@@ -4,7 +4,7 @@
 
 ![JJ Camp](Assets/cover.jpg)
 
-프론트엔드 프로그래밍의 가장 높은 벽! JAVASCRIPT 를 극복하자!
+프론트엔드 프로그래밍의 가장 높은 벽! JavaScript를 극복하자!
 7전 8기 JavaScript 의 벽에 좌절했던 프론트엔드 개발자, 디자이너분들이여 다시 한 번 일어나세요!
 12주 동안 JavaScript를 끈질기게 물고 늘어져, 정복하는 과정입니다.
 
@@ -20,7 +20,7 @@ JavaScript를 포기하자니 내가 프론트엔드 영역에서 할 수 있는
 야무 강사님과 함께 JavaScript 만을 위한, JavaScript 에 의한, JavaScript 에 관한 모든 것을 얻어갈 수 있습니다.
 아주 상세한 객체지향 기초부터 시작하여 종주에는 새로운 기술에 대한 접근까지 배움으로써 지긋지긋했던 JavaScript 멘붕사태를 정복하고 신세계를 열어주고자 하는 강의!
 
-### JavaScript Framework 의 더 넓은 세계까지 소개
+### JavaScript Framework의 더 넓은 세계까지 소개
 
 React.js, Angular.js 와 같은 JavaScript Framework 를 소개해드립니다.
 12주 후, JavaScript 는 거들 뿐! JavaScript 에 고생받던 당신은 온데 간데 없고, 업무 속도는 하늘을 날아다니고 있을 겁니다.지금 바로 합류하세요!
