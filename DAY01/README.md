@@ -150,6 +150,5 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 
 ### 웹폰트 로컬스토리즈 저장 방법
 
-[웹 폰트를 로컬 스토리지에 저장하는 기법 - 캐시 안정성 증가, 글꼴 깜빡임 현상 제거](http://mytory.net/2016/06/15/webfont-best-practice.html)
-
-
+- [웹 폰트를 로컬 스토리지에 저장하는 기법 - 캐시 안정성 증가, 글꼴 깜빡임 현상 제거](http://mytory.net/2016/06/15/webfont-best-practice.html)
+- [Spoqa Han Sans](http://spoqa.github.io/spoqa-han-sans/)
