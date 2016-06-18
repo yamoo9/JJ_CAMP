@@ -78,22 +78,24 @@ DOM에서 사용하는 가장 중요한 규칙은 문서를 나뭇가지(tree)�
 > 현실 세계에서 모든 것은 원자로 구성되어 있고, 원자는 세상의 노드라고 할 수 있으며 원자보다 작은 양성자나 전자 등도 노드라고 부를수 있다.
 > 마찬가지로 DOM 또한 노드의 집합이며, 문서라는 나무 위에 가지나 잎 같은 노드를 갖고 있는 것과 같다.
 
--
+---
 
 ### DOM API: 문서 객체 선택과 탐색
 
-HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
-고로 `<head>` 내부에 `<script>` 요소를 사용하지 않을 것을 권장.
+HTML Parser는 `<script>` 요소를 만나면 더 이상 일을 안하고 쉰다.
+고로 `<head>` 내부에 `<script>` 요소를 사용하지 않을 것을 권장한다.
 
-#### 변수 정리
+-
 
-- 변수란? `데이터를 저장하는 공간`
+### 변수 정리
+
+- 변수란?<br> `데이터를 저장하는 기억(Memory) 공간`
 - 변수 이름 작성 규칙
-  1. 반드시!!! 변수를 정의할 때는 `var` 키워드를 앞에 붙여준다.
-  1. 숫자가 맨 앞에 오면 안된다.
-  1. 변수 이름 사이에 공백이 있으면 안된다.
-  1. `$`, `_`을 제외한 특수문자는 사용할 수 없다.
-  1. 모두 대문자로 작성하지 말아라.
+  - 반드시!!! 변수를 정의할 때는 `var` 키워드를 앞에 붙여준다.
+  - 숫자가 맨 앞에 오면 안된다.
+  - 변수 이름 사이에 공백이 있으면 안된다.
+  - `$`, `_`을 제외한 특수문자는 사용할 수 없다.
+  - 모두 대문자로 작성하지 말아라. (모두 대문자는 상수(`const`)를 작성할 경우 사용)
 - 변수를 선언하는 방법
   - `var 변수이름;`
 - 변수에 값을 할당하는 방법
@@ -105,7 +107,7 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 
 자바스크립트에서 사용되는 데이터 유형은 다음과 같다.
 
-###### 주요 객체
+###### 자바스크립트 주요 객체
 
 - 숫자 객체(`Number`)
 - 문자 객체(`String`)
@@ -115,14 +117,19 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 - 객체(`Object`)
 
 ###### 객체가 아닌 것들
+
 - `null`
 - `undefined`
+
+-
 
 ### 데이터 유형을 체크하는 방법
 
 - `typeof`
 - `instnaceof`
 - `constructor`
+
+※ `typeof`의 치명적 오류는 다음 시간에...
 
 -
 
@@ -136,19 +143,25 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 - `.querySelector()`
 - `.querySelectorAll()`
 
+※ `.querySelector()`/`.querySelectorAll()` IE 8+ 지원
+
 -
 
 ### 헬퍼 함수 『선택/탐색』
+
+다음 시간에...
 
 -
 
 ### 자바스크립트 기초가 부족하신 분들에게 유용한 도서/강의
 
-- [JavaScript, Codecademy](https://www.codecademy.com/learn/javascript)
+- [`JavaScript`, Codecademy](https://www.codecademy.com/learn/javascript)
 - [자바스크립트 온라인 무료 강의, 생활코딩](http://opentutorials.org/course/743)
 - [자바스크립트+jQuery 완전정복 스터디 1 기초편](http://book.naver.com/bookdb/book_detail.nhn?bid=9650891)
 
-### 웹폰트 로컬스토리즈 저장 방법
+-
+
+### 웹폰트 로컬스토리지 저장 방법
 
 - [웹 폰트를 로컬 스토리지에 저장하는 기법 - 캐시 안정성 증가, 글꼴 깜빡임 현상 제거](http://mytory.net/2016/06/15/webfont-best-practice.html)
-- [Spoqa Han Sans](http://spoqa.github.io/spoqa-han-sans/)
+- [스포카 한 산스(Spoqa Han Sans) 글꼴](http://spoqa.github.io/spoqa-han-sans/)
