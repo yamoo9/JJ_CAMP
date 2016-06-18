@@ -93,6 +93,7 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
   1. 숫자가 맨 앞에 오면 안된다.
   1. 변수 이름 사이에 공백이 있으면 안된다.
   1. `$`, `_`을 제외한 특수문자는 사용할 수 없다.
+  1. 모두 대문자로 작성하지 말아라.
 - 변수를 선언하는 방법
   - `var 변수이름;`
 - 변수에 값을 할당하는 방법
@@ -116,6 +117,14 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 - `null`
 - `undefined`
 
+### 데이터 유형을 체크하는 방법
+
+- `typeof`
+- `instnaceof`
+- `constructor`
+
+-
+
 #### 문서 객체 선택 API
 
 문서 객체에 접근하는 방법은 다음과 같다.
@@ -130,5 +139,12 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 
 ### 헬퍼 함수 『선택/탐색』
 
+-
+
+### 자바스크립트 기초가 부족하신 분들에게 유용한 도서/강의
+
+- [JavaScript, Codecademy](https://www.codecademy.com/learn/javascript)
+- [자바스크립트 온라인 무료 강의, 생활코딩](http://opentutorials.org/course/743)
+- [자바스크립트+jQuery 완전정복 스터디 1 기초편](http://book.naver.com/bookdb/book_detail.nhn?bid=9650891)
 
 
