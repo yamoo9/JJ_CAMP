@@ -82,7 +82,43 @@ DOM에서 사용하는 가장 중요한 규칙은 문서를 나뭇가지(tree)�
 
 ### DOM API: 문서 객체 선택과 탐색
 
+HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
+고로 `<head>` 내부에 `<script>` 요소를 사용하지 않을 것을 권장.
+
+#### 변수 정리
+
+- 변수란?
+- 변수 이름 작성 규칙
+- 변수를 선언하는 방법
+- 변수에 값을 할당하는 방법
+- 변수에 할당하거나 참조하는 데이터 유형
+
+#### 자바스크립트 데이터 유형
+
+자바스크립트에서 사용되는 데이터 유형은 다음과 같다.
+
+- 숫자(`Number`)
+- 문자(`String`)
+- 불린(`Boolean`)
+- 배열(`Array`)
+- 함수(`Function`)
+- 객체(`Object`)
+- `null`
+- `undefined`
+
+#### 문서 객체 선택 API
+
+문서 객체에 접근하는 방법은 다음과 같다.
+
+- `.getElementById()`
+- `.getElementsByTagName()`
+- `.getElementsByClassName()`
+- `.querySelector()`
+- `.querySelectorAll()`
+
 -
 
 ### 헬퍼 함수 『선택/탐색』
+
+
 
