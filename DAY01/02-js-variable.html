@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>Javascript 변수와 문서 객체 찾기(변수에 참조)</title>
+  <style>
+    .important {
+      font-weight: bold;
+      font-weight: 900;
+      color: #7045cf;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <h1 id="company" class="brand mase kin">Company Brand</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio sed nihil iusto, eveniet molestias consequuntur deleniti eligendi voluptas! Voluptatibus, ratione.</p>
+    <p>Impedit perferendis, fuga, fugit atque eius porro corporis! Quo ab omnis illum molestias quibusdam dignissimos eius error, mollitia magni accusantium.</p>
+    <p>Expedita architecto doloribus sapiente, cupiditate suscipit totam tempora rerum accusantium voluptates eveniet quidem doloremque molestiae magnam corrupti reprehenderit, quaerat, aliquam.</p>
+    <p>Temporibus obcaecati dolore quae similique fugit, nihil consectetur doloribus dignissimos. Harum, atque voluptates libero error inventore alias sapiente aspernatur praesentium.</p>
+  </div>
+
+<script>
+// 문서 객체에 접근하는 방법
+// 목표 1. #company 문서 요소(객체)에 접근
+// 문서에서 id 속성 값이 'company'인 요소를 찾아라.
+// 스타일 변경 (class 속성 추가, .important)
+// 먼저 하드코딩된 데이터 값을 저장해둬야 다시 사용
+// console.log(document.getElementById('company').getAttribute('class'));
+document.getElementById('company').setAttribute('class', document.getElementById('company').getAttribute('class') + ' important');
+
+// 변수를 사용해서 문서의 객체를 기억한다. (저장소에 기억해둔다)
+var company = document.getElementById('company'); // 문서 객체 참조
+// console.log( company );
+var company_original_class_name = company.getAttribute('class');
+// console.log(company_original_class_name);
+company.setAttribute('class', company_original_class_name + ' important');
+</script>
+</body>
+</html>
