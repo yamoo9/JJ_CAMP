@@ -148,4 +148,8 @@ HTML Parser는 `<script>` 요소를 만나면 더이상 일을 안하고 쉰다.
 - [자바스크립트 온라인 무료 강의, 생활코딩](http://opentutorials.org/course/743)
 - [자바스크립트+jQuery 완전정복 스터디 1 기초편](http://book.naver.com/bookdb/book_detail.nhn?bid=9650891)
 
+### 웹폰트 로컬스토리즈 저장 방법
+
+[웹 폰트를 로컬 스토리지에 저장하는 기법 - 캐시 안정성 증가, 글꼴 깜빡임 현상 제거](http://mytory.net/2016/06/15/webfont-best-practice.html)
+
 
