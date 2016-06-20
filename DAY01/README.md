@@ -165,3 +165,15 @@ HTML Parser는 `<script>` 요소를 만나면 더 이상 일을 안하고 쉰다
 
 - [웹 폰트를 로컬 스토리지에 저장하는 기법 - 캐시 안정성 증가, 글꼴 깜빡임 현상 제거](http://mytory.net/2016/06/15/webfont-best-practice.html)
 - [스포카 한 산스(Spoqa Han Sans) 글꼴](http://spoqa.github.io/spoqa-han-sans/)
+
+---
+
+### JJ 정복 CAMP 2016년 6월 18일자 영상 자료
+
+아래 링크를 클릭하여 Youtube에 업로드 된  1일차 영상 강의를 시청하시면 됩니다.
+
+※ 강의 촬영은 1회차만 제공되며, 더 이상의 강의 촬영은 없습니다.
+
+- [JJ_CAMP__2016.06.18___01](https://youtu.be/PvcLR4c9KRo)
+- [JJ_CAMP__2016.06.18___02](https://youtu.be/K3yNSQRRhJU)
+- [JJ_CAMP__2016.06.18___03](https://youtu.be/cg-ok2NwvhM)
