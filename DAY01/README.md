@@ -168,7 +168,7 @@ HTML Parser는 `<script>` 요소를 만나면 더 이상 일을 안하고 쉰다
 
 ---
 
-### JJ 정복 CAMP 2016년 6월 18일자 영상 자료
+<!-- ### JJ 정복 CAMP 2016년 6월 18일자 영상 자료
 
 아래 링크를 클릭하여 Youtube에 업로드 된  1일차 영상 강의를 시청하시면 됩니다.
 
@@ -176,4 +176,4 @@ HTML Parser는 `<script>` 요소를 만나면 더 이상 일을 안하고 쉰다
 
 - [JJ_CAMP__2016.06.18___01](https://youtu.be/PvcLR4c9KRo)
 - [JJ_CAMP__2016.06.18___02](https://youtu.be/K3yNSQRRhJU)
-- [JJ_CAMP__2016.06.18___03](https://youtu.be/cg-ok2NwvhM)
+- [JJ_CAMP__2016.06.18___03](https://youtu.be/cg-ok2NwvhM) -->
