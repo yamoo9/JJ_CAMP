@@ -99,10 +99,66 @@ for ( var child_el, l=html.childNodes.length-1; l > -1; l-- ) {
   }
 }
 
-console.log(filtered_elem_collection);
+// console.log(filtered_elem_collection);
 
 // 유사 배열이 아니라, 자바스크립트 배열이기 때문에 배열 메소드 사용 가능
-filtered_elem_collection.pop();
+// filtered_elem_collection.pop();
 
-console.log(filtered_elem_collection);
+// console.log(filtered_elem_collection);
+
+var head = html.children[0];
+var body = html.children[1];
+
+// console.log(head, body);
+
+/**
+ * --------------------------------
+ * .firstElementChild를 대체할 수 있나?
+ * .children[0]
+ * ----------------------------- */
+
+// 사용자의 브라우저에게 물어본다 (check feature)
+// console.log(!!html.firstElementChild);
+// firstElementChild를 지원하지 않는다면..
+// if ( !html.firstElementChild ) {
+//   console.log('firstElementChild를 지원하지 않는다.');
+//   // 특정 요소에서 자식요소노드를 수집(.children)
+//   // 그 중에서 첫번째 원소에 접근 반환한다. (.children[0])
+// } else {
+//   console.log('firstElementChild를 지원한다.');
+// }
+
+// 조건문, 3항식을 사용해서 조건문을 완성해보세요.
+// var result;
+// if (window.jQuery) {
+//   result = 'jQuery 존재';
+// } else {
+//   result = 'jQuery 존재 X';
+// }
+
+var result = window.jQuery ? 'jQuery 존재' : 'jQuery 존재 X';
+
+// console.log(result);
+
+var check_feature_firstElementChild = html.firstElementChild ?
+  'firstElementChild를 지원한다.' :
+  'firstElementChild를 지원하지 않는다.';
+
+document.write('<p>'+ check_feature_firstElementChild +'</p>');
+
+
+// 3항식을 연달아 사용할 수 있나?
+
+// 조건 A ? 참 : 조건 B : 참 ? 조건 C : 참 : 거짓;
+
+var using_js_lib_frameworks =
+  window.jQuery ?
+    'OK! jQuery 지원' :
+    window.Dojo ?
+      'OK! Dojo 지원' :
+      window.angular ?
+        'OK! Angular 지원' :
+        '현재 문서는 아무런 JS 라이브러리/프레임워크를 지원하지 않는다.';
+
+console.log(using_js_lib_frameworks);
 
