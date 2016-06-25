@@ -70,3 +70,10 @@
 - `hasClass()`
 - `toggleClass()`
 - `radioClass()`
+
+-
+
+### 기타/참고
+
+- [CSS 선택자 브라우저 호환 표](kimblim.dk/css-tests/selectors/)
+- [JavaScript nodeType 유형](http://www.w3schools.com/jsref/prop_node_nodetype.asp)
