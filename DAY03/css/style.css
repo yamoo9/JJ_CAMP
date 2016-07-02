@@ -9,6 +9,7 @@ body {
 .button-toggle {
   cursor: pointer;
   border: none;
+  margin-bottom: 15px;
   border-radius: 4px;
   padding: 0.625rem 1.85rem;
   background: #fe4940;
@@ -27,4 +28,29 @@ body {
 .button-toggle:focus {
   background: #751a1a;
   color: #ffd219;
+}
+
+/**
+ * --------------------------------
+ * .toggled-container
+ * ----------------------------- */
+.toggled-container {
+  border: 1px solid #dadada;
+  padding: 2em 2.4em;
+  border-radius: 3px;
+}
+
+.toggled-container * {
+  margin-top: 0;
+}
+
+.toggled-container .container-headline {
+  color: #e44454;
+  font-weight: 100;
+  font-size: 2.2rem;
+  margin-bottom: 0.1em;
+}
+.toggled-container p {
+  color: #86888a;
+  margin-bottom: 0;
 }
