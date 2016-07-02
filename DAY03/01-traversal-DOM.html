@@ -8,14 +8,29 @@
 </head>
 <body>
 
-  <button type="button" class="button-toggle">toggle button</button>
+  <button
+    data-role="toggle-button"
+    type="button"
+    class="button-toggle">toggle button</button>
 
   <div class="toggled-container">
-    <h2 class="container-headline">Container Headline</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    <h2 class="container-headline">Container <a href="#">Headline</a></h2>
+    <p><a href="css/style.css">Get Stylesheet</a> dolor sit amet, consectetur adipisicing elit. <a href="js/01-traversal-DOM.js">Get JavaScript File</a>
     Accusantium, dolorum, repellat? Aliquid. yamoo9</p>
   </div>
 
-<script src="js/01-traversal-DOM.js"></script>
+<!-- <script src="js/01-traversal-DOM.js"></script> -->
+<script src="lib/dom-helper.js"></script>
+<script>
+var btn = $query('button');
+// var btn = $query(true); // 잘못된 값이 전달되었을 때 오류 검증
+var container_link = $q('[class$="container"] a');
+// console.log(btn.getAttribute('data-role')); // 'button'
+// console.log('HTML DOM: ', container_link.href); // HTML DOM
+// console.log('XML DOM: ', container_link.getAttribute('href')); // XML DOM
+
+var container_links = $queryAll('[class$="container"] a');
+console.log(container_links, container_links.length); // 2
+</script>
 </body>
 </html>

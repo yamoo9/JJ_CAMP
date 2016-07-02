@@ -1,5 +1,6 @@
 body {
-  margin: 5% 15%;
+  margin: 15% 15% 0;
+  background: #efefef;
 }
 
 /**
@@ -35,27 +36,40 @@ body {
  * .toggled-container
  * ----------------------------- */
 .toggled-container {
+  opacity: 1;
   border: 1px solid #dadada;
   padding: 2em 2.4em;
   border-radius: 3px;
+  background: #ffffff;
+  /*transition: all 0.45s ease-out;*/
+  transition: opacity 0.45s ease-out, transform 0.2s ease-out 0.2s;
+  transform: scale(1) translateY(0);
 }
 
 /* Multi Classes */
 .toggled-container.screen-off {
-  display: none;
+  /*display: none;*/
+  opacity: 0;
+  transform: scale(10) translateY(-200px);
 }
 
 .toggled-container * {
   margin-top: 0;
+  font-weight: 100;
 }
 
 .toggled-container .container-headline {
   color: #e44454;
-  font-weight: 100;
   font-size: 2.2rem;
   margin-bottom: 0.1em;
 }
 .toggled-container p {
   color: #86888a;
   margin-bottom: 0;
+}
+
+.toggled-container a {
+  text-decoration: none;
+  font-weight: 200;
+  color: #de8532;
 }
