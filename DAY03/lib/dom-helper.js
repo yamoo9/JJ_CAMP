@@ -27,7 +27,7 @@ function $queryAll(selector, context) {
   } else {
     // 컨텍스트 객체가 존재한다면...
     // 경우 2. CSS 선택자인 경우
-    if ( context.nodeType !== 1 && typeof context === 'string' ) {
+    if ( !context.nodeType && typeof context === 'string' ) {
       context = $query(context);
     }
     // 경우 1. DOM 객체인 경우 (넘어감)
