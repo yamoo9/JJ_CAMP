@@ -40,6 +40,11 @@ body {
   border-radius: 3px;
 }
 
+/* Multi Classes */
+.toggled-container.screen-off {
+  display: none;
+}
+
 .toggled-container * {
   margin-top: 0;
 }
