@@ -5,6 +5,61 @@
  */
 
 /**
+ * --------------------------------
+ * 예전엔 사용하던 헬퍼 함수
+ * ----------------------------- */
+function idEl(id_name) {
+  // 유효성 검사(Argument Validation)
+  if ( typeof id_name !== 'string' ) {
+    throw new Error('전달된 인자는 id 이름(문자열) 유형이 아닙니다.');
+  }
+  return document.getElementById(id_name);
+}
+
+function tagEl(tag_name, context) {
+  // 유효성 검사(Argument Validation)
+  if ( typeof tag_name !== 'string' ) {
+    throw new Error('전달된 인자는 요소의 이름(문자열) 유형이 아닙니다.');
+  }
+
+  // if (!context) {
+  //   context = document;
+  // }
+
+  return (context || document).getElementsByTagName(tag_name);
+}
+
+function classEl(class_name) {
+  // 객체 판별법
+  // 최신 브라우저인지 아닌지 브라우저에게 물어보아서 조건에 따라 분기하는 방법
+  if (!document.getElementsByClassName) {
+    // 신형 방식
+    return document.getElementsByClassName(class_name);
+  } else {
+    // 구형 방식
+    // 문서에서 모든 요소를 가져와야 해요
+    var els_collection = [],
+        all_elements = document.body.getElementsByTagName('*');
+    // 순회
+    for(var el, i=0, l=all_elements.length; i<l; i++) {
+      el = all_elements[i];
+      if ( el.getAttribute('class') === class_name ) {
+        els_collection.push(el);
+      }
+    }
+    return els_collection;
+  }
+}
+
+
+
+
+
+
+
+
+
+/**
  * CSS 선택자로 문서에서 대상(요소노드)을 찾는 헬퍼함수
  *
  * @method $query
