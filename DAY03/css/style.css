@@ -1,0 +1,30 @@
+body {
+  margin: 5% 15%;
+}
+
+/**
+ * --------------------------------
+ * .button-toggle
+ * ----------------------------- */
+.button-toggle {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 0.625rem 1.85rem;
+  background: #fe4940;
+  color: #fff;
+  font-size: 1rem;
+}
+/* 버튼 상태 디자인 */
+.button-toggle:hover {
+  background: #751a1a;
+}
+.button-toggle:active {
+  position: relative;
+  top: 2px;
+  outline: none;
+}
+.button-toggle:focus {
+  background: #751a1a;
+  color: #ffd219;
+}

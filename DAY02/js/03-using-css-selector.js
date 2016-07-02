@@ -27,10 +27,10 @@
 // - querySelector('css selector') : single element
 // - querySelectorAll('css selector') : nodeList
 
-var body               = document.querySelector('body');
-var page_header        = document.querySelector('#page-header');
-var page_slogan        = page_header.querySelector('.page-slogan');
-var ul_lis             = page_header.querySelectorAll('ul li'); // 복수 선택하여 nodeList 반환
+var body        = document.querySelector('body');
+var page_header = document.querySelector('#page-header');
+var page_slogan = page_header.querySelector('.page-slogan');
+var ul_lis      = page_header.querySelectorAll('ul li'); // 복수 선택하여 nodeList 반환
 
 // CSS3 선택자를 사용하여 리스트 끝에서 3번째 위치한 요소를 찾았다. 기존 방법 대비 참 쉽다.
 var ul_list_last_item3 = page_header.querySelector('ul li:nth-last-child(3)');
