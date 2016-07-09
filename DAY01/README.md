@@ -2,6 +2,8 @@
 
 ## [JavaScript & jQuery 정복 CAMP](http://www.fastcampus.co.kr/dev_camp_jst/)
 
+# DAY01
+
 ### JavaScript 시작하기
 
 - 클라이언트 자바스크립트 환경

@@ -2,6 +2,8 @@
 
 ## [JavaScript & jQuery 정복 CAMP](http://www.fastcampus.co.kr/dev_camp_jst/)
 
+# DAY02
+
 ### JavaScript 시작하기 & 핵심 정복기
 
 문서객체모델(DOM) : 선택/탐색

@@ -25,16 +25,23 @@
     </div>
   </div>
 
+  <ul>
+    <li><a href="">item</a></li>
+    <li><a href="">item</a></li>
+    <li><a href="">item</a></li>
+    <li><a href="">item</a></li>
+  </ul>
+
 <!-- <script src="js/01-traversal-DOM.js"></script> -->
 <script src="lib/dom-helper.js"></script>
 <script src="js/02-traversal-DOM.js"></script>
 <script>
-// var btn = $query('button');
-// // var btn = $query(true); // 잘못된 값이 전달되었을 때 오류 검증
-// var container_link = $q('[class$="container"] a');
+var btn = $query('button');
+// var btn = $query(true); // 잘못된 값이 전달되었을 때 오류 검증
+var container_link = $q('[class$="container"] a');
 // // console.log(btn.getAttribute('data-role')); // 'button'
-// // console.log('HTML DOM: ', container_link.href); // HTML DOM
-// // console.log('XML DOM: ', container_link.getAttribute('href')); // XML DOM
+console.log('HTML DOM: ', container_link.href); // HTML DOM
+console.log('XML DOM: ', container_link.getAttribute('href')); // XML DOM
 
 // var container_links = $queryAll('[class$="container"] a');
 // console.log(container_links, container_links.length); // 2
