@@ -1,0 +1,91 @@
+/*! gallery.css © yamoo9.net, 2016 */
+
+::selection {
+  background: #000;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #757e9b;
+  color: #fff;
+}
+
+body {
+  width: 730px;
+  margin: 4% auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #676767;
+  background: radial-gradient(circle at 30% 10%, transparent, #aaa);
+}
+
+h1, p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0.2em;
+  color: #232323;
+  letter-spacing: -0.03em;
+  font-weight: 100;
+  font-size: 3rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+  /*text-align-last: left;*/
+}
+
+/**
+ * --------------------------------
+ * .gallery
+ * ----------------------------- */
+.gallery {
+  position: relative;
+  height: 450px;
+  /*border: 1px solid #eee;*/
+}
+
+.gallery-controls {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 1rem;
+}
+
+.gallery-controls::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.gallery-controls .gallery-control-button {
+  cursor: pointer;
+  float: left;
+  margin-right: 4.878%;
+  border: none;
+  padding: 0;
+  background: #fff;
+}
+
+.gallery-controls .gallery-control-button:hover,
+.gallery-controls .gallery-control-button:focus {
+  outline: 6px solid #bd4a4d;
+}
+
+.gallery-controls .gallery-control-button:last-child {
+  margin-right: 0;
+}
+
+.gallery-controls .gallery-control-button img {
+  float: left;
+  vertical-align: bottom;
+}
+
+.gallery-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
