@@ -16,7 +16,7 @@ body {
   font-size: 0.875rem;
   line-height: 1.5;
   color: #676767;
-  background: radial-gradient(circle at 30% 10%, transparent, #aaa);
+  background: radial-gradient(circle at 30% 10%, #f5f0e1, #e4d8b4);
 }
 
 h1, p {
@@ -47,6 +47,10 @@ p {
   /*border: 1px solid #eee;*/
 }
 
+.gallery * {
+  transition: all .65s cubic-bezier(0.64, -0.24, 0.01, 0.97);
+}
+
 .gallery-controls {
   position: absolute;
   width: 100%;
@@ -68,11 +72,12 @@ p {
   border: none;
   padding: 0;
   background: #fff;
+  -webkit-filter: sepia(0.56);
 }
 
 .gallery-controls .gallery-control-button:hover,
 .gallery-controls .gallery-control-button:focus {
-  outline: 6px solid #bd4a4d;
+  /*border-left: 6px solid #957a5e;*/
 }
 
 .gallery-controls .gallery-control-button:last-child {
@@ -88,4 +93,14 @@ p {
   position: absolute;
   top: 0;
   left: 0;
+  -webkit-filter: sepia(0.56);
+}
+
+.gallery-view:hover,
+.gallery-controls .gallery-control-button:hover {
+  -webkit-filter: sepia(0);
+}
+
+.gallery-view:hover {
+  transform: scale(1.15);
 }
