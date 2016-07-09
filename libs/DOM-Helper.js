@@ -51,7 +51,33 @@ function $tagEl(tag_name, context) {
   return (context || document).getElementsByTagName(tag_name);
 }
 
-// $classEl()
+// .getElementsByClassName() IE 9+
+// ↑ 헬퍼 $classEl()
+function $classEl(class_name, context) {
+  // 자바스크립트 호이스트(Hoist, 끌어올리다)
+  var all_els, filtered_els = [];
+  // 조건 1 IE 9+ 처리
+  if ( !document.getElementsByClassName ) {
+    return (context || document).getElementsByClassName(class_name);
+  }
+  // 조건 2 IE 8- 경우 처리
+  else {
+    all_els = (context || document.body).getElementsByTagName('*');
+    // 반복문 (수집된 DOM 객체를 순환)
+    for ( var el, i=0, l=all_els.length; i<l; i++ ) {
+      el = all_els[i]; // console.log(el);
+      // 조건 class 속성을 포함하고 있는지 확인
+      // console.log(!!el.hasClass);
+      var check_class_name = new RegExp('(\\s|^)' + class_name + '(\\s|$)');
+      if( check_class_name.test( el.getAttribute('class') ) ) {
+        // 조건문이 참이면 아래 코드 수행
+        filtered_els.push(el);
+      }
+    }
+    return filtered_els;
+  }
+  // console.log(filtered_els); // 배열
+}
 
 // .querySelectorAll()
 // ↑ 헬퍼 $queryAll(selector, context)
@@ -59,6 +85,10 @@ function $queryAll(selector, context) {
   // STEP 1 유효성 검사
   validateData(selector, 'string');
   // STEP 2 찾은 요소노드 대상을 반환
+  // context 조건 확인
+  if ( typeof context === 'string' ) {
+    context = $query(context);
+  }
   return (context || document).querySelectorAll(selector);
 }
 
