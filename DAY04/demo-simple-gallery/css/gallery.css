@@ -12,7 +12,8 @@
 
 body {
   width: 730px;
-  margin: 4% auto;
+  min-height: 90vh;
+  margin: 10vh auto;
   font-size: 0.875rem;
   line-height: 1.5;
   color: #676767;
@@ -87,7 +88,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  content: 'active';
+  content: '♥';
   top: 0;
   left: 0;
   width: 100%;
