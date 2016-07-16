@@ -48,8 +48,6 @@
           <ul class="depth-2">
             <li><a href="#">Fall/Winter 16</a></li>
             <li><a href="#">Spring/Summer 16</a></li>
-            <li><a href="#">Fall/Winter 15</a></li>
-            <li><a href="#">Pre Fall 15</a></li>
           </ul>
         </li>
       </ul>
@@ -102,44 +100,34 @@ var i            = 0;
 var l            = gnb_d1_links.length;
 
 function activateDepth2Menu() {
-  // this????
-  // console.log(this);
-  // 부모 <li>에 접근
   var _parent_li    = this.parentNode;
-  deactivateDepth2Menu(_parent_li);
-  // var _parent_ul    = _parent_li.parentNode;
-  // var _activated_el = _parent_ul.querySelector('.active');
-  // if ( _activated_el ) {
-  //   // _activated_el.removeAttribute('class');
-  //   _activated_el.classList.remove('active');
-  // }
-  // _parent_li.setAttribute('class', 'active');
+  deactiveDepth2Menu(_parent_li);
   _parent_li.classList.add('active');
 }
 
-function deactivateDepth2Menu(_parent_li) {
+function deactiveDepth2Menu(_parent_li) {
+  // console.log('deactiveDepth2Menu');
   var _parent_ul    = _parent_li.parentNode;
   var _activated_el = _parent_ul.querySelector('.active');
-  if ( _activated_el ) {
-    // _activated_el.removeAttribute('class');
-    _activated_el.classList.remove('active');
-  }
+  if ( _activated_el ) { _activated_el.classList.remove('active'); }
 }
 
 for(; i<l; i++) {
+  var gnb_link = gnb_d1_links[i];
   // focus 이벤트 바인딩 <-> 이벤트 핸들러(함수)
-  gnb_d1_links[i].addEventListener('focus', activateDepth2Menu);
-  if (i === l - 1) {
-    var gnb_d2_links = gnb_d1_links[i].parentNode.querySelectorAll('a');
-    var gnb_d2_links_len = gnb_d2_links.length;
-    var gnb_d2_link_last_link = gnb_d2_links[ gnb_d2_links_len - 1 ];
-    gnb_d2_link_last_link.addEventListener('blur', function() {
-      var d1_li = this.parentNode.parentNode.parentNode;
-      deactivateDepth2Menu(d1_li);
+  gnb_link.addEventListener('focus', activateDepth2Menu);
+  if ( i === l - 1 ) {
+    var gnb_last_a = gnb_link.parentNode.querySelector('.depth-2 li:last-child a');
+    gnb_last_a.addEventListener('blur', function() {
+      // 여기서 전달인자는 무엇이 되어야 하나?
+      // 현재 이벤트의 주인(Context)의 부모의 부모의 부모
+      var d1_parent_li = this.parentNode.parentNode.parentNode;
+      deactiveDepth2Menu(d1_parent_li);
     });
   }
   unb_d1_links[i].addEventListener('focus', activateDepth2Menu);
 }
+
 </script>
 </body>
 </html>
