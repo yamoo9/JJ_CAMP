@@ -153,7 +153,8 @@
 }
 
 /* .depth-1 > li:hover .depth-2 */
-#holzweiler-header .depth-1 > li:hover .depth-2 {
+#holzweiler-header .depth-1 > li:hover .depth-2,
+#holzweiler-header .depth-1 > li.active .depth-2 {
 /*#holzweiler-header .depth-1 > li > a:hover + .depth-2 {*/
   display: block;
 }

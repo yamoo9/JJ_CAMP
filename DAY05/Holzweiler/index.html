@@ -21,7 +21,7 @@
     </h1>
     <nav class="holzweiler-gnb">
       <ul class="depth-1 clearfix">
-        <li>
+        <li class="temp">
           <!-- .depth-1 a:focus + .depth-2 { display: block; } -->
           <a href="#">Shop</a>
           <ul class="depth-2">
@@ -87,17 +87,31 @@
 <script src="../../libs/DOM-Helper.js"></script>
 <script>
 var gnb          = $query('.holzweiler-gnb');
+var unb          = $query('.holzweiler-unb');
 var gnb_d1_links = $queryAll('.depth-1 > li > a', gnb);
+var unb_d1_links = $queryAll('.depth-1 > li > a', unb);
 var i            = 0;
 var l            = gnb_d1_links.length;
 
 function activateDepth2Menu() {
-  console.log('focused in Anchor Element.');
+  // this????
+  // console.log(this);
+  // 부모 <li>에 접근
+  var _parent_li    = this.parentNode;
+  var _parent_ul    = _parent_li.parentNode;
+  var _activated_el = _parent_ul.querySelector('.active');
+  if ( _activated_el ) {
+    // _activated_el.removeAttribute('class');
+    _activated_el.classList.remove('active');
+  }
+  // _parent_li.setAttribute('class', 'active');
+  _parent_li.classList.add('active');
 }
 
 for(; i<l; i++) {
   // focus 이벤트 바인딩 <-> 이벤트 핸들러(함수)
-  gnb_d1_links[i].addEventListener('focus', activateDepth2Menu, false);
+  gnb_d1_links[i].addEventListener('focus', activateDepth2Menu);
+  unb_d1_links[i].addEventListener('focus', activateDepth2Menu);
 }
 
 </script>
