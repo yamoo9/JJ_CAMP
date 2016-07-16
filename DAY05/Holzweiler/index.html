@@ -43,7 +43,15 @@
           </ul>
         </li>
         <li><a href="#">News</a></li>
-        <li><a href="#">About</a></li>
+        <li>
+          <a href="#">About</a>
+          <ul class="depth-2">
+            <li><a href="#">Fall/Winter 16</a></li>
+            <li><a href="#">Spring/Summer 16</a></li>
+            <li><a href="#">Fall/Winter 15</a></li>
+            <li><a href="#">Pre Fall 15</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <nav class="holzweiler-unb">
@@ -98,22 +106,40 @@ function activateDepth2Menu() {
   // console.log(this);
   // 부모 <li>에 접근
   var _parent_li    = this.parentNode;
+  deactivateDepth2Menu(_parent_li);
+  // var _parent_ul    = _parent_li.parentNode;
+  // var _activated_el = _parent_ul.querySelector('.active');
+  // if ( _activated_el ) {
+  //   // _activated_el.removeAttribute('class');
+  //   _activated_el.classList.remove('active');
+  // }
+  // _parent_li.setAttribute('class', 'active');
+  _parent_li.classList.add('active');
+}
+
+function deactivateDepth2Menu(_parent_li) {
   var _parent_ul    = _parent_li.parentNode;
   var _activated_el = _parent_ul.querySelector('.active');
   if ( _activated_el ) {
     // _activated_el.removeAttribute('class');
     _activated_el.classList.remove('active');
   }
-  // _parent_li.setAttribute('class', 'active');
-  _parent_li.classList.add('active');
 }
 
 for(; i<l; i++) {
   // focus 이벤트 바인딩 <-> 이벤트 핸들러(함수)
   gnb_d1_links[i].addEventListener('focus', activateDepth2Menu);
+  if (i === l - 1) {
+    var gnb_d2_links = gnb_d1_links[i].parentNode.querySelectorAll('a');
+    var gnb_d2_links_len = gnb_d2_links.length;
+    var gnb_d2_link_last_link = gnb_d2_links[ gnb_d2_links_len - 1 ];
+    gnb_d2_link_last_link.addEventListener('blur', function() {
+      var d1_li = this.parentNode.parentNode.parentNode;
+      deactivateDepth2Menu(d1_li);
+    });
+  }
   unb_d1_links[i].addEventListener('focus', activateDepth2Menu);
 }
-
 </script>
 </body>
 </html>
