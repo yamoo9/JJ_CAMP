@@ -154,6 +154,25 @@ function $createEl(el_name, parent_el) {
       checkError('전달인자는 요소노드가 아닙니다. 이를 확인해주세요.');
     }
   }
+  // A && B 코드는 A 값이 true 일 때 B 코드가 실행되는 조건문이다.
+  // B 코드에서는 3항식을 사용하여 조건 분기문을 처리할 수 있다.
+  // parent_el && isElNode(parent_el) ?
+  //                  parent_el.appendChild(_el) :
+  //                  checkError('전달인자는 요소노드가 아닙니다. 이를 확인해주세요.');
   // 생성된 _el이 참조하는 문서 요소노드를 반환
   return _el;
+}
+
+
+function $createText(text, el_node) {
+  // 전달인자 유효성 검사
+  validateData(text, 'string');
+  // 텍스트노드 생성
+  var _textnode = document.createTextNode(text);
+  // 조건: el_node 가 있다면
+  if ( el_node && isElNode(el_node) ) {
+    el_node.appendChild(_textnode);
+  } else {
+    return _textnode;
+  }
 }
