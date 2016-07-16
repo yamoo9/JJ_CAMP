@@ -9,12 +9,53 @@
 </head>
 <body>
 
-  <ul>
+  <!--
+  <ul class="reset-list custom-ul">
     <li><a href="http://fastcampus.co.kr/">Fast Campus</a></li>
     <li><a href="http://google.com/">Google</a></li>
+    <li><a href="http://naver.com/">NAVER</a></li>
+    <li><a href="http://daum.net/">DAUM</a></li>
+    <li><a href="http://squarespace.com/">Squarespace</a></li>
   </ul>
+   -->
 
 <script>
+// MVC => Model
+// JSON 문법
+var link_list = [
+  {
+    "name": "Fast Campus",
+    "address": "http://fastcampus.co.kr/"
+  },
+  {
+    "name": "Google",
+    "address": "http://google.com/"
+  },
+  {
+    "name": "NAVER",
+    "address": "http://naver.com/"
+  },
+  {
+    "name": "DAUM",
+    "address": "http://daum.net/"
+  },
+  {
+    "name": "Squarespace",
+    "address": "http://squarespace.com/"
+  }
+];
+
+
+// <body> 참조
+var body = $query('body'); // document.body;
+// <ul> 생성, 속성 설정
+var custom_ul = $createEl('ul', body);
+custom_ul.setAttribute('class', 'reset-list custom-ul');
+// <li> 생성
+var custom_li = $createEl('li', custom_ul);
+// <a> 생성, 속성 + 텍스트 추가
+var custom_link = $createEl('a', custom_li, 'Fast Campus');
+custom_link.setAttribute('href', 'http://fastcampus.co.kr/');
 
 </script>
 </body>
