@@ -140,7 +140,7 @@ function $query(selector) {
 // document.body.appendChild(new_el);
 
 // Helper Function
-function $createEl(el_name, parent_el) {
+function $createEl(el_name, parent_el, text) {
   // 유효성 검사
   validateData(el_name, 'string');
   // 요소노드 생성
@@ -159,6 +159,12 @@ function $createEl(el_name, parent_el) {
   // parent_el && isElNode(parent_el) ?
   //                  parent_el.appendChild(_el) :
   //                  checkError('전달인자는 요소노드가 아닙니다. 이를 확인해주세요.');
+
+  // 조건: text가 있다면
+  if (text) {
+    $createText(text, _el);
+  }
+
   // 생성된 _el이 참조하는 문서 요소노드를 반환
   return _el;
 }
