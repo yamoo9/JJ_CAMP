@@ -6,6 +6,7 @@
   <title>JJ_CAMP - DAY05</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="../libs/DOM-Helper.js"></script>
+  <script src="model_data/link_list.js"></script>
 </head>
 <body>
 
@@ -20,42 +21,36 @@
    -->
 
 <script>
-// MVC => Model
-// JSON 문법
-var link_list = [
-  {
-    "name": "Fast Campus",
-    "address": "http://fastcampus.co.kr/"
-  },
-  {
-    "name": "Google",
-    "address": "http://google.com/"
-  },
-  {
-    "name": "NAVER",
-    "address": "http://naver.com/"
-  },
-  {
-    "name": "DAUM",
-    "address": "http://daum.net/"
-  },
-  {
-    "name": "Squarespace",
-    "address": "http://squarespace.com/"
-  }
-];
-
-
 // <body> 참조
 var body = $query('body'); // document.body;
 // <ul> 생성, 속성 설정
 var custom_ul = $createEl('ul', body);
 custom_ul.setAttribute('class', 'reset-list custom-ul');
-// <li> 생성
-var custom_li = $createEl('li', custom_ul);
-// <a> 생성, 속성 + 텍스트 추가
-var custom_link = $createEl('a', custom_li, 'Fast Campus');
-custom_link.setAttribute('href', 'http://fastcampus.co.kr/');
+// begin: <반복문> 구간
+// // <li> 생성
+// var custom_li = $createEl('li', custom_ul);
+// // <a> 생성, 속성 + 텍스트 추가
+// var custom_link = $createEl('a', custom_li, 'Fast Campus');
+// custom_link.setAttribute('href', 'http://fastcampus.co.kr/');
+// finish: <반복문> 구간
+
+// 반복 구문 작성
+// var 한 번만 사용하는 패턴
+var i=0, l=link_list.length, link, custom_li, custom_link;
+for(; i<l; i++) {
+  // 모델 데이터 필터링해서 해당 값을 처리
+  link = link_list[i];
+  // <li> 생성
+  custom_li = $createEl('li', custom_ul);
+  // <a> 생성, 속성 + 텍스트 추가
+  custom_link = $createEl('a', custom_li, link.name);
+  // 헬퍼 함수 $attr() 사용합시다.
+  custom_link.setAttribute('href', link.address);
+  // link 내부의 external 값이 true라면 아래 조건문 실행
+  if(link.external) {
+    custom_link.setAttribute('target', '_blank');
+  }
+}
 
 </script>
 </body>
