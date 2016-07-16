@@ -22,6 +22,15 @@ function validateData(data, type, err_msg) {
   }
 }
 
+function isElNode(node) {
+  return node.nodeType === 1;
+}
+
+function checkError(message) {
+  validateData(message, 'string');
+  throw new Error(message);
+}
+
 // .getElementById()
 // ↑ 헬퍼 $idEl()
 function $idEl(id_name) {
@@ -96,4 +105,55 @@ function $queryAll(selector, context) {
 // ↑ 헬퍼 $query()
 function $query(selector) {
   return $queryAll(selector)[0];
+}
+
+// ----------------------------------------------------------------------------
+
+// DOM Script
+
+// Creation
+// .createElement()
+// .createTextNode()
+
+
+// Insertion
+// parentNode.appendChild(childNode)
+// insertAfter()
+
+// Remove
+// parentNode.removeChild(childNode)
+
+// Attribute
+// .getAttribute()
+// .setAttribute()
+// .id
+// .className
+// .title
+// .href
+// .data-*
+
+
+// 1. 요소를 생성하는 헬퍼 함수
+
+// Native Code
+// var new_el = document.createElement('div');
+// document.body.appendChild(new_el);
+
+// Helper Function
+function $createEl(el_name, parent_el) {
+  // 유효성 검사
+  validateData(el_name, 'string');
+  // 요소노드 생성
+  var _el = document.createElement(el_name);
+  // 조건 1. parent_el 가 있을 경우, 기존 코드 수행
+  if ( parent_el ) {
+    // 요소 노드인가?
+    if ( isElNode(parent_el) ) {
+      parent_el.appendChild(_el);
+    } else {
+      checkError('전달인자는 요소노드가 아닙니다. 이를 확인해주세요.');
+    }
+  }
+  // 생성된 _el이 참조하는 문서 요소노드를 반환
+  return _el;
 }
