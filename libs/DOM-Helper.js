@@ -3,6 +3,8 @@
 // JS 엄격한 모드로 동작
 // "use strict";
 
+// ----------------------------------------------------------------------------
+
 // 데이터 유형을 체크하는 헬퍼 함수
 // [필수 전달인자] data
 // [필수 전달인자] type ※ 문자열 데이터 유형만 가능!
@@ -22,14 +24,20 @@ function validateData(data, type, err_msg) {
   }
 }
 
+// ----------------------------------------------------------------------------
+// 전달된 데이터의 노드 유형이 요소노드인지 확인하는 함수
 function isElNode(node) {
   return node.nodeType === 1;
 }
 
+// ----------------------------------------------------------------------------
+// 전달된 message를 사용하여 오류 메시지를 출력하고, 코드를 멈추는 함수
 function checkError(message) {
   validateData(message, 'string');
   throw new Error(message);
 }
+
+// ----------------------------------------------------------------------------
 
 // .getElementById()
 // ↑ 헬퍼 $idEl()
@@ -46,6 +54,8 @@ function $idEl(id_name) {
   return document.getElementById(id_name);
 }
 
+// ----------------------------------------------------------------------------
+
 // .getElementsByTagName()
 // ↑ 헬퍼 $tagEl(tag_name, context)
 function $tagEl(tag_name, context) {
@@ -59,6 +69,8 @@ function $tagEl(tag_name, context) {
   // return context.getElementsByTagName(tag_name);
   return (context || document).getElementsByTagName(tag_name);
 }
+
+// ----------------------------------------------------------------------------
 
 // .getElementsByClassName() IE 9+
 // ↑ 헬퍼 $classEl()
@@ -88,6 +100,8 @@ function $classEl(class_name, context) {
   // console.log(filtered_els); // 배열
 }
 
+// ----------------------------------------------------------------------------
+
 // .querySelectorAll()
 // ↑ 헬퍼 $queryAll(selector, context)
 function $queryAll(selector, context) {
@@ -101,6 +115,8 @@ function $queryAll(selector, context) {
   return (context || document).querySelectorAll(selector);
 }
 
+// ----------------------------------------------------------------------------
+
 // .querySelector()
 // ↑ 헬퍼 $query()
 function $query(selector) {
@@ -109,31 +125,7 @@ function $query(selector) {
 
 // ----------------------------------------------------------------------------
 
-// DOM Script
-
-// Creation
-// .createElement()
-// .createTextNode()
-
-
-// Insertion
-// parentNode.appendChild(childNode)
-// insertAfter()
-
-// Remove
-// parentNode.removeChild(childNode)
-
-// Attribute
-// .getAttribute()
-// .setAttribute()
-// .id
-// .className
-// .title
-// .href
-// .data-*
-
-
-// 1. 요소를 생성하는 헬퍼 함수
+// 요소를 생성하는 헬퍼 함수
 
 // Native Code
 // var new_el = document.createElement('div');
@@ -169,7 +161,9 @@ function $createEl(el_name, parent_el, text) {
   return _el;
 }
 
+// ----------------------------------------------------------------------------
 
+// 텍스트 노드를 생성하는 헬퍼 함수
 function $createText(text, el_node) {
   // 전달인자 유효성 검사
   validateData(text, 'string');

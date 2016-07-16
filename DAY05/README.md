@@ -56,6 +56,33 @@
 
 -
 
+```js
+// DOM Script
+
+// Creation
+// .createElement()
+// .createTextNode()
+
+
+// Insertion
+// parentNode.appendChild(childNode)
+// insertAfter()
+
+// Remove
+// parentNode.removeChild(childNode)
+
+// Attribute
+// .getAttribute()
+// .setAttribute()
+// .id
+// .className
+// .title
+// .href
+// .data-*
+```
+
+-
+
 ### JavaScript 객체 정복
 
 - 생성자와 프로토타입 객체

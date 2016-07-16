@@ -1,0 +1,26 @@
+@charset "utf-8";
+/*! style.css © yamoo9.net, 2016 */
+
+body {
+  margin: 3rem 10rem;
+}
+
+.reset-list {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.custom-ul li {
+  border-top: 1px solid #ccc;
+  padding: 0.3em 0;
+}
+
+.custom-ul li:last-child {
+  border-bottom: 1px solid #ccc;
+}
+.custom-ul a {
+  text-decoration: none;
+  color: #fe4940;
+}
