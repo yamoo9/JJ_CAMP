@@ -23,14 +23,14 @@ function deactiveDepth2Menu(_parent_li) {
 }
 // Blur 이벤트 감지 시, 하위 메뉴 접힘 함수
 function blurDeactiveDepth2Menu() {
-  var d1_parent_li = this.parentNode.parentNode.parentNode;
-  deactiveDepth2Menu(d1_parent_li);
+  var _d1_parent_li = this.parentNode.parentNode.parentNode;
+  deactiveDepth2Menu(_d1_parent_li);
 }
 // 키보드 Shift + Tab 감지 시, 하위 메뉴 접힘 함수
 function backTabDeactiveDepth2Menu(event) {
-  var key = event.keyCode || event.which;
+  var _key = event.keyCode || event.which;
   // Tab 키 식별 숫자는 9 이다.
-  if(event.shiftKey && key === 9) { deactiveDepth2Menu(this.parentNode); }
+  if(event.shiftKey && _key === 9) { deactiveDepth2Menu(this.parentNode); }
 }
 
 /**
@@ -48,6 +48,7 @@ var i=0, l=gnb_d1_links.length, gnb_link, unb_link, gnb_last_a, unb_last_a;
  * -----------------------------------------------------------------
  * 내비게이션 접근성 설정 이벤트 바인딩
  * 요소에 개별적 이벤트 적용을 위한 반복문 사용.
+ * ※ 자바스크립트 호이스트 현상 고려, for문의 변수 선언은 초기화 영역으로 이동 정리.
  */
 for(; i<l; i++) {
   gnb_link = gnb_d1_links[i];
