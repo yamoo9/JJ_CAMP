@@ -7,10 +7,6 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/holzweiler.css">
-  <style>
-    /* CSS로는 Depth 2 내비게이션의 접근성 준수는 사실상 불가능에 가깝다. */
-    /* #holzweiler-header .depth-1 a:focus + .depth-2 { display: block; } */
-  </style>
 </head>
 <body>
 
@@ -20,9 +16,9 @@
       <a href="#"><img class="flex-img" src="media/logo.svg" alt="HOLZWEILER"></a>
     </h1>
     <nav class="holzweiler-gnb">
+      <h2 class="readable-hidden">Global Navigation Bar</h2>
       <ul class="depth-1 clearfix">
         <li class="temp">
-          <!-- .depth-1 a:focus + .depth-2 { display: block; } -->
           <a href="#">Shop</a>
           <ul class="depth-2">
             <li><a href="#">Sale</a></li>
@@ -53,6 +49,7 @@
       </ul>
     </nav>
     <nav class="holzweiler-unb">
+      <h2 class="readable-hidden">Utility Navigation Bar</h2>
       <ul class="depth-1 clearfix">
         <li><a href="#">Search</a></li>
         <li><a href="#">Sign in</a></li>
@@ -89,45 +86,7 @@
     </button>
   </section>
 
-
 <script src="../../libs/DOM-Helper.js"></script>
-<script>
-var gnb          = $query('.holzweiler-gnb');
-var unb          = $query('.holzweiler-unb');
-var gnb_d1_links = $queryAll('.depth-1 > li > a', gnb);
-var unb_d1_links = $queryAll('.depth-1 > li > a', unb);
-var i            = 0;
-var l            = gnb_d1_links.length;
-
-function activateDepth2Menu() {
-  var _parent_li    = this.parentNode;
-  deactiveDepth2Menu(_parent_li);
-  _parent_li.classList.add('active');
-}
-
-function deactiveDepth2Menu(_parent_li) {
-  // console.log('deactiveDepth2Menu');
-  var _parent_ul    = _parent_li.parentNode;
-  var _activated_el = _parent_ul.querySelector('.active');
-  if ( _activated_el ) { _activated_el.classList.remove('active'); }
-}
-
-for(; i<l; i++) {
-  var gnb_link = gnb_d1_links[i];
-  // focus 이벤트 바인딩 <-> 이벤트 핸들러(함수)
-  gnb_link.addEventListener('focus', activateDepth2Menu);
-  if ( i === l - 1 ) {
-    var gnb_last_a = gnb_link.parentNode.querySelector('.depth-2 li:last-child a');
-    gnb_last_a.addEventListener('blur', function() {
-      // 여기서 전달인자는 무엇이 되어야 하나?
-      // 현재 이벤트의 주인(Context)의 부모의 부모의 부모
-      var d1_parent_li = this.parentNode.parentNode.parentNode;
-      deactiveDepth2Menu(d1_parent_li);
-    });
-  }
-  unb_d1_links[i].addEventListener('focus', activateDepth2Menu);
-}
-
-</script>
+<script src="js/holzweiler.js"></script>
 </body>
 </html>

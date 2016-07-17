@@ -153,9 +153,11 @@
 }
 
 /* .depth-1 > li:hover .depth-2 */
+
+/* CSS로는 Depth 2 내비게이션의 접근성 준수는 사실상 불가능에 가깝다. */
+/* #holzweiler-header .depth-1 a:focus + .depth-2 { display: block; } */
 #holzweiler-header .depth-1 > li:hover .depth-2,
 #holzweiler-header .depth-1 > li.active .depth-2 {
-/*#holzweiler-header .depth-1 > li > a:hover + .depth-2 {*/
   display: block;
 }
 
