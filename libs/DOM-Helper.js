@@ -189,9 +189,10 @@ function parentEl(el, depth) {
   if ( !isElNode(el) ) {
     checkError('1번째 전달인자는 요소노드여야 합니다.');
   }
-  if (depth) {
-    validateData(depth, 'number');
-  }
+  // if (depth) {
+  //   validateData(depth, 'number');
+  // }
+  depth && validateData(depth, 'number');
 
   // depth 기본 값 설정
   depth = depth || 1;
@@ -220,7 +221,24 @@ function parentEl(el, depth) {
 // .nextSibling
 // .nextElementSibling IE 9+
 function nextEl(el) {
-  // return ???
+  // 검수 1. el 요소노드인가?
+  if ( !isElNode(el) ) {
+    checkError('전달된 인자는 요소노드가 아닙니다.');
+  }
+  // 검수 2. el.nextElementSibling 존재하나?
+  // 최신 브라우저 IE 9+
+  if ( el.nextElementSibling ) {
+    el = el.nextElementSibling;
+  }
+  // IE 8- (구형 웹 브라우저 호환을 위한 코드)
+  else {
+    // 반복 구문
+    // 다음에 나오는 노드가 요소야? 요소일 때 까지 반복!!
+    do {
+      el = el.nextSibling;
+    } while( el && !isElNode(el) );
+  }
+  return el;
 }
 // prevEl()
 // 전달된 el 요소노드의 인접한 이전 요소노드를 반환하는 헬퍼 함수
