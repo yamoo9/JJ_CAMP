@@ -5,6 +5,17 @@
 
 // ----------------------------------------------------------------------------
 
+// 데이터 유형을 정확하게 반환하는 헬퍼 함수
+function $type(data) {
+  // 1. typeof      [], null을 올바르게 이야기 하지 못한다.
+  // 2. instanceof  원시 데이터 유형(리터럴, 그 자체의 값)을 올바르게 이야기 하지 못한다.
+  // 3. constructor 완벽해보이나.... 문제가 있다. (객체가 아닌 데이터 유형에서는 오류 발생)
+  // 4. 메소드 빌려쓰기 패턴: Object.prototype.toString.call()
+  // ※ jQuery.type() 같은 원리로 동작한다.
+  return Object.prototype.toString.call(data).slice(8,-1).toLowerCase();
+}
+
+
 // 데이터 유형을 체크하는 헬퍼 함수
 // [필수 전달인자] data
 // [필수 전달인자] type ※ 문자열 데이터 유형만 가능!

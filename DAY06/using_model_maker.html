@@ -4,9 +4,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>모델 메이커를 사용해봅시다.</title>
+  <script src="../libs/DOM-Helper.js"></script>
   <script src="ModelMaker.js"></script>
   <script>
-    var link_collection = modelMaker();
+    var link_collection = modelMaker([
+      {
+        'name': 'yamoo9',
+        'job': 'instructor'
+      },
+      {
+        'name': 'homin',
+        'job': 'student'
+      },
+      {
+        'name': 'haein',
+        'job': 'swan'
+      }
+    ]);
     console.dir(link_collection);
   </script>
 </head>
