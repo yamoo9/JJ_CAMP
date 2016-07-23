@@ -1,5 +1,6 @@
 /*! holzweiler.js © yamoo9.net, 2016 */
-
+// 스트릭트 모드 활성화
+'use strict';
 /**
  * ----------------------------------------------------------------------
  * 내비게이션 컨트롤 (절차 지향 방식, 함수형 프로그래밍)
@@ -12,29 +13,29 @@
 // 하위 메뉴 펼침 함수
 function activateDepth2Menu() {
   // var _parent_li = this.parentNode;
-  // 탐색 헬퍼 함수 parentEl(el)
-  var _parent_li = parentEl(this);
+  // 탐색 헬퍼 함수 $parentEl(el)
+  var _parent_li = $parentEl(this);
   deactiveDepth2Menu(_parent_li);
   _parent_li.classList.add('active');
 }
 // 하위 메뉴 접힘 함수
 function deactiveDepth2Menu(_parent_li) {
   // var _parent_ul    = _parent_li.parentNode;
-  var _parent_ul    = parentEl(_parent_li);
+  var _parent_ul    = $parentEl(_parent_li);
   var _activated_el = $query('.active', _parent_ul);
   if ( _activated_el ) { _activated_el.classList.remove('active'); }
 }
 // Blur 이벤트 감지 시, 하위 메뉴 접힘 함수
 function blurDeactiveDepth2Menu() {
   // var _d1_parent_li = this.parentNode.parentNode.parentNode;
-  var _d1_parent_li = parentEl(this, 3);
+  var _d1_parent_li = $parentEl(this, 3);
   deactiveDepth2Menu(_d1_parent_li);
 }
 // 키보드 Shift + Tab 감지 시, 하위 메뉴 접힘 함수
 function backTabDeactiveDepth2Menu(event) {
   var _key = event.keyCode || event.which;
   // Tab 키 식별 숫자는 9 이다.
-  if(event.shiftKey && _key === 9) { deactiveDepth2Menu( parentEl(this) ); }
+  if(event.shiftKey && _key === 9) { deactiveDepth2Menu( $parentEl(this) ); }
 }
 
 /**
@@ -64,7 +65,7 @@ for(; i<l; i++) {
   }
   // Depth 2 마지막 <a> 요소에서 blur 이벤트 발생 시, 하위 메뉴 닫힘
   if ( i === l - 1 ) {
-    gnb_last_a = $query('.depth-2 li:last-child a', parentEl(gnb_link));
+    gnb_last_a = $query('.depth-2 li:last-child a', $parentEl(gnb_link));
     gnb_last_a.addEventListener('blur', blurDeactiveDepth2Menu);
   }
 }
@@ -76,7 +77,7 @@ for(; k<m; k++) {
   if ( k === 0 ) {
     unb_link.addEventListener('keydown', backTabDeactiveDepth2Menu);
   }
-  unb_last_a = $query('.depth-2', parentEl(unb_link));
+  unb_last_a = $query('.depth-2', $parentEl(unb_link));
   if(unb_last_a) {
     $query('li:last-child a', unb_last_a).addEventListener('blur', blurDeactiveDepth2Menu);
   }

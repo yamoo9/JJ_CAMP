@@ -183,7 +183,7 @@ function $createText(text, el_node) {
  */
 
 // 부모요소노드를 찾아 반환하는 헬퍼 함수
-function parentEl(el, depth) {
+function $parentEl(el, depth) {
   // el는 반드시 요소 노드여야만 합니다.
   // 검수: 요소노드인가 체크
   if ( !isElNode(el) ) {
@@ -236,18 +236,35 @@ function parentEl(el, depth) {
 // var 함수이름2 = function() {}; // 함수 값
 
 // 변수 선언
-var nextEl; // undefined
-if ( el.nextElementSibling ) {
-  nextEl = function(el) {
+var _tester = $createEl('div');
+var $nextEl; // undefined
+if ( _tester.nextElementSibling ) {
+  $nextEl = function(el) {
     if ( !isElNode(el) ) {
       checkError('전달된 인자는 요소노드가 아닙니다.');
     }
     return el.nextElementSibling;
   };
 } else {
-  nextEl = function(el) {
+  $nextEl = function(el) {
     do {
       el = el.nextSibling;
+    } while( el && !isElNode(el) );
+    return el;
+  };
+}
+var $prevEl; // undefined
+if ( _tester.previousElementSibling ) {
+  $prevEl = function(el) {
+    if ( !isElNode(el) ) {
+      checkError('전달된 인자는 요소노드가 아닙니다.');
+    }
+    return el.previousElementSibling;
+  };
+} else {
+  $prevEl = function(el) {
+    do {
+      el = el.previousSibling;
     } while( el && !isElNode(el) );
     return el;
   };
