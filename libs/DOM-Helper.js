@@ -215,6 +215,44 @@ function parentEl(el, depth) {
   return el;
 }
 
+/**
+ * --------------------------------
+ * 코드 리뷰
+ * 함수를 사용할 때 마다
+ * 한 번만 확인하면 될 내용을
+ * 매번 확인하는 비효율성을 발견했다.
+ *
+ * 코드 리팩토링
+ * 리뷰에서 발견한 문제를 해결한다.
+ */
+// 현재 스코프(Scope, 영역)의 최 상단
+
+// 함수이름1()
+// 함수이름2()
+
+// 함수 선언
+// function 함수이름1() {}
+// 함수 표현식
+// var 함수이름2 = function() {}; // 함수 값
+
+// 변수 선언
+var nextEl; // undefined
+if ( el.nextElementSibling ) {
+  nextEl = function(el) {
+    if ( !isElNode(el) ) {
+      checkError('전달된 인자는 요소노드가 아닙니다.');
+    }
+    return el.nextElementSibling;
+  };
+} else {
+  nextEl = function(el) {
+    do {
+      el = el.nextSibling;
+    } while( el && !isElNode(el) );
+    return el;
+  };
+}
+
 // nextEl(el)
 // 전달된 el 요소노드의 인접한 다음 요소노드를 반환하는 헬퍼 함수
 // 크로스 브라우징 헬퍼 함수
@@ -240,10 +278,28 @@ function nextEl(el) {
   }
   return el;
 }
+
 // prevEl()
 // 전달된 el 요소노드의 인접한 이전 요소노드를 반환하는 헬퍼 함수
 function prevEl(el) {
-  // return ???
+  // 검수 1. el 요소노드인가?
+  if ( !isElNode(el) ) {
+    checkError('전달된 인자는 요소노드가 아닙니다.');
+  }
+  // 검수 2. el.previousElementSibling 존재하나?
+  // 최신 브라우저 IE 9+
+  if ( el.previousElementSibling ) {
+    el = el.previousElementSibling;
+  }
+  // IE 8- (구형 웹 브라우저 호환을 위한 코드)
+  else {
+    // 반복 구문
+    // 다음에 나오는 노드가 요소야? 요소일 때 까지 반복!!
+    do {
+      el = el.previousSibling;
+    } while( el && !isElNode(el) );
+  }
+  return el;
 }
 
 // firstEl()
