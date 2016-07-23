@@ -119,8 +119,8 @@ function $queryAll(selector, context) {
 
 // .querySelector()
 // ↑ 헬퍼 $query()
-function $query(selector) {
-  return $queryAll(selector)[0];
+function $query(selector, context) {
+  return $queryAll(selector, context)[0];
 }
 
 // ----------------------------------------------------------------------------
@@ -176,3 +176,60 @@ function $createText(text, el_node) {
     return _textnode;
   }
 }
+
+/**
+ * --------------------------------
+ * 탐색 헬퍼 함수
+ */
+
+// 부모요소노드를 찾아 반환하는 헬퍼 함수
+function parentEl(el, depth) {
+  // el는 반드시 요소 노드여야만 합니다.
+  // 검수: 요소노드인가 체크
+  if ( !isElNode(el) ) {
+    checkError('1번째 전달인자는 요소노드여야 합니다.');
+  }
+  if (depth) {
+    validateData(depth, 'number');
+  }
+
+  // depth 기본 값 설정
+  depth = depth || 1;
+  // 미션. 전달 받은 depth 값에 따라
+  // 반복하여 부모의 부모.. 거슬러 올라간 결과를 반환한다.
+  // for문? while문?, do ~ while문?
+  // 경우 1. for문
+  // for ( var i=0; i<depth; i++ ) {
+  //   if ( !(el && isElNode(el)) ) {
+  //     checkError('부모요소노드가 없습니다.');
+  //   }
+  //   el = el.parentNode;
+  // }
+  // 경우 2. do ~ while문
+  do {
+    // 반복 구문
+    el = el.parentNode; // <a>, <li>, <ul>
+  } while( el && isElNode(el) && --depth );
+
+  return el;
+}
+
+// nextEl(el)
+// 전달된 el 요소노드의 인접한 다음 요소노드를 반환하는 헬퍼 함수
+// 크로스 브라우징 헬퍼 함수
+// .nextSibling
+// .nextElementSibling IE 9+
+function nextEl(el) {
+  // return ???
+}
+// prevEl()
+// 전달된 el 요소노드의 인접한 이전 요소노드를 반환하는 헬퍼 함수
+function prevEl(el) {
+  // return ???
+}
+
+// firstEl()
+// 전달된 el 요소노드의 첫번째 자식 요소노드를 반환하는 헬퍼 함수
+
+// lastEl()
+// 전달된 el 요소노드의 마지막 자식 요소노드를 반환하는 헬퍼 함수
