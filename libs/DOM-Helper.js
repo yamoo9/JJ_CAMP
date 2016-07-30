@@ -302,15 +302,108 @@ var $lastEl = (function(){
   return _lastEl;
 })();
 
+/**
+ * --------------------------------
+ * 조작(Manipulation) 헬퍼함수
+ */
 // $hasClass()
 // elNode.classList.contains
+var $hasClass = (function(){
+  var _hasClass;
+  if ( 'classList' in HTMLElement.prototype ) {
+    _hasClass = function(el, class_name) {
+      return el.classList.contains(class_name);
+    };
+  } else {
+    _hasClass = function(el, class_name) {
+      var _check_class_name = new RegExp('(^| )'+class_name+'( |$)');
+      var el_class_name = el.getAttribute('class');
+      return _check_class_name.test(el_class_name);
+    };
+  }
+  return _hasClass;
+})();
 
 // $addClass()
 // elNode.classList.add
+var $addClass = (function(){
+  var _addClass;
+  if ( 'classList' in HTMLElement.prototype ) {
+    _addClass = function(el, class_name) {
+      if (!el.classList.contains(class_name)) {
+        el.classList.add(class_name);
+      }
+    };
+  } else {
+    _addClass = function(el, class_name) {
+      // 검증!
+      // 전달된 class_name 값을 el가 소유하고 있나?
+      if ( !$hasClass(el, class_name) ) {
+        var pre_class_value = el.getAttribute('class');
+        el.setAttribute('class', pre_class_value + ' ' + class_name);
+      }
+    };
+  }
+  return _addClass;
+})();
 
 // $removeClass()
 // elNode.classList.remove
+var $removeClass = (function(){
+  var _removeClass;
+  if ( 'classList' in HTMLElement.prototype ) {
+    _removeClass = function(el, class_name) {
+      if (el.classList.contains(class_name)) {
+        el.classList.remove(class_name);
+      }
+    };
+  } else {
+    _removeClass = function(el, class_name) {
+      if ( $hasClass(el, class_name) ) {
+        var el_classes = el.getAttribute('class'); // 'design develop web'
+        el_classes = el_classes.replace(class_name, '');
+        el.setAttribute( 'class', el_classes.trim() );
+      }
+    };
+  }
+  return _removeClass;
+})();
 
 // $toggleClass()
 // elNode.classList.toggle
-// $radioClass()
+var $toggleClass = (function(){
+  var _toggleClass;
+  if ( 'classList' in HTMLElement.prototype ) {
+    _toggleClass = function(el, class_name) {
+      el.classList.toggle(class_name);
+    };
+  } else {
+    _toggleClass = function(el, class_name) {
+      if ( $hasClass(el, class_name) ) {
+        $removeClass(el, class_name);
+      } else {
+        $addClass(el, class_name);
+      }
+    };
+  }
+  return _toggleClass;
+})();
+
+
+// $radioClass(el, class_name)
+function $radioClass(el, class_name) {
+  // el은 활성화 시킬 요소
+  // el의 형제 요소들을 찾아서 그 중 활성화 클래스 속성을 가진 요소에서 클래스 속성 제거
+  var siblings = el.parentNode.children;
+  for ( var sibling, i=0, l=siblings.length; i<l; i++ ) {
+    sibling = siblings[i];
+    if( $hasClass(sibling, class_name) ) {
+      $removeClass(sibling, class_name);
+      break;
+    }
+  }
+  // 위의 코드는 형제 요소 중에서 활성화 클래스를 가진 요소에서 활성화 클래스 속성 제거
+  // 아래 코드는 자신(el)에게 활성화 클래스 속성 추가
+  $addClass(el, class_name);
+}
+

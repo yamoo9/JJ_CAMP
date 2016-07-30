@@ -70,3 +70,9 @@
 – Array, String 객체
 – Number, Boolean 객체
 – Math, Date, RegExp 객체
+
+-
+
+### 기타/참고
+
+- [You Might Not Need jQuery](http://youmightnotneedjquery.com/)
