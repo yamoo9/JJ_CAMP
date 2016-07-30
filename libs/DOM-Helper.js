@@ -339,8 +339,8 @@ var $addClass = (function(){
       // 검증!
       // 전달된 class_name 값을 el가 소유하고 있나?
       if ( !$hasClass(el, class_name) ) {
-        var pre_class_value = el.getAttribute('class');
-        el.setAttribute('class', pre_class_value + ' ' + class_name);
+        var pre_class_value = el.getAttribute('class') || '';
+        el.setAttribute('class', (pre_class_value + ' ' + class_name).trim());
       }
     };
   }
@@ -349,19 +349,25 @@ var $addClass = (function(){
 
 // $removeClass()
 // elNode.classList.remove
+function _removeClassAll(el, class_name) {
+  if (!class_name) { el.setAttribute('class', ''); }
+}
 var $removeClass = (function(){
   var _removeClass;
-  if ( 'classList' in HTMLElement.prototype ) {
+  if ( 'classLists' in HTMLElement.prototype ) {
     _removeClass = function(el, class_name) {
+      _removeClassAll(el, class_name);
       if (el.classList.contains(class_name)) {
         el.classList.remove(class_name);
       }
     };
   } else {
     _removeClass = function(el, class_name) {
+      _removeClassAll(el, class_name);
       if ( $hasClass(el, class_name) ) {
-        var el_classes = el.getAttribute('class'); // 'design develop web'
-        el_classes = el_classes.replace(class_name, '');
+        var el_classes = el.getAttribute('class');
+        var check_class_name = new RegExp('(^| )' + class_name + '($| )', 'i');
+        el_classes = el_classes.replace(check_class_name, ' ');
         el.setAttribute( 'class', el_classes.trim() );
       }
     };

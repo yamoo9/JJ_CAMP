@@ -24,7 +24,7 @@
     <li><a href="">item-17</a></li>
     <li><a href="">item-16</a></li>
     <li><a href="">item-15</a></li>
-    <li><a href="">item-14</a></li>
+    <li class="yamoo9 yamoo99 yamoo999"><a href="">item-14</a></li>
     <li><a href="">item-13</a></li>
   </ul>
 
@@ -35,65 +35,77 @@
 // JavaScript - Front-End Env. > 모듈 패턴
 // Node.js : JavaScript - Back-End Env. > 별도의 JS 파일이 이미 모듈.
 // A
+// (function(global){
+//   'use strict';
+//   var start_el = $query('.start');
+//   var next_el = $nextEl(start_el);
+//   var prev_el = $prevEl(start_el);
+//   // console.log(next_el, prev_el);
+
+//   // 문서에서 ul.primary-navigation 요소 내부의 모든 <a> 요소를 찾아서
+//   var primary_nav = $query('.primary-navigation');
+//   var primary_links = $queryAll('a', primary_nav);
+//   var showMeWrapper = function(index) {
+//     var showMe = function(e) {
+//       // 브라우저의 <a> 기본 동작 차단(preventDefault)
+//       e.preventDefault();
+//       // return false;
+//       console.log('this:', e.target);
+//       console.log('index:', index);
+//       // console.log('Event Type:', e.type);
+//       // 미션 2. 클릭한 대상의 인덱스(Index)를 콘솔에 출력하시오.
+//     };
+
+//     return showMe;
+//   };
+//   // console.log(primary_links);
+//   // 클릭 이벤트 속성에 핸들러를 연결합니다.
+//   // 클릭 시, this를 콘솔에 출력합니다.
+//   // (단, 기본적으로 <a> 요소는 href 속성이 있을 경우,
+//   // 페이지를 연결하려는 기본 동작이 있는데 이를 무마(차단)시켜야 합니다.)
+//   // primary_links // 노드 리스트, 유사 배열(Like Array)
+//   for ( var index, link, i=0, l=primary_links.length; i<l; i++ ) {
+//     link = primary_links[i];
+//     index = i;
+//     // 경우 1. showMe를 반환하는 showMeWrapper 함수를 생성한 다음
+//     // 실행 시에 index를 전달하여 처리
+//     // link.addEventListener('click', showMeWrapper(index));
+//     // link.addEventListener('click', function(evt) {
+//     //   evt.preventDefault();
+//     //   console.log(this, index);
+//     // });
+
+//     // 경우 2. 굳이 showMeWrapper 함수를 만들지 않고 처리하는 방법
+//     link.addEventListener('click', (function(index){
+//       return function(e) {
+//         e.preventDefault();
+//         console.log(index);
+//       }
+//     })(i));
+//   }
+
+//   // 전역(Global Scope)에 공개
+//   global.primary_nav_obj = {
+//     'nav': primary_nav,
+//     'links': primary_links
+//   };
+// })(this);
+
 (function(global){
+  // B
   'use strict';
-  var start_el = $query('.start');
-  var next_el = $nextEl(start_el);
-  var prev_el = $prevEl(start_el);
-  // console.log(next_el, prev_el);
-
-  // 문서에서 ul.primary-navigation 요소 내부의 모든 <a> 요소를 찾아서
-  var primary_nav = $query('.primary-navigation');
-  var primary_links = $queryAll('a', primary_nav);
-  var showMeWrapper = function(index) {
-    var showMe = function(e) {
-      // 브라우저의 <a> 기본 동작 차단(preventDefault)
-      e.preventDefault();
-      // return false;
-      console.log('this:', e.target);
-      console.log('index:', index);
-      // console.log('Event Type:', e.type);
-      // 미션 2. 클릭한 대상의 인덱스(Index)를 콘솔에 출력하시오.
-    };
-
-    return showMe;
-  };
-  // console.log(primary_links);
-  // 클릭 이벤트 속성에 핸들러를 연결합니다.
-  // 클릭 시, this를 콘솔에 출력합니다.
-  // (단, 기본적으로 <a> 요소는 href 속성이 있을 경우,
-  // 페이지를 연결하려는 기본 동작이 있는데 이를 무마(차단)시켜야 합니다.)
-  // primary_links // 노드 리스트, 유사 배열(Like Array)
-  for ( var index, link, i=0, l=primary_links.length; i<l; i++ ) {
-    link = primary_links[i];
-    index = i;
-    // 경우 1. showMe를 반환하는 showMeWrapper 함수를 생성한 다음
-    // 실행 시에 index를 전달하여 처리
-    // link.addEventListener('click', showMeWrapper(index));
-    // link.addEventListener('click', function(evt) {
-    //   evt.preventDefault();
-    //   console.log(this, index);
-    // });
-
-    // 경우 2. 굳이 showMeWrapper 함수를 만들지 않고 처리하는 방법
-    link.addEventListener('click', (function(index){
-      return function(e) {
-        e.preventDefault();
-        console.log(index);
-      }
-    })(i));
+  // IIFE 패턴 내부에 존재하는 함수로 비공개 함수이다.
+  // 모듈 패턴 내부의 함수는 별도로 외부에 공개되지 않는다.
+  function toggleOn(evt) {
+    evt.preventDefault();
+    $radioClass(evt.target.parentNode, 'on');
   }
 
-  // 전역(Global Scope)에 공개
-  global.primary_nav_obj = {
-    'nav': primary_nav,
-    'links': primary_links
-  };
+  var links = $queryAll('.primary-navigation a'), link, i=links.length;
+  for(; (link = links[--i]);) {
+    link.addEventListener('click', toggleOn);
+  }
 })(this);
-
-(function(){
-  // B
-})();
 </script>
 </body>
 </html>
