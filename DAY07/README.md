@@ -35,25 +35,29 @@
 
 ### 조작과 관련한 헬퍼 함수 만들기
 
+#### `class` 속성
+- `addClass()`
+- `removeClass()`
+- `hasClass()`
+- `toggleClass()`
+- `radioClass()`
+
+#### 속성
 - `getAttr()`
 - `setAttr()`
 - `hasAttr()`
 - `attr()`
 - `removeAttr()`
 
+#### 삽입
 - `append()`
 - `appendTo()`
 - `prepend()`
 - `prependTo()`
 
+#### 텍스트/HTML
 - `html()`
 - `text()`
-
-- `addClass()`
-- `removeClass()`
-- `hasClass()`
-- `toggleClass()`
-- `radioClass()`
 
 -
 
