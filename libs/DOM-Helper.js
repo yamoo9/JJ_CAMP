@@ -192,143 +192,61 @@ function $createText(text, el_node) {
  * --------------------------------
  * 탐색 헬퍼 함수
  */
-
-// 부모요소노드를 찾아 반환하는 헬퍼 함수
 function $parentEl(el, depth) {
-  // el는 반드시 요소 노드여야만 합니다.
-  // 검수: 요소노드인가 체크
   if ( !isElNode(el) ) {
     checkError('1번째 전달인자는 요소노드여야 합니다.');
   }
-  // if (depth) {
-  //   validateData(depth, 'number');
-  // }
   depth && validateData(depth, 'number');
-
-  // depth 기본 값 설정
   depth = depth || 1;
-  // 미션. 전달 받은 depth 값에 따라
-  // 반복하여 부모의 부모.. 거슬러 올라간 결과를 반환한다.
-  // for문? while문?, do ~ while문?
-  // 경우 1. for문
-  // for ( var i=0; i<depth; i++ ) {
-  //   if ( !(el && isElNode(el)) ) {
-  //     checkError('부모요소노드가 없습니다.');
-  //   }
-  //   el = el.parentNode;
-  // }
-  // 경우 2. do ~ while문
   do {
-    // 반복 구문
     el = el.parentNode; // <a>, <li>, <ul>
   } while( el && isElNode(el) && --depth );
 
   return el;
 }
 
-/**
- * --------------------------------
- * 코드 리뷰
- * 함수를 사용할 때 마다
- * 한 번만 확인하면 될 내용을
- * 매번 확인하는 비효율성을 발견했다.
- *
- * 코드 리팩토링
- * 리뷰에서 발견한 문제를 해결한다.
- */
-// 현재 스코프(Scope, 영역)의 최 상단
+// $prevEl 변수에 바로 실행되어 처리되는 것은 즉시 실행함수.
+var $prevEl = (function() {
+  var _prevEl;
+  if ( 'previousElementSibling' in HTMLElement.prototype ) {
+    _prevEl = function(el) {
+      if ( !isElNode(el) ) {
+        checkError('전달된 인자는 요소노드가 아닙니다.');
+      }
+      return el.previousElementSibling;
+    };
+  } else {
+    _prevEl = function(el) {
+      do {
+        el = el.previousSibling;
+      } while( el && !isElNode(el) );
+      return el;
+    };
+  }
+  // 반환되는 함수는 클로저 함수이다.
+  return _prevEl;
+}());
 
-// 함수이름1()
-// 함수이름2()
-
-// 함수 선언
-// function 함수이름1() {}
-// 함수 표현식
-// var 함수이름2 = function() {}; // 함수 값
-
-// 변수 선언
-var _tester = $createEl('div');
-var $nextEl; // undefined
-if ( _tester.nextElementSibling ) {
-  $nextEl = function(el) {
-    if ( !isElNode(el) ) {
-      checkError('전달된 인자는 요소노드가 아닙니다.');
-    }
-    return el.nextElementSibling;
-  };
-} else {
-  $nextEl = function(el) {
-    do {
-      el = el.nextSibling;
-    } while( el && !isElNode(el) );
-    return el;
-  };
-}
-var $prevEl; // undefined
-if ( _tester.previousElementSibling ) {
-  $prevEl = function(el) {
-    if ( !isElNode(el) ) {
-      checkError('전달된 인자는 요소노드가 아닙니다.');
-    }
-    return el.previousElementSibling;
-  };
-} else {
-  $prevEl = function(el) {
-    do {
-      el = el.previousSibling;
-    } while( el && !isElNode(el) );
-    return el;
-  };
-}
-
-// nextEl(el)
-// 전달된 el 요소노드의 인접한 다음 요소노드를 반환하는 헬퍼 함수
-// 크로스 브라우징 헬퍼 함수
-// .nextSibling
-// .nextElementSibling IE 9+
-function nextEl(el) {
-  // 검수 1. el 요소노드인가?
-  if ( !isElNode(el) ) {
-    checkError('전달된 인자는 요소노드가 아닙니다.');
+var $nextEl = (function() {
+  var _nextEl;
+  if ( 'nextElementSibling' in HTMLElement.prototype ) {
+    _nextEl = function(el) {
+      if ( !isElNode(el) ) {
+        checkError('전달된 인자는 요소노드가 아닙니다.');
+      }
+      return el.nextElementSibling;
+    };
+  } else {
+    _nextEl = function(el) {
+      do {
+        el = el.nextSibling;
+      } while( el && !isElNode(el) );
+      return el;
+    };
   }
-  // 검수 2. el.nextElementSibling 존재하나?
-  // 최신 브라우저 IE 9+
-  if ( el.nextElementSibling ) {
-    el = el.nextElementSibling;
-  }
-  // IE 8- (구형 웹 브라우저 호환을 위한 코드)
-  else {
-    // 반복 구문
-    // 다음에 나오는 노드가 요소야? 요소일 때 까지 반복!!
-    do {
-      el = el.nextSibling;
-    } while( el && !isElNode(el) );
-  }
-  return el;
-}
-
-// prevEl()
-// 전달된 el 요소노드의 인접한 이전 요소노드를 반환하는 헬퍼 함수
-function prevEl(el) {
-  // 검수 1. el 요소노드인가?
-  if ( !isElNode(el) ) {
-    checkError('전달된 인자는 요소노드가 아닙니다.');
-  }
-  // 검수 2. el.previousElementSibling 존재하나?
-  // 최신 브라우저 IE 9+
-  if ( el.previousElementSibling ) {
-    el = el.previousElementSibling;
-  }
-  // IE 8- (구형 웹 브라우저 호환을 위한 코드)
-  else {
-    // 반복 구문
-    // 다음에 나오는 노드가 요소야? 요소일 때 까지 반복!!
-    do {
-      el = el.previousSibling;
-    } while( el && !isElNode(el) );
-  }
-  return el;
-}
+  // 반환되는 함수는 클로저 함수이다.
+  return _nextEl;
+}());
 
 // firstEl()
 // 전달된 el 요소노드의 첫번째 자식 요소노드를 반환하는 헬퍼 함수

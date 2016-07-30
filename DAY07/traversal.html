@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>HTML DOM 탐색 헬퍼함수</title>
+  <script src="../libs/DOM-Helper.js"></script>
+</head>
+<body>
+
+  <!-- ul>li*8>a{item-$$@0} -->
+  <ul class="primary-navigation">
+    <li><a href="">item-00</a></li>
+    <li class="start"><a href="">item-01</a></li>
+    <li><a href="">item-02</a></li>
+    <li><a href="">item-03</a></li>
+    <li><a href="">item-04</a></li>
+    <li><a href="">item-05</a></li>
+    <li><a href="">item-06</a></li>
+    <li><a href="">item-07</a></li>
+  </ul>
+
+<script>
+var start_el = $query('.start');
+var next_el = $nextEl(start_el);
+var prev_el = $prevEl(start_el);
+// console.log(next_el, prev_el);
+
+// 문서에서 ul.primary-navigation 요소 내부의 모든 <a> 요소를 찾아서
+// 클릭 이벤트 속성에 핸들러를 연결합니다.
+// 클릭 시, this를 콘솔에 출력합니다.
+// (단, 기본적으로 <a> 요소는 href 속성이 있을 경우,페이지를 연결하려는 기본 동작이 있는데 이를 무마(차단)시켜야 합니다.)
+</script>
+</body>
+</html>

@@ -19,6 +19,12 @@
 
 -
 
+### [IIFE](http://benalman.com/news/2010/11/immediately-invoked-function-expression/) 패턴
+
+즉시 실행 함수
+
+-
+
 ### 탐색과 관련한 헬퍼 함수 만들기
 
 - `firstEl()`
