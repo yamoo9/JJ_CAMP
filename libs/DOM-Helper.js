@@ -210,9 +210,9 @@ var $prevEl = (function() {
   var _prevEl;
   if ( 'previousElementSibling' in HTMLElement.prototype ) {
     _prevEl = function(el) {
-      if ( !isElNode(el) ) {
-        checkError('전달된 인자는 요소노드가 아닙니다.');
-      }
+      // if ( !isElNode(el) ) {
+      //   checkError('전달된 인자는 요소노드가 아닙니다.');
+      // }
       return el.previousElementSibling;
     };
   } else {
@@ -231,9 +231,9 @@ var $nextEl = (function() {
   var _nextEl;
   if ( 'nextElementSibling' in HTMLElement.prototype ) {
     _nextEl = function(el) {
-      if ( !isElNode(el) ) {
-        checkError('전달된 인자는 요소노드가 아닙니다.');
-      }
+      // if ( !isElNode(el) ) {
+      //   checkError('전달된 인자는 요소노드가 아닙니다.');
+      // }
       return el.nextElementSibling;
     };
   } else {
@@ -248,8 +248,69 @@ var $nextEl = (function() {
   return _nextEl;
 }());
 
-// firstEl()
+// $firstEl(el)
 // 전달된 el 요소노드의 첫번째 자식 요소노드를 반환하는 헬퍼 함수
+var $firstEl = (function(){
+  var _firstEl;
+  if ( 'firstElementChild' in HTMLElement.prototype ) {
+    // console.log('firstElementChild를 지원');
+    _firstEl = function(el) {
+      return el.firstElementChild;
+    };
+  } else {
+    _firstEl = function(el) {
+      // console.log('firstElementChild를 미지원');
+      // STEP 1. el.firstChild를 참조
+      el = el.firstChild;
+      // 경우 1.
+      // if ( el && !isElNode(el) ) {
+      //   // STEP 2. el의 다음 노드가 요소 노드인지 확인할 것.
+      //   el = $nextEl(el);
+      // }
+      // return el;
+      // 경우 2.
+      return el && !isElNode(el) ? $nextEl(el) : el;
+    };
+  }
+  return _firstEl;
+})();
 
-// lastEl()
+// $lastEl(el)
 // 전달된 el 요소노드의 마지막 자식 요소노드를 반환하는 헬퍼 함수
+var $lastEl = (function(){
+  var _lastEl;
+  if ( 'lastElementChild' in HTMLElement.prototype ) {
+    // console.log('lastElementChild를 지원');
+    _lastEl = function(el) {
+      return el.lastElementChild;
+    };
+  } else {
+    _lastEl = function(el) {
+      // console.log('lastElementChild를 미지원');
+      // STEP 1. el.firstChild를 참조
+      el = el.lastChild;
+      // 경우 1.
+      // if ( el && !isElNode(el) ) {
+      //   // STEP 2. el의 다음 노드가 요소 노드인지 확인할 것.
+      //   el = $prevEl(el);
+      // }
+      // return el;
+      // 경우 2.
+      return el && !isElNode(el) ? $prevEl(el) : el;
+    };
+  }
+  return _lastEl;
+})();
+
+// $hasClass()
+// elNode.classList.contains
+
+// $addClass()
+// elNode.classList.add
+
+// $removeClass()
+// elNode.classList.remove
+
+// $toggleClass()
+// elNode.classList.toggle
+// $radioClass()
