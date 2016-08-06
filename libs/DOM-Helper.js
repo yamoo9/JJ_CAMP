@@ -317,24 +317,45 @@
 
   // 1. each() 헬퍼 함수 만들기
   // jQuery.each() 유틸리티 메소드와 유사하게 구현
-  function each(list, callback) {
-    validateData(list, 'array', '전달된 첫번째 인자는 배열 유형이어야 합니다.');
-    // ES5 지원 브라우저에서 처리
-    if ( list.forEach ) {
-      list.forEach(function(item, index){
-        callback.call(item, item, index);
-      });
+  var each = (function(){
+    // ES5 지원 웹 브라우저에서 수행 IE 9+
+    if ( Array.prototype.forEach ) {
+      return function(list, callback) {
+        // validateData(list, 'array');
+        // console.log(type(list), !!list.forEach);
+        list.forEach(function(item, index) {
+          callback.call(item, item, index);
+        });
+      };
     }
-    // ES5를 미지원하는 오래된 브라우저 처리
+    // IE 6-8 웹 브라우저
     else {
-      for (var list_item, i=0, l=list.length; i<l; i++) {
-        list_item = list[i];
-        callback.call(list_item, list_item, i);
-      }
+      return function(list, callback) {
+        // validateData(list, 'array');
+        for (var list_item, i=0, l=list.length; i<l; i++) {
+          list_item = list[i];
+          callback.call(list_item, list_item, i);
+        }
+      };
     }
-  }
+  })();
 
   // 2. makeArray() 헬퍼 함수 만들기
+  // 객체, 유사배열 -> 배열
+  // Array.from()
+  function makeArray(obj) {
+    // obj가 유사 배열이라면?
+    // 유사배열의 조건
+    // 1. length 속성이 있어야 한다.
+    // 2. 배열 생성자의 프로트타입 객체가 가진 능력이 없어야 한다.
+    if ( obj.length && type(obj) !== 'string' && !obj.pop ) {
+    // if ( obj.length && type(obj) !== 'string' && type(obj) === 'nodelist' ) {
+      for(var basket=[], i=0, l=obj.length; i<l; i++) {
+        basket.push(obj[i]);
+      }
+      return basket;
+    }
+  }
 
   global.yamoo9 = {
     // 문서객체모델 선택
@@ -364,6 +385,7 @@
     'isElNode':     isElNode,
     'checkError':   checkError,
     'each':         each,
+    'makeArray':    makeArray,
   };
 
   // global.$$ = global.yamoo9;

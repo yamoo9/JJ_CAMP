@@ -21,7 +21,9 @@
 (function(global, $){
   'use strict';
 
-  var gnb_links = $.queryAll('.gnb a');
+  var gnb_links = $.queryAll('.gnb a'); // NodeList -> like Array
+
+  // console.log($.type(gnb_links));
 
   $.each(gnb_links, function(link, index){
     link.onclick = function(evt) {
