@@ -289,10 +289,7 @@
     }
     // SET
     else if ( type(attribute) === 'object' ) {
-      each(attribute, function(prop, value) {
-        // attribute
-        setAttr(elNode, prop, value);
-      });
+
     }
     else {
       // set 함수 수행
@@ -317,14 +314,6 @@
   //   console.log(prop, obj[prop]);
   // }
 
-  function each(properties, callback) {
-    // validateData(properties, 'object', '전달된 첫번째 인자는 객체여야 합니다.');
-    for (var prop in properties) {
-      if ( properties.hasOwnProperty(prop) ) {
-        fn.call(null, prop, properties[prop]);
-      }
-    }
-  }
 
   global.yamoo9 = {
     // 문서객체모델 선택

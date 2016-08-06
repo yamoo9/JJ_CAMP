@@ -8,12 +8,40 @@
 </head>
 <body>
 
+  <nav class="gnb" role="navigation">
+    <ul>
+      <li><a href="">WCAG</a></li>
+      <li><a href="">WAI-ARIA</a></li>
+      <li><a href="">STANDARD-MODE</a></li>
+      <li><a href="">QUIRKS-MODE</a></li>
+    </ul>
+  </nav>
+
   <div role="dialog" title="this is dialog." data-name="dialog">
     Dialog
   </div>
 
 <script>
 (function(global, $){
+
+  // --------------------------------------------------------------------------------------------------------
+  // 문서의 .gnb 객체에 접근하여 이벤트 핸들링
+  function clkFn(e) {
+      // e = e || window.event;
+      // e.target = e.target || e.srcElement;
+      // e.preventDefault();
+      console.log(this);
+      // 브라우저 기본 동작을 차단
+      return false;
+    };
+
+  // 외부에 공개할 때
+  // global.clkFn = clkFn;
+
+  var gnb = $.query('.gnb');
+  var gnb_links = $.queryAll('a', gnb);
+  // console.log(gnb_links);
+  gnb_links[0].onclick = clkFn;
 
   // console.log(global.$$ === $);
 
@@ -23,7 +51,7 @@
 
   // GET
   var dialog_data_name = $.attr(dialog, 'data-name');
-  console.log('dialog_data_name:', dialog_data_name);
+  // console.log('dialog_data_name:', dialog_data_name);
 
   // SET
   $.attr(dialog, 'data-namespace', 'yamoo9');
@@ -40,7 +68,34 @@
   //   'margin': '',
   // });
 
-  console.log('dialog의 data-namespace:', $.attr(dialog, 'data-namespace'));
+  // console.log('dialog의 data-namespace:', $.attr(dialog, 'data-namespace'));
+
+
+  // --------------------------------------------------------------------------------------------------------
+  // 자바스크립트 함수 데이터 유형
+  // 1. 일반(General Function) 함수
+  // 2. new 생성자(Constructor Function) 함수
+
+  // 함수를 실제 사용할 수 있도록 생성하는 생성자(Constructor)
+  // 생성자는 prototype 속성을 통해 연결된 하나의 객체
+  // 프로토타입 객체가 가진 능력을 생성자를 통해 생성된 객체(인스턴스)가 가지게 됩니다.
+  var showContextArgs = function() {
+     console.log('context:', this);
+     console.log('arguments:', arguments);
+     console.log('arguments는 배열인가?:', !!arguments.pop);
+  };
+
+  // --------------------------------------------------------------------------------------------------------
+  // Function.prototype 객체의 속성 .call() 실습 구문
+  showContextArgs.call(document.head); // 컨텍스트만 변경
+  showContextArgs.call(document.body, 'coffee', 'mocha', 'java'); // 컨텍스트랑 전달인자를 설정
+
+  // --------------------------------------------------------------------------------------------------------
+  // Function.prototype 객체의 속성 .apply() 실습 구문
+  showContextArgs.apply(document); // 컨텍스트만 변경
+  // apply()를 사용할 경우, 전달되는 인자 유형은 배열로만 가능.
+  // showContextArgs.apply(document.body.firstElementChild, 'water', 'juice', 'tea'); // 오류 발생!!!
+  showContextArgs.apply(document.body.firstElementChild, ['water', 'juice', 'tea']); // 컨텍스트랑 전달인자를 설정
 
 })(this, this.yamoo9);
 </script>
