@@ -289,7 +289,11 @@
     }
     // SET
     else if ( type(attribute) === 'object' ) {
-
+      for (var attr in attribute) {
+        if (attribute.hasOwnProperty(attr)) {
+          setAttr(elNode, attr, attribute[attr]);
+        }
+      }
     }
     else {
       // set 함수 수행
