@@ -270,6 +270,30 @@
     addClass(el, class_name);
   }
 
+  function getAttr(elNode, attribute) {
+    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+    validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    return elNode.getAttribute(attribute);
+  }
+  function setAttr(elNode, attribute, value) {
+    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+    validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    elNode.setAttribute(attribute, value);
+  }
+  function attr(elNode, attribute, value) {
+    // GET
+    // if ( type(value) === 'undefined' ) {
+    if ( !value ) {
+      // get 함수 수행
+      return getAttr(elNode, attribute);
+    }
+    // SET
+    else {
+      // set 함수 수행
+      setAttr(elNode, attribute, value);
+    }
+  }
+
   global.yamoo9 = {
     // 문서객체모델 선택
     'query':        query,
@@ -284,7 +308,7 @@
     'firstEl':      firstEl,
     'lastEl':       lastEl,
     // 문서객체 속성 제어
-    // 'attr':         attr,
+    'attr':         attr,
     // 클래스 속성 제어
     'hasClass':     hasClass,
     'addClass':     addClass,
@@ -299,6 +323,6 @@
     'checkError':   checkError,
   };
 
-  global.$$ = global.yamoo9;
+  // global.$$ = global.yamoo9;
 
 })(this);

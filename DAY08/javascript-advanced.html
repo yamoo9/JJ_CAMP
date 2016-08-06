@@ -4,8 +4,33 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>자바스크립트 심화 학습</title>
+  <script src="../libs/DOM-Helper.js"></script>
 </head>
 <body>
 
+  <div role="dialog" title="this is dialog." data-name="dialog">
+    Dialog
+  </div>
+
+<script>
+(function(global, $){
+
+  // console.log(global.$$ === $);
+
+  var dialog = $.query('[role]');
+
+  // console.log(dialog);
+
+  // GET
+  var dialog_data_name = $.attr(dialog, 'data-name');
+  console.log('dialog_data_name:', dialog_data_name);
+
+  // SET
+  $.attr(dialog, 'data-namespace', 'yamoo9');
+
+  console.log('dialog의 data-namespace:', $.attr(dialog, 'data-namespace'));
+
+})(this, this.yamoo9);
+</script>
 </body>
 </html>
