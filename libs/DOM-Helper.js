@@ -3,7 +3,7 @@
 // JS 엄격한 모드로 동작
 // "use strict";
 
-(function(global){
+// (function(global){
   // ----------------------------------------------------------------------------
 
   // 데이터 유형을 정확하게 반환하는 헬퍼 함수
@@ -415,15 +415,15 @@
   }
 
   // 전역에 노출(공개)
-  global.yamoo9 = {
-    'hasClass': $hasClass,
-    'addClass': $addClass,
-    'removeClass': $removeClass,
-    'toggleClass': $toggleClass,
-    'radioClass': $radioClass,
-  };
+  // global.yamoo9 = {
+  //   'hasClass': $hasClass,
+  //   'addClass': $addClass,
+  //   'removeClass': $removeClass,
+  //   'toggleClass': $toggleClass,
+  //   'radioClass': $radioClass,
+  // };
 
   // 별칭(Alias) 설정
-  global.$$ = global.yamoo9;
+  // global.$$ = global.yamoo9;
 
-})(this);
+// })(this);
