@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>자바스크립트 심화 학습 Part 2</title>
+  <script src="../libs/DOM-Helper.js"></script>
+</head>
+<body>
+
+<nav class="gnb" role="navigation">
+  <ul>
+    <li><a href="">WCAG</a></li>
+    <li><a href="">WAI-ARIA</a></li>
+    <li><a href="">STANDARD-MODE</a></li>
+    <li><a href="">QUIRKS-MODE</a></li>
+  </ul>
+</nav>
+
+<script>
+(function(global, $){
+  'use strict';
+
+  var gnb_links = $.queryAll('.gnb a');
+
+  $.each(gnb_links, function(link, index){
+    link.onclick = function(evt) {
+      evt.preventDefault();
+      console.log(this, link, index);
+    };
+  });
+
+})(this, this.yamoo9);
+</script>
+</body>
+</html>
