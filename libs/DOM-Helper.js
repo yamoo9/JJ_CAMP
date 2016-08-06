@@ -323,9 +323,15 @@
       return function(list, callback) {
         // validateData(list, 'array');
         // console.log(type(list), !!list.forEach);
-        list.forEach(function(item, index) {
+
+        // 1. Array.prototype.forEach() 메소드를 빌려쓰는 패턴
+        // Array.prototype.forEach.call(list, function(item, index) {
+
+        // 2. 헬퍼함수인 makeArray()를 사용하는 방법
+        makeArray(list).forEach(function(item, index) {
           callback.call(item, item, index);
         });
+
       };
     }
     // IE 6-8 웹 브라우저
@@ -343,19 +349,25 @@
   // 2. makeArray() 헬퍼 함수 만들기
   // 객체, 유사배열 -> 배열
   // Array.from()
-  function makeArray(obj) {
-    // obj가 유사 배열이라면?
-    // 유사배열의 조건
-    // 1. length 속성이 있어야 한다.
-    // 2. 배열 생성자의 프로트타입 객체가 가진 능력이 없어야 한다.
-    if ( obj.length && type(obj) !== 'string' && !obj.pop ) {
-    // if ( obj.length && type(obj) !== 'string' && type(obj) === 'nodelist' ) {
-      for(var basket=[], i=0, l=obj.length; i<l; i++) {
-        basket.push(obj[i]);
+  var makeArray = (function(){
+    // ES 6 지원
+    if (Array.from) {
+      return function(data) {
+        return Array.from(data);
       }
-      return basket;
+    } else {
+      return function (obj) {
+        if ( obj.length && type(obj) !== 'string' && !obj.pop ) {
+          for(var basket=[], i=0, l=obj.length; i<l; i++) {
+            basket.push(obj[i]);
+          }
+          return basket;
+        } else {
+          return [];
+        }
+      };
     }
-  }
+  })();
 
   global.yamoo9 = {
     // 문서객체모델 선택
