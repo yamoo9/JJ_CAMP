@@ -288,9 +288,41 @@
       return getAttr(elNode, attribute);
     }
     // SET
+    else if ( type(attribute) === 'object' ) {
+      each(attribute, function(prop, value) {
+        // attribute
+        setAttr(elNode, prop, value);
+      });
+    }
     else {
       // set 함수 수행
       setAttr(elNode, attribute, value);
+    }
+  }
+
+  // for문의 경우는 반복 수행
+  // 데이터 유형 length 속성을 가지고 있어야 몇 회 반복할 지를 결정
+  // 배열, 문자
+  // 객체 데이터 유형은 length 속성을 가지고 있지 않다.
+
+  // // 객체 리터럴을 사용하여 변수에 참조
+  // var obj = {'name': 'coffee'};
+  // obj.use = 'drink';
+  // obj.amount = '1l';
+
+  // // 객체의 속성을 반복적으로 탐색하는 구문
+  // // for ~ in문
+  // // 속성 in 객체
+  // for( var prop in obj ) {
+  //   console.log(prop, obj[prop]);
+  // }
+
+  function each(properties, callback) {
+    // validateData(properties, 'object', '전달된 첫번째 인자는 객체여야 합니다.');
+    for (var prop in properties) {
+      if ( properties.hasOwnProperty(prop) ) {
+        fn.call(null, prop, properties[prop]);
+      }
     }
   }
 
