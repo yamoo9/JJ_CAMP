@@ -6,6 +6,25 @@
 
 ### trim() 헬퍼 함수
 
+```js
+// 문자열의 좌측, 우측의 공백을 제거하는 헬퍼 함수
+var trim = (function(){
+  // 비공개 함수 (함수 내부의 함수)
+  function _trimBefore(str) {
+    return str.replace(/\s+/,'');
+  }
+  function _trimAfter(str) {
+    return str.replace(/\s+$/,'');
+  }
+  // 공개 함수 (함수 내부에서 외부로 내보내지는(공개되는) 함수)
+  return function(text) {
+    return _trimAfter( _trimBefore(text) );
+  }
+})();
+```
+
+※ jQuery 라이브러리의 헬퍼함수인 [`trim()`](http://api.jquery.com/jQuery.trim/) 또한 이와 같은 방법으로 구현된 것.
+
 -
 
 ### 조작과 관련한 헬퍼 함수

@@ -50,6 +50,22 @@
   }
 
   // ----------------------------------------------------------------------------
+  // 문자열의 좌측, 우측의 공백을 제거하는 헬퍼 함수
+  var trim = (function(){
+    // 비공개 함수 (함수 내부의 함수)
+    function _trimBefore(str) {
+      return str.replace(/\s+/,'');
+    }
+    function _trimAfter(str) {
+      return str.replace(/\s+$/,'');
+    }
+    // 공개 함수 (함수 내부에서 외부로 내보내지는(공개되는) 함수)
+    return function(text) {
+      return _trimAfter( _trimBefore(text) );
+    }
+  })();
+
+  // ----------------------------------------------------------------------------
 
   // .getElementById()
   // ↑ 헬퍼 $idEl()
