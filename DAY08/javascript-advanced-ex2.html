@@ -10,10 +10,10 @@
 
 <nav class="gnb" role="navigation">
   <ul>
-    <li><a href="">WCAG</a></li>
-    <li><a href="">WAI-ARIA</a></li>
-    <li><a href="">STANDARD-MODE</a></li>
-    <li><a href="">QUIRKS-MODE</a></li>
+    <li><a href="/wcag">WCAG</a></li>
+    <li><a href="/wai-aria">WAI-ARIA</a></li>
+    <li><a href="/standard-mode">STANDARD-MODE</a></li>
+    <li><a href="/quirks-mode">QUIRKS-MODE</a></li>
   </ul>
 </nav>
 
@@ -26,6 +26,21 @@
   // console.log($.type(gnb_links));
 
   $.each(gnb_links, function(link, index){
+    // console.log(this === link);
+    // console.log(index);
+
+    // $.attr(this, 'id', 'link-' + index);
+    // $.attr(this, 'title': $.attr(link, 'href').replace('/',''));
+    // $.attr(this, 'role': 'tab');
+
+    // -------------------------------
+
+    $.attr(link, {
+      'id': 'link-' + index,
+      'title': $.attr(link, 'href').replace('/',''),
+      'role': 'tab'
+    });
+
     link.onclick = function(evt) {
       evt.preventDefault();
       // console.log(this, link, index);

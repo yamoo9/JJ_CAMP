@@ -272,28 +272,29 @@
 
   function getAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
-    validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    // validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
     return elNode.getAttribute(attribute);
   }
   function setAttr(elNode, attribute, value) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
-    validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    // validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
     elNode.setAttribute(attribute, value);
   }
   function attr(elNode, attribute, value) {
-    // GET
-    // if ( type(value) === 'undefined' ) {
-    if ( !value ) {
-      // get 함수 수행
-      return getAttr(elNode, attribute);
-    }
-    // SET
-    else if ( type(attribute) === 'object' ) {
+
+    if ( type(attribute) === 'object' ) {
       for (var attr in attribute) {
         if (attribute.hasOwnProperty(attr)) {
           setAttr(elNode, attr, attribute[attr]);
         }
       }
+      // return;
+    }
+    // GET
+    // if ( !value ) {
+    else if ( type(value) === 'undefined' ) {
+      // get 함수 수행
+      return getAttr(elNode, attribute);
     }
     else {
       // set 함수 수행
