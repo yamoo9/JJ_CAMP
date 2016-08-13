@@ -74,7 +74,7 @@
         // 표준 방식(MS IE 9+)
         // window.getComputedStyle(문서객체,가상요소).스타일속성(카멜케이스 표기식)
         // window.getComputedStyle($0).fontSize
-        console.log( $.getStyle(target, 'font-size') );
+        console.log( $.css(demo, 'font-size') );
       break;
       case 'button-text-size-down':
         console.log('size down');

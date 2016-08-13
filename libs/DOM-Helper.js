@@ -305,13 +305,19 @@
   })();
 
   function setStyle(elNode, property, value) {
+    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+    validateData(property, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
     elNode.style[property] = value;
   }
 
   function css(elNode, property, value) {
-    if ( !value ) {
+    if ( !value && type(property) === 'string' ) {
       // GETTER
       return getStyle(elNode, property);
+    } else if ( !value && type(property) === 'object' ) {
+      each(property, function(prop, value){
+        css(elNode, prop, value);
+      });
     } else {
       // SETTER
       setStyle(elNode, property, value);
@@ -375,9 +381,21 @@
   var each = (function(){
     if ( Array.prototype.forEach ) {
       return function(list, callback) {
-        makeArray(list).forEach(function(item, index) {
-          callback.call(item, item, index);
-        });
+        // 유사배열 또는 배열 또는 객체
+        var is_obj = type(list) === 'object';
+        if ( (list.length && type(list) !== 'string') || is_obj ) {
+          makeArray(list).forEach(function(item, index) {
+            if(!is_obj) {
+              // 배열
+              callback.call(item, item, index);
+            } else {
+              // 객체
+              // 객체의 속성 item
+              var obj_value = obj[item];
+              callback.call(null, item, obj_value);
+            }
+          });
+        }
       };
     }
     // IE 6-8 웹 브라우저
@@ -394,15 +412,30 @@
   var makeArray = (function(){
     if (Array.from) {
       return function(data) {
-        return Array.from(data);
+        if (type(data) === 'object') {
+          // 객체 > 배열화 (속성)
+          return Object.keys(data);
+        } else {
+          // 유사 배열 > 배열화
+          return Array.from(data);
+        }
       }
     } else {
       return function (obj) {
+        var new_arr_set=[], i=0, l=obj.length
         if ( obj.length && type(obj) !== 'string' && !obj.pop ) {
-          for(var basket=[], i=0, l=obj.length; i<l; i++) {
-            basket.push(obj[i]);
+          for(; i<l; i++) {
+            new_arr_set.push(obj[i]);
           }
-          return basket;
+          return new_arr_set;
+        } else if ( type(obj) === 'object' ) {
+          // 객체를 배열화 [속성만]
+          for ( var prop in obj ) {
+            if (obj.hasOwnProperty(prop)) {
+              new_arr_set.push(prop);
+            }
+          }
+          return new_arr_set;
         } else {
           return [];
         }
