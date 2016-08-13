@@ -23,6 +23,7 @@
   <div class="button-group-text-size-adjust" role="group">
     <button type="button" class="button-text-size-up" aria-label="글자 크기 키움">+</button>
     <button type="button" class="button-text-size-down" aria-label="글자 크기 줄임">-</button>
+    <button type="button" class="button-text-size-reset" aria-label="글자 크기 초기화">=</button>
   </div>
 
   <div class="demo">demonstration</div>
@@ -48,6 +49,34 @@
   // $.removeAttr(demo, []);
   // $.removeAttr(demo, '');
   // $.removeAttr(demo);
+
+  // 문서에서 대상 객체 선택
+  var button_set = $.query('.button-group-text-size-adjust');
+  // console.log(button_set);
+
+  // 이벤트 위임
+  button_set.addEventListener('click', function(event) {
+    // 이벤트 대상 (이벤트 전파에 따라 대상은 변경된다)
+    var target = event.target; // event.srcElement;
+    var target_class = $.attr(target, 'class');
+    switch(target_class) {
+      case 'button-text-size-up':
+        console.log('size up');
+        // demo 변수에 참조된 문서 객체의 현재 글자 크기를 가져와 봅니다.
+        // 구형 IE 6-8 비표준 방식(MS IE 전용 방식)
+        // $0.currentStyle.fontSize
+        // 표준 방식(MS IE 9+)
+        // window.getComputedStyle(문서객체,가상요소).스타일속성(카멜케이스 표기식)
+        // window.getComputedStyle($0).fontSize
+        console.log( $.getStyle(target, 'font-size') );
+      break;
+      case 'button-text-size-down':
+        console.log('size down');
+      break;
+      default:
+        console.info('클릭한 대상은 목적하는 대상이 아닙니다.');
+    }
+  });
 
 })(this, this.yamoo9);
 

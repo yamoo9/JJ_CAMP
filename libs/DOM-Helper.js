@@ -281,6 +281,19 @@
     elNode.setAttribute(attribute, value);
   }
   // 8.13 ----------------------------------------------------------------------------
+  function getStyle(elNode, property) {
+    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+    validateData(property, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    // W3C Standard
+    if ( window.getComputedStyle ) {
+      return window.getComputedStyle(elNode)[property];
+    }
+    // MS IE Non Standard
+    else {
+      return elNode.currentStyle[property];
+    }
+  }
+
   function hasAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
     // validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
@@ -430,6 +443,8 @@
     'attr':         attr,
     'hasAttr':      hasAttr,
     'removeAttr':   removeAttr,
+    // CSS 속성 제어
+    'getStyle':     getStyle,
     // 클래스 속성 제어
     'hasClass':     hasClass,
     'addClass':     addClass,
