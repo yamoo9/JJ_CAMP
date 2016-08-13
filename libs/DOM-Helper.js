@@ -280,6 +280,24 @@
     // validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
     elNode.setAttribute(attribute, value);
   }
+  // 8.13 ----------------------------------------------------------------------------
+  function hasAttr(elNode, attribute) {
+    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+    validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    return elNode.hasAttribute(attribute);
+  }
+  function removeAttr(elNode, attribute) {
+    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+    if (type(attribute) === 'string') {
+      elNode.removeAttribute(attribute);
+    }
+    if (type(attribute) === 'array') {
+      each(attribute, function(item, index) {
+        elNode.removeAttribute(item);
+      });
+    }
+  }
+
   function attr(elNode, attribute, value) {
 
     if ( type(attribute) === 'object' ) {
@@ -389,6 +407,8 @@
     'lastEl':       lastEl,
     // 문서객체 속성 제어
     'attr':         attr,
+    'hasAttr':      hasAttr,
+    'removeAttr':   removeAttr,
     // 클래스 속성 제어
     'hasClass':     hasClass,
     'addClass':     addClass,
