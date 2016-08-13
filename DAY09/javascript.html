@@ -4,11 +4,28 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>자바스크립트 헬퍼 함수</title>
+  <!-- 웹 폰트: http://spoqa.github.io/spoqa-han-sans/ -->
+  <link href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet">
+  <style>
+    .demo {
+      display: inline-flex;
+      padding: 1em 1.45em;
+      text-transform: uppercase;
+      font: 200 2rem/1.5 "Spoqa Han Sans";
+      letter-spacing: 0.03em;
+      color: #259785;
+    }
+  </style>
   <script src="../libs/DOM-Helper.js"></script>
 </head>
 <body>
 
-  <div class="demo"></div>
+  <div class="button-group-text-size-adjust" role="group">
+    <button type="button" class="button-text-size-up" aria-label="글자 크기 키움">+</button>
+    <button type="button" class="button-text-size-down" aria-label="글자 크기 줄임">-</button>
+  </div>
+
+  <div class="demo">demonstration</div>
 
 <script>
 

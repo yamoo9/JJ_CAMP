@@ -283,8 +283,13 @@
   // 8.13 ----------------------------------------------------------------------------
   function hasAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
-    validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
-    return elNode.hasAttribute(attribute);
+    // validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+    if (type(attribute) === 'string') {
+      return elNode.hasAttribute(attribute);
+    }
+    if (type(attribute) === 'undefined') {
+      return elNode.hasAttributes();
+    }
   }
   function removeAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
@@ -303,6 +308,7 @@
     if (attr_type === 'undefined' || attribute.length === 0) {
       // elNode 속성이 존재하는가? 존재한다면 모든 속성을 제거
       if ( elNode.hasAttributes() ) {
+      // if ( hasAttr(elNode) ) {
         // NamedNodeMap {name:value}, length
         each(elNode.attributes, function(item, index) {
           var property = item.name;
