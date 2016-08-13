@@ -381,16 +381,12 @@
   var each = (function(){
     if ( Array.prototype.forEach ) {
       return function(list, callback) {
-        // 유사배열 또는 배열 또는 객체
-        var is_obj = type(list) === 'object';
+        var is_obj = ( type(list) === 'object' );
         if ( (list.length && type(list) !== 'string') || is_obj ) {
           makeArray(list).forEach(function(item, index) {
             if(!is_obj) {
-              // 배열
               callback.call(item, item, index);
             } else {
-              // 객체
-              // 객체의 속성 item
               var obj_value = obj[item];
               callback.call(null, item, obj_value);
             }
@@ -413,10 +409,8 @@
     if (Array.from) {
       return function(data) {
         if (type(data) === 'object') {
-          // 객체 > 배열화 (속성)
           return Object.keys(data);
         } else {
-          // 유사 배열 > 배열화
           return Array.from(data);
         }
       }
@@ -429,7 +423,6 @@
           }
           return new_arr_set;
         } else if ( type(obj) === 'object' ) {
-          // 객체를 배열화 [속성만]
           for ( var prop in obj ) {
             if (obj.hasOwnProperty(prop)) {
               new_arr_set.push(prop);
