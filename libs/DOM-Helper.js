@@ -281,18 +281,28 @@
     elNode.setAttribute(attribute, value);
   }
   // 8.13 ----------------------------------------------------------------------------
-  function getStyle(elNode, property) {
-    if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
-    validateData(property, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
-    // W3C Standard
+  var getStyle = (function(){
+    // W3C Standard Method
     if ( window.getComputedStyle ) {
-      return window.getComputedStyle(elNode)[property];
+      return function(elNode, property, pseudo) {
+        if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+        validateData(property, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+        var cssMap = window.getComputedStyle(elNode, pseudo);
+        if ( pseudo && cssMap.content === '' ) {
+          return null;
+        }
+        return cssMap[property];
+      };
     }
-    // MS IE Non Standard
+    // MS IE Non Standard Method (IE 6-8)
     else {
-      return elNode.currentStyle[property];
+      return function(elNode, property) {
+        if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
+        validateData(property, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
+        return elNode.currentStyle[property];
+      };
     }
-  }
+  })();
 
   function hasAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
@@ -333,68 +343,32 @@
   }
 
   function attr(elNode, attribute, value) {
-
     if ( type(attribute) === 'object' ) {
       for (var attr in attribute) {
         if (attribute.hasOwnProperty(attr)) {
           setAttr(elNode, attr, attribute[attr]);
         }
       }
-      // return;
     }
-    // GET
-    // if ( !value ) {
     else if ( type(value) === 'undefined' ) {
-      // get 함수 수행
       return getAttr(elNode, attribute);
     }
     else {
-      // set 함수 수행
       setAttr(elNode, attribute, value);
     }
   }
 
-  // for문의 경우는 반복 수행
-  // 데이터 유형 length 속성을 가지고 있어야 몇 회 반복할 지를 결정
-  // 배열, 문자
-  // 객체 데이터 유형은 length 속성을 가지고 있지 않다.
-
-  // // 객체 리터럴을 사용하여 변수에 참조
-  // var obj = {'name': 'coffee'};
-  // obj.use = 'drink';
-  // obj.amount = '1l';
-
-  // // 객체의 속성을 반복적으로 탐색하는 구문
-  // // for ~ in문
-  // // 속성 in 객체
-  // for( var prop in obj ) {
-  //   console.log(prop, obj[prop]);
-  // }
-
-
-  // 1. each() 헬퍼 함수 만들기
-  // jQuery.each() 유틸리티 메소드와 유사하게 구현
   var each = (function(){
-    // ES5 지원 웹 브라우저에서 수행 IE 9+
     if ( Array.prototype.forEach ) {
       return function(list, callback) {
-        // validateData(list, 'array');
-        // console.log(type(list), !!list.forEach);
-
-        // 1. Array.prototype.forEach() 메소드를 빌려쓰는 패턴
-        // Array.prototype.forEach.call(list, function(item, index) {
-
-        // 2. 헬퍼함수인 makeArray()를 사용하는 방법
         makeArray(list).forEach(function(item, index) {
           callback.call(item, item, index);
         });
-
       };
     }
     // IE 6-8 웹 브라우저
     else {
       return function(list, callback) {
-        // validateData(list, 'array');
         for (var list_item, i=0, l=list.length; i<l; i++) {
           list_item = list[i];
           callback.call(list_item, list_item, i);
@@ -403,11 +377,7 @@
     }
   })();
 
-  // 2. makeArray() 헬퍼 함수 만들기
-  // 객체, 유사배열 -> 배열
-  // Array.from()
   var makeArray = (function(){
-    // ES 6 지원
     if (Array.from) {
       return function(data) {
         return Array.from(data);
