@@ -304,6 +304,20 @@
     }
   })();
 
+  function setStyle(elNode, property, value) {
+    elNode.style[property] = value;
+  }
+
+  function css(elNode, property, value) {
+    if ( !value ) {
+      // GETTER
+      return getStyle(elNode, property);
+    } else {
+      // SETTER
+      setStyle(elNode, property, value);
+    }
+  }
+
   function hasAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
     // validateData(attribute, 'string', '전달된 2번째 "속성 이름"은 반드시 문자열이어야 합니다.');
@@ -414,7 +428,7 @@
     'hasAttr':      hasAttr,
     'removeAttr':   removeAttr,
     // CSS 속성 제어
-    'getStyle':     getStyle,
+    'css':          css,
     // 클래스 속성 제어
     'hasClass':     hasClass,
     'addClass':     addClass,
