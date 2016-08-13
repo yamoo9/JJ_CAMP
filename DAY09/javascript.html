@@ -41,8 +41,9 @@
   // 문서 객체 선택
   var demo = $.query('.demo');
   var demo_init_font_size = $.css(demo, 'font-size');
+  var step_font_size = 10;
   var min_font_size = 12;
-  var max_font_size = 60;
+  var max_font_size = 100;
   // 속성을 추가 하는 것
   $.attr(demo, {
     'id': 'demo-divistion',
@@ -68,19 +69,25 @@
     // 이벤트 대상 (이벤트 전파에 따라 대상은 변경된다)
     var target = event.target; // event.srcElement;
     var target_class = $.attr(target, 'class');
-    var current_font_size;
+    var current_font_size, changed_font_size;
     switch(target_class) {
       case 'button-text-size-up':
         // console.log('size up');
         current_font_size = $.css(demo, 'font-size');
         current_font_size = parseInt(current_font_size, 10);
-        $.css(demo, 'font-size', current_font_size + 10 + 'px');
+        if ( (changed_font_size || current_font_size) <= max_font_size ) {
+          changed_font_size = current_font_size + step_font_size;
+          $.css(demo, 'font-size', changed_font_size  + 'px' );
+        }
       break;
       case 'button-text-size-down':
         // console.log('size down');
         current_font_size = $.css(demo, 'font-size');
         current_font_size = parseInt(current_font_size, 10);
-        $.css(demo, 'font-size', current_font_size + -10 + 'px');
+        if ( (changed_font_size || current_font_size) >= min_font_size ) {
+          changed_font_size = current_font_size + (-1 * step_font_size);
+          $.css(demo, 'font-size', changed_font_size  + 'px' );
+        }
       break;
       default:
         // console.info('클릭한 대상은 목적하는 대상이 아닙니다.');
