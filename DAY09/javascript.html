@@ -70,27 +70,23 @@
     var target = event.target; // event.srcElement;
     var target_class = $.attr(target, 'class');
     var current_font_size, changed_font_size;
+    current_font_size = $.css(demo, 'font-size');
+    // current_font_size = parseInt(current_font_size, 10);
+    current_font_size = $.removeUnit(current_font_size); // $.removeUnit.unit [단위 값 출력]
     switch(target_class) {
       case 'button-text-size-up':
-        // console.log('size up');
-        current_font_size = $.css(demo, 'font-size');
-        current_font_size = parseInt(current_font_size, 10);
         if ( (changed_font_size || current_font_size) <= max_font_size ) {
           changed_font_size = current_font_size + step_font_size;
-          $.css(demo, 'font-size', changed_font_size  + 'px' );
+          $.css(demo, 'font-size', changed_font_size  + $.removeUnit.unit );
         }
       break;
       case 'button-text-size-down':
-        // console.log('size down');
-        current_font_size = $.css(demo, 'font-size');
-        current_font_size = parseInt(current_font_size, 10);
         if ( (changed_font_size || current_font_size) >= min_font_size ) {
           changed_font_size = current_font_size + (-1 * step_font_size);
-          $.css(demo, 'font-size', changed_font_size  + 'px' );
+          $.css(demo, 'font-size', changed_font_size  + $.removeUnit.unit );
         }
       break;
       default:
-        // console.info('클릭한 대상은 목적하는 대상이 아닙니다.');
         $.css(demo, 'font-size', demo_init_font_size);
     }
   });

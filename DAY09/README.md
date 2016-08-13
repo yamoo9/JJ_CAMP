@@ -54,3 +54,5 @@
 ### 기타/참고
 
 - [You Might Not Need jQuery](http://youmightnotneedjquery.com/)
+- [ECMAScript 호환성 표](http://kangax.github.io/compat-table/es6/)
+- [JavaScript Framework 벤치마킹 표](http://www.stefankrause.net/js-frameworks-benchmark2/webdriver-java/table.html?utm_source=javascriptweekly&utm_medium=email)

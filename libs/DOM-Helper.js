@@ -436,6 +436,33 @@
     }
   })();
 
+
+
+  function removeUnit(has_unit_value, tactics) {
+    // 단위를 빼내는 구문
+    // 흔하게 사용하는 CSS의 단위 리스트
+    var unit_list = 'vmax vmin vh vw rem % em px'.split(' '); // ['em', 'rem', 'px', '%']
+    // has_unit_value // 1.5, 20px, 1rem, 0.4em, 80%, ...
+    for ( var unit, i=unit_list.length-1; unit_list[i]; i-- ) {
+      unit = unit_list[i];
+      // px, em, %, rem, vw, vh, vmin, vmax
+      if ( has_unit_value.indexOf(unit) > -1 ) {
+        if ( unit === 'em' ) {
+          removeUnit.unit = 'em';
+          continue;
+        }
+        removeUnit.unit = unit;
+        break;
+      }
+    }
+
+    // 전달된 인자에 따라 어떤 메소드(방법)를 사용할 지 결정
+    var method = (tactics || 'int') === 'int' ? 'parseInt' : 'parseFloat';
+    // 단위를 제거한 값을 반환
+    return window[method](has_unit_value, 10);
+  }
+  removeUnit.unit = null;
+
   global.yamoo9 = {
     // 문서객체모델 선택
     'query':        query,
@@ -469,6 +496,7 @@
     'checkError':   checkError,
     'each':         each,
     'makeArray':    makeArray,
+    'removeUnit':   removeUnit,
   };
 
   // global.$$ = global.yamoo9;
