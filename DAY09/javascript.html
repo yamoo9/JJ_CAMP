@@ -24,10 +24,12 @@
   });
   // 속성을 제거하는 것
   // 1. 하나씩 속성을 제거
-  $.removeAttr(demo, 'id');
+  // $.removeAttr(demo, 'id');
   // 2. 여러 개의 속성을 제거
-  $.removeAttr(demo, ['title', 'aria-hidden']);
-  // 3. 모든 속성을 제거
+  // $.removeAttr(demo, ['title', 'aria-hidden']);
+  // 3. 요소에 존재하는 모든 속성을 제거
+  // $.removeAttr(demo, []);
+  // $.removeAttr(demo, '');
   // $.removeAttr(demo);
 
 })(this, this.yamoo9);

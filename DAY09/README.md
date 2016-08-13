@@ -10,7 +10,14 @@
 - `hasAttr()`
 - `removeAttr()`
 
+#### CSS 속성
+- `getStyle()`
+- `setStyle()`
+- `css()`
+
 #### 삽입
+- `prependChild()`
+- `insertAfter()`
 - `append()`
 - `appendTo()`
 - `prepend()`

@@ -288,13 +288,28 @@
   }
   function removeAttr(elNode, attribute) {
     if (!isElNode(elNode)) { console.error('전달된 첫번째 인자는 요소노드여야 합니다.'); }
-    if (type(attribute) === 'string') {
+    var attr_type = type(attribute);
+    // 문자열로 전달된 속성 하나를 제거
+    if (attr_type === 'string') {
       elNode.removeAttribute(attribute);
     }
-    if (type(attribute) === 'array') {
+    // 배열로 전달된 속성만 제거
+    if (attr_type === 'array' && attribute.length > 0) {
       each(attribute, function(item, index) {
         elNode.removeAttribute(item);
       });
+    }
+    // 모든 속성을 제거
+    if (attr_type === 'undefined' || attribute.length === 0) {
+      // elNode 속성이 존재하는가? 존재한다면 모든 속성을 제거
+      if ( elNode.hasAttributes() ) {
+        // NamedNodeMap {name:value}, length
+        each(elNode.attributes, function(item, index) {
+          var property = item.name;
+          // removeAttr(elNode, property);
+          elNode.removeAttribute(property);
+        });
+      }
     }
   }
 
