@@ -103,6 +103,17 @@
     }
   }
 
+  function createNode(node, text) {
+    var _return_obj;
+    if (!text) {
+      return createEl(node);
+    } else {
+      var created_node = createEl(node);
+      created_node.appendChild(createText(text));
+      return created_node;
+    }
+  }
+
   function parentEl(el, depth) {
     if ( !isElNode(el) ) {
       checkError('1번째 전달인자는 요소노드여야 합니다.');
@@ -468,8 +479,9 @@
     'query':        query,
     'queryAll':     queryAll,
     // 문서객체 생성
-    'createEl':     createEl,
-    'createText':   createText,
+    // 'createEl':     createEl,
+    // 'createText':   createText,
+    'createNode': createNode,
     // 문서객체 탐색
     'parentEl':     parentEl,
     'prevEl':       prevEl,
