@@ -520,7 +520,7 @@
     if (global.addEventListener) {
       _on = function(el_node, event_type, event_handler, capture) {
         // capture 초기 값 설정
-        capture = type(capture) === 'undefined' ? false : true;
+        capture = capture || false;
         // 전달인자 검증
         if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
         if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }

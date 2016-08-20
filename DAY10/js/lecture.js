@@ -198,4 +198,42 @@
     console.log('또 다른 동작 수행 2');
   });
 
+  // 상위 요소에 이벤트를 설정
+  // 이벤트 위임
+  // gnb > ul > li > a
+  $.on(gnb, 'click', function(ev){
+     ev = ev || global.event;
+     ev.target = ev.target || ev.srcElement;
+     if (!ev.stopPropagation) {
+      ev.stopPropagation = function() {
+        ev.cancelBuble = true;
+      }
+     }
+     if (!ev.preventDefault) {
+      ev.preventDefault = function() {
+        ev.returnValue = false;
+      }
+     }
+     // console.log('현재 이벤트가 걸린 문서 객체:', event.currentTarget);
+     // console.log('이벤트가 전파된 해당 문서 객체:', event.target);
+     // 특정 요소에서 이벤트 처리
+     // localName
+     // nodeName.toLowerCase()
+     switch ( event.target.nodeName.toLowerCase() ) {
+      case 'ul':
+        console.log('this is <ul>.');
+      break;
+      case 'li':
+        console.log('this is <li>.');
+      break;
+      case 'a':
+        ev.preventDefault();
+        console.log('this is <li> or <a>.');
+      break;
+      default:
+        console.log('this isn\'t <ul>, <li>, <a>.');
+     }
+
+  });
+
 })(this, this.yamoo9);
