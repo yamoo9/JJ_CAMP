@@ -147,6 +147,55 @@
     $.attr(this, 'disabled', 'disabled');
   };
 
+  function keyupBehavior(event) {
+    console.log('event.type:', event.type);
+    switch(event.type) {
+      case 'keydown':
+      case 'keypress':
+      break;
+      case 'keyup':
+        console.log('key up state');
+      break;
+    }
+  }
+
   $.on(button, 'click', oneClick);
+  // $.on(button, 'keyup', keyupBehavior);
+
+  // ---------------------------------
+
+  // <!-- 포커스가 처리되지 않는 요소 <div>, <span> 에 이벤트가 걸린 상황 -->
+  // <div class="button">i'm button</div>
+  // 비포커스 요소의 경우는 click 이벤트가 걸려있다 하더라도
+  // 마우스가 없는 상황에서 키보드 접근이 불가능하며
+  // 가능하게 설정(tabindex="0")하였다 하더라도...
+  // 별도의 키보드 이벤트를 통해 작동할 수 있도록 구현해야 한다.
+  var btn = $.query('.button');
+
+  var clickBtn = function(event) {
+    var type = event.type;
+    var code = event.keyCode;
+    if (
+      type === 'click' ||
+      ( type === 'keydown' && (code === 13 || code === 32) )
+    ) {
+      global.alert('button clicked');
+    }
+  };
+
+  $.attr(btn, {
+    'tabindex': 0,
+    'role': 'button'
+  });
+  $.on(btn, 'keydown', clickBtn);
+  $.on(btn, 'click', clickBtn);
+
+  $.on(btn, 'click', function() {
+    console.log('또 다른 동작 수행 1');
+  });
+
+  $.on(btn, 'click', function() {
+    console.log('또 다른 동작 수행 2');
+  });
 
 })(this, this.yamoo9);

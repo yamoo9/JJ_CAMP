@@ -514,13 +514,24 @@
   }
 
   // 이벤트 제어
-  function on(el_node, event_type, event_handler) {
+  function on(el_node, event_type, event_handler, capture) {
+    // capture 초기 값 설정
+    capture = type(capture) === 'undefined' ? false : true;
     // 전달인자 검증
     if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
     if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
     if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
-    // 구형 이벤트 모델
-    el_node['on'+event_type] = event_handler;
+    // 진보 이벤트 모델 W3C, IE 9
+    if ( el_node.addEventListener ) {
+      el_node.addEventListener(event_type, event_handler, capture);
+    }
+    // 진보 이벤트 모델 MS IE 6-8
+    else if (el_node.attachEvent) {
+      el_node.attachEvent('on' + event_type, event_handler);
+    } else {
+      // 구형 이벤트 모델
+      el_node['on'+event_type] = event_handler;
+    }
   }
   function off(el_node, event_type, event_handler) {
     // 전달인자 검증
