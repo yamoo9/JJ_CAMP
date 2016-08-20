@@ -115,9 +115,9 @@
   }
 
   function parentEl(el, depth) {
-    if ( !isElNode(el) ) {
-      checkError('1번째 전달인자는 요소노드여야 합니다.');
-    }
+    // if ( !isElNode(el) ) {
+    //   checkError('1번째 전달인자는 요소노드여야 합니다.');
+    // }
     depth && validateData(depth, 'number');
     depth = depth || 1;
     do {
@@ -474,6 +474,45 @@
   }
   removeUnit.unit = null;
 
+  // DOM 조작에 도움을 주는 함수 제작
+  function append(parent_node, child_node) {
+    if ( !isElNode(parent_node) ) {
+      checkError('전달된 인자는 요소노드여야 합니다.');
+    }
+    parent_node.appendChild(child_node);
+  }
+
+  function prepend(parent_node, child_node) {
+    if ( !isElNode(parent_node) ) {
+      checkError('전달된 인자는 요소노드여야 합니다.');
+    }
+    var firstChild = parent_node.firstChild; // 없다면 null, undefined
+    // 부모 요소노드(parent_node)에 자식이 존재하는가? 검증
+    // 조건1) 만약 자식노드가 존재한다면?
+    // 자식노드 앞에 child_node를 삽입힌다.
+    if ( firstChild ) {
+      insertBefore(child_node, firstChild);
+    }
+    // 조건2) 만약 자식노드가 존재하지않는다면?
+    // parent_node의 마지막 자식노드로 삽입한다.
+    else {
+      append(parent_node, child_node);
+    }
+  }
+
+  function insertBefore(insert_node, target_node) {
+    parentEl(target_node).insertBefore(insert_node, target_node);
+  }
+
+  function insertAfter(insert_node, target_node) {
+    var next_node = target_node.nextSibling;
+    if ( next_node ) {
+      insertBefore(insert_node, next_node);
+    } else {
+      append(parentEl(target_node), insert_node);
+    }
+  }
+
   global.yamoo9 = {
     // 문서객체모델 선택
     'query':        query,
@@ -488,6 +527,13 @@
     'nextEl':       nextEl,
     'firstEl':      firstEl,
     'lastEl':       lastEl,
+    // 문서객체 조작
+    'prepend':      prepend,
+    'append':       append,
+    'insertAfter':  insertAfter,
+    // 'after':        after,
+    'insertBefore': insertBefore,
+    // 'before':       before,
     // 문서객체 속성 제어
     'attr':         attr,
     'hasAttr':      hasAttr,

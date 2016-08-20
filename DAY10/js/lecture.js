@@ -106,14 +106,42 @@ this.localScope();
     'type': 'button',
     'class': 'one-click-button'
   });
+
   // 2.1 버튼 내부에 텍스트 추가
   // button.textContent = 'one click';
+
   // 2.2 DOM에서 제공하는 텍스트 노드를 생성한 다음 버튼 객체에 추가
   // var button_text = $.createText('one Click');
   // button.appendChild(button_text);
+
   // 2.3 $.createNode('button', 'text content');
 
   // 3. 생성된 버튼 객체를 문서에 추가(삽입)
-  body.appendChild(button);
+  // body.appendChild(button);
+  // $.append(body, button);
+  // $.prepend(body, button);
+
+  // gnb 요소 앞에 삽입
+  var gnb = $.query('.gnb');
+  // $.insertBefore(button, gnb);
+
+  // gnb 요소의 첫번째 자식 노드로 버튼을 추가
+  // $.prepend(gnb, button);
+
+  // console.log( $.isElNode(button) );
+
+  // gnb 요소의 뒤에 버튼 요소를 삽입
+  $.insertAfter(button, $.query('ul', gnb));
+
+  button.onclick = function() {
+    console.log('clicked button');
+    // 이벤트 속성에 null을 대입함으로서
+    // 이벤트 제거
+    this.onclick = null;
+    // 한 번 클릭이 발생한 이후
+    // 사용자는 더 이상 버튼을 클릭할 수 없음을
+    // 시각적으로 제공
+    $.attr(this, 'disabled', 'disabled');
+  };
 
 })(this, this.yamoo9);
