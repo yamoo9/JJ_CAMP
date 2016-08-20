@@ -513,6 +513,25 @@
     }
   }
 
+  // 이벤트 제어
+  function on(el_node, event_type, event_handler) {
+    // 전달인자 검증
+    if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+    if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+    if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+    // 구형 이벤트 모델
+    el_node['on'+event_type] = event_handler;
+  }
+  function off(el_node, event_type, event_handler) {
+    // 전달인자 검증
+    if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+    if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+    if ( type(event_handler) === 'function' || type(event_handler) === 'null' ) {
+      // 구형 이벤트 모델
+      el_node['on'+event_type] = null;
+    }
+  }
+
   global.yamoo9 = {
     // 문서객체모델 선택
     'query':        query,
@@ -527,13 +546,14 @@
     'nextEl':       nextEl,
     'firstEl':      firstEl,
     'lastEl':       lastEl,
+    // 이벤트 제어(구형, 진보 이벤트 모델 모두 지원 업그레이드)
+    'on':           on,
+    'off':          off,
     // 문서객체 조작
     'prepend':      prepend,
     'append':       append,
     'insertAfter':  insertAfter,
-    // 'after':        after,
     'insertBefore': insertBefore,
-    // 'before':       before,
     // 문서객체 속성 제어
     'attr':         attr,
     'hasAttr':      hasAttr,

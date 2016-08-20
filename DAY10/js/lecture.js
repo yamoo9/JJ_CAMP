@@ -5,34 +5,36 @@
 // 스코프 체이닝
 // 클로저
 // ----------------------------------------
+(function(){
 
-// 전역 컨텍스트
-// console.log(this);
+  // 전역 컨텍스트
+  // console.log(this);
 
-function localScope() {
-  // ECMAScript 5 Edition
-  // 엄격 모드
-  'use strict';
-  // 전역과 구분이 되는 지역 컨텍스트 생성
-  // console.log(this); // undefined
-}
+  function localScope() {
+    // ECMAScript 5 Edition
+    // 엄격 모드
+    'use strict';
+    // 전역과 구분이 되는 지역 컨텍스트 생성
+    // console.log(this); // undefined
+  }
 
-localScope(); // 이 함수는 누가 실행했는가?
-window.localScope(); // this === window object
-this.localScope();
+  localScope(); // 이 함수는 누가 실행했는가?
+  window.localScope(); // this === window object
+  this.localScope();
 
-// this 키워드 -> 컨텍스트 참조 변수
+  // this 키워드 -> 컨텍스트 참조 변수
 
-// sandbox(function() {
-//   var x = 'x position';
-//   sandbox(function() {
-//     var y = 'y position';
-//     sandbox(function() {
-//       var z = 'z position';
-//       console.log(x, y, z);
-//     });
-//   });
-// });
+  // sandbox(function() {
+  //   var x = 'x position';
+  //   sandbox(function() {
+  //     var y = 'y position';
+  //     sandbox(function() {
+  //       var z = 'z position';
+  //       console.log(x, y, z);
+  //     });
+  //   });
+  // });
+});
 
 // ----------------------------------------
 
@@ -128,20 +130,23 @@ this.localScope();
   // gnb 요소의 첫번째 자식 노드로 버튼을 추가
   // $.prepend(gnb, button);
 
-  // console.log( $.isElNode(button) );
-
   // gnb 요소의 뒤에 버튼 요소를 삽입
+  // $.insertAfter(button, gnb);
+
+  // gnb ul 요소 뒤에 버튼 요소 삽입
   $.insertAfter(button, $.query('ul', gnb));
 
-  button.onclick = function() {
+  var oneClick = function() {
     console.log('clicked button');
     // 이벤트 속성에 null을 대입함으로서
     // 이벤트 제거
-    this.onclick = null;
+    $.off(this, 'click', null);
     // 한 번 클릭이 발생한 이후
     // 사용자는 더 이상 버튼을 클릭할 수 없음을
     // 시각적으로 제공
     $.attr(this, 'disabled', 'disabled');
   };
+
+  $.on(button, 'click', oneClick);
 
 })(this, this.yamoo9);
