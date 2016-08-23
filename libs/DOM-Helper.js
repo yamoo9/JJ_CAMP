@@ -103,10 +103,21 @@
     }
   }
 
-  function parentEl(el, depth) {
-    if ( !isElNode(el) ) {
-      checkError('1번째 전달인자는 요소노드여야 합니다.');
+  function createNode(node, text) {
+    var _return_obj;
+    if (!text) {
+      return createEl(node);
+    } else {
+      var created_node = createEl(node);
+      created_node.appendChild(createText(text));
+      return created_node;
     }
+  }
+
+  function parentEl(el, depth) {
+    // if ( !isElNode(el) ) {
+    //   checkError('1번째 전달인자는 요소노드여야 합니다.');
+    // }
     depth && validateData(depth, 'number');
     depth = depth || 1;
     do {
@@ -463,19 +474,173 @@
   }
   removeUnit.unit = null;
 
+  // DOM 조작에 도움을 주는 함수 제작
+  function append(parent_node, child_node) {
+    if ( !isElNode(parent_node) ) {
+      checkError('전달된 인자는 요소노드여야 합니다.');
+    }
+    parent_node.appendChild(child_node);
+  }
+
+  function prepend(parent_node, child_node) {
+    if ( !isElNode(parent_node) ) {
+      checkError('전달된 인자는 요소노드여야 합니다.');
+    }
+    var firstChild = parent_node.firstChild; // 없다면 null, undefined
+    // 부모 요소노드(parent_node)에 자식이 존재하는가? 검증
+    // 조건1) 만약 자식노드가 존재한다면?
+    // 자식노드 앞에 child_node를 삽입힌다.
+    if ( firstChild ) {
+      insertBefore(child_node, firstChild);
+    }
+    // 조건2) 만약 자식노드가 존재하지않는다면?
+    // parent_node의 마지막 자식노드로 삽입한다.
+    else {
+      append(parent_node, child_node);
+    }
+  }
+
+  function insertBefore(insert_node, target_node) {
+    parentEl(target_node).insertBefore(insert_node, target_node);
+  }
+
+  function insertAfter(insert_node, target_node) {
+    var next_node = target_node.nextSibling;
+    if ( next_node ) {
+      insertBefore(insert_node, next_node);
+    } else {
+      append(parentEl(target_node), insert_node);
+    }
+  }
+
+  // 아래 코드를 매번 물어보지 않는 효율적인 코드로 변경
+  var on = (function(){
+    var _on;
+    // 진보 이벤트 모델 W3C, IE 9
+    if (global.addEventListener) {
+      _on = function(el_node, event_type, event_handler, capture) {
+        // capture 초기 값 설정
+        capture = capture || false;
+        // 전달인자 검증
+        if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+        if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+        if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+        el_node.addEventListener(event_type, event_handler, capture);
+      };
+    }
+    // 진보 이벤트 모델 MS IE 6-8
+    else if (global.attachEvent) {
+      _on = function(el_node, event_type, event_handler) {
+        // 전달인자 검증
+        if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+        if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+        if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+        el_node.attachEvent('on' + event_type, event_handler);
+      };
+    }
+    // 구형 이벤트 모델
+    else {
+      _on = function(el_node, event_type, event_handler) {
+        // 전달인자 검증
+        if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+        if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+        if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+        el_node['on'+event_type] = event_handler;
+      };
+    }
+    return _on;
+  })();
+
+  // 이벤트 제어
+  // function on(el_node, event_type, event_handler, capture) {
+  //   // capture 초기 값 설정
+  //   capture = type(capture) === 'undefined' ? false : true;
+  //   // 전달인자 검증
+  //   if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+  //   if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+  //   if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+  //   // 진보 이벤트 모델 W3C, IE 9
+  //   if ( el_node.addEventListener ) {
+  //     el_node.addEventListener(event_type, event_handler, capture);
+  //   }
+  //   // 진보 이벤트 모델 MS IE 6-8
+  //   else if (el_node.attachEvent) {
+  //     el_node.attachEvent('on' + event_type, event_handler);
+  //   } else {
+  //     // 구형 이벤트 모델
+  //     el_node['on'+event_type] = event_handler;
+  //   }
+  // }
+
+  var off = (function(){
+    var _off;
+    // 진보 이벤트 모델 W3C, IE 9
+    if (global.removeEventListener) {
+      _off = function(el_node, event_type, event_handler, capture) {
+        // capture 초기 값 설정
+        capture = type(capture) === 'undefined' ? false : true;
+        // 전달인자 검증
+        if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+        if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+        if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+        el_node.removeEventListener(event_type, event_handler, capture);
+      };
+    }
+    // 진보 이벤트 모델 MS IE 6-8
+    else if (global.detachEvent) {
+      _off = function(el_node, event_type, event_handler) {
+        // 전달인자 검증
+        if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+        if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+        if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+        el_node.detachEvent('on' + event_type, event_handler);
+      };
+    }
+    // 구형 이벤트 모델
+    else {
+      _off = function(el_node, event_type, event_handler) {
+        // 전달인자 검증
+        if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+        if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+        if ( type(event_handler) !== 'function' ) { checkError('전달된 3번째 인자는 함수 유형이어야 합니다.'); }
+        el_node['on'+event_type] = null;
+      };
+    }
+    return _off;
+  })();
+
+  // function off(el_node, event_type, event_handler) {
+  //   // 전달인자 검증
+  //   if ( !isElNode(el_node) ) { checkError('전달된 인자는 요소노드여야 합니다.'); }
+  //   if ( type(event_type) !== 'string' ) { checkError('전달된 2번째 인자는 텍스트 유형이어야 합니다.'); }
+  //   if ( type(event_handler) === 'function' || type(event_handler) === 'null' ) {
+  //     // 구형 이벤트 모델
+  //     el_node['on'+event_type] = null;
+  //   }
+  // }
+
   global.yamoo9 = {
     // 문서객체모델 선택
     'query':        query,
     'queryAll':     queryAll,
     // 문서객체 생성
-    'createEl':     createEl,
-    'createText':   createText,
+    // 'createEl':     createEl,
+    // 'createText':   createText,
+    'createNode': createNode,
     // 문서객체 탐색
     'parentEl':     parentEl,
     'prevEl':       prevEl,
     'nextEl':       nextEl,
     'firstEl':      firstEl,
     'lastEl':       lastEl,
+    // 이벤트 제어(구형, 진보 이벤트 모델 모두 지원 업그레이드)
+    'on':           on,
+    'off':          off,
+    // 문서객체 조작
+    'prepend':      prepend,
+    'append':       append,
+    'insertAfter':  insertAfter,
+    'insertBefore': insertBefore,
     // 문서객체 속성 제어
     'attr':         attr,
     'hasAttr':      hasAttr,
