@@ -20,7 +20,7 @@
       return new y9(selector);
     }
     // 객체 자신을 초기화
-    this.init();
+    this.init(selector);
     // 암묵적으로 생성된 객체를 반환
     // return this;
   };
@@ -41,6 +41,7 @@
       _merge(this, method);
     }
   };
+  // static methods 확장
   y9.include({
     'each': function(o, fn) {
       if ( this.type(fn) !== 'function' ) { fn = function(){}; }
@@ -68,18 +69,32 @@
     },
     'isArray': function(o) {
       return this.type(o) === 'array';
+    },
+    'extend': function() {
+      var l = arguments.length;
+      while( arguments[--l] ) {
+        var o1 = arguments[l-1];
+        var o2 = arguments[l];
+        if (o1) { _merge(o1, o2); }
+      }
+      return arguments[0];
     }
   });
-
-
 
   // 생성자 함수의 프로토타입 객체
   y9.prototype = {
     // 생성자 설정
     'constructor': y9,
     // 초기화
-    'init': function() {}
+    'init': function(selector) {
+      this.els = y9.makeArray( global.document.querySelectorAll(selector) );
+    },
+    // 프로토타입 객체 확장 메소드
+    'extend': function(o) {
+      y9.extend(y9.prototype, o);
+    }
   };
+
   // 생성자 함수를 외부에 공개
   global.y9 = y9;
   // 별칭 설정
