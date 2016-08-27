@@ -6,26 +6,36 @@
   var xhr = new XHR();
   // 생성된 XHR 객체 검토
   // console.log('xhr.open:', !!xhr.open);
-  // 동기(Syncronous)적으로 통신하는 방법 사용
-  xhr.open('GET', 'data/data.txt', false);
+  // 동기(Syncronous)적으로 통신하는 방법 사용 [권장 X]
+  // xhr.open('GET', 'data/data.txt', false);
+  // 비동기(Asyncronous) 통신 방법
+  // xhr.open('GET', 'data/data.txt', true);
+  xhr.open('GET', 'data/data.txt');
   // console.log('xhr.send:', !!xhr.send);
   xhr.send();
 
-  // Ajax 통신으로 가져온 데이터를 뿌릴 컨테이너 요소
-  var container_p = document.querySelector('.ajax-container p');
+  // 비동기 통신을 위한 이벤트 구문 작성
+  xhr.onreadystatechange = function() {
+    if ( this.status === 200 && this.readyState === 4 ) {
+      var data = this.response.split('.');
+      var template_html = [];
+      for ( var text, i=0, l=data.length; i<l; i++ ) {
+        text = data[i];
+        if ( text.trim() !== '' ) {
+          template_html.push( '<p>' + text + '.</p>' );
+        }
+      }
+      template_html = template_html.join('');
+      container.innerHTML = template_html;
+    } else {
+      container_p.innerHTML = '아무래도... 통신에 실패한 듯 합니다. ㅠㅡㅠ';
+    }
+  };
 
-  // 데이터를 받아온 후에 처리
-  switch ( xhr.status ) {
-    case 200:
-      // console.log('전달 받은 데이터: ', xhr.response);
-      // console.log('전달 받은 데이터: ', xhr.responseText);
-      container_p.innerHTML = xhr.responseText;
-    break;
-    case 404:
-    case 500:
-      // 통신에 실패하면 아래 코드 출력
-      console.info('아무래도... 통신에 실패한 듯 합니다. ㅠㅡㅠ');
-  }
+  // Ajax 통신으로 가져온 데이터를 뿌릴 컨테이너 요소
+  var container = document.querySelector('.ajax-container');
+  var container_p = container.querySelector('p');
+
 
 
 })(this, this.XMLHttpRequest);
