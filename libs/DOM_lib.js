@@ -82,18 +82,34 @@
   });
 
   // 생성자 함수의 프로토타입 객체
-  y9.prototype = {
+  y9.fn = y9.prototype = {
     // 생성자 설정
     'constructor': y9,
     // 초기화
-    'init': function(selector) {
-      this.els = y9.makeArray( global.document.querySelectorAll(selector) );
-    },
+    'init': (function(){
+      var els = [];
+      return function(selector) {
+        els = y9.makeArray( global.document.querySelectorAll(selector) );
+        y9.fn.getEls = function() { return els; };
+      };
+    })(),
     // 프로토타입 객체 확장 메소드
     'extend': function(o) {
-      y9.extend(y9.prototype, o);
+      y9.extend(y9.fn, o);
     }
   };
+
+  y9.fn.extend({
+    // 'find':
+    // 'eq':
+    // 'each':
+    // 'on':
+    // 'off':
+    // 'css':
+    // 'attr':
+    // 'prop':
+    // 'prepend':
+  });
 
   // 생성자 함수를 외부에 공개
   global.y9 = y9;
