@@ -29,3 +29,47 @@
   // console.log('window.driver:', global.driver);
 
 })(this);
+
+// 생성자 함수와 프로토타입 객체
+(function(global){
+  'use strict';
+
+  // [상위 객체 생성자 함수]
+  function superF() {}
+  superF.prototype.look = function() { console.log('보다'); };
+
+  // --------------------------------------------------------------
+
+  // var sf = new superF();
+  // sf.look(); // 프로토타입 객체의 능력 사용
+
+  // --------------------------------------------------------------
+
+  // [하위 객체 생성자 함수]
+  function F() {}
+  // 생성자 함수의 .prototype 속성에 연결된 원형(Prototype) 객체
+  console.log(F.prototype);
+
+  // --------------------------------------------------------------
+
+  // [상속]
+  // 상위 객체의 능력을 하위 객체가 물려 받는 것.
+  // 다른 객체 생성자 함수 정의
+  // superF.prototype의 능력을 F.prototype에 상속
+  F.prototype = new superF(); // superF{}
+  F.prototype.constructor = F;
+
+  // 상속을 추상화한 헬퍼 함수
+  function inherit(F, superF) {
+    F.prototype = new superF();
+    F.prototype.constructor = F;
+  }
+
+  // --------------------------------------------------------------
+
+  // 생성자 함수를 사용하여 생성한 객체(Instance)
+  var f = new F();
+  f.look();
+  console.log(f);
+
+})(this);
