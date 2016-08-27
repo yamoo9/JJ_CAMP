@@ -56,14 +56,61 @@
   // 상위 객체의 능력을 하위 객체가 물려 받는 것.
   // 다른 객체 생성자 함수 정의
   // superF.prototype의 능력을 F.prototype에 상속
-  F.prototype = new superF(); // superF{}
-  F.prototype.constructor = F;
+  // F.prototype = new superF(); // superF{}
+  // F.prototype.constructor = F;
 
-  // 상속을 추상화한 헬퍼 함수
-  function inherit(F, superF) {
-    F.prototype = new superF();
-    F.prototype.constructor = F;
+  // 상속 과정을 추상화한 헬퍼 함수
+  // ECMAScript 3rd Edition
+  function inherit(klass, superKlass) {
+    klass.prototype = new superKlass();
+    klass.prototype.constructor = klass;
   }
+
+  // ECMAScript 5th Edition
+  function inherit(klass, superKlass) {
+    var type = Object.prototype.toString.call(superKlass).slice(8,-1).toLowerCase();
+    if ( type !== 'function' || type !== 'null' ) {
+      throw new Error('superKlass는 반드시 함수, 또는 null 데이터 유형이어야 합니다.');
+    }
+    klass.prototype = Object.create(superKlass && superKlass.prototype, {
+      'constructor': {
+        'enumerable': false,
+        'writable': true,
+        'value': klass,
+        'configurable': true
+      }
+    });
+    if (superKlass) {
+      Object.setPrototypeOf ? Object.setPrototypeOf(klass, superKlass) : klass.__proto__= superKlass;
+    }
+  }
+
+  // Babel ES5 컴파일러의 _inherits
+  // function _inherits(subClass, superClass) {
+  //   if (typeof superClass !== "function" && superClass !== null) {
+  //     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  //   }
+  //   subClass.prototype = Object.create(superClass && superClass.prototype, {
+  //     constructor: {
+  //       value: subClass,
+  //       enumerable: false,
+  //       writable: true,
+  //       configurable: true
+  //     }
+  //   });
+  //   if (superClass)
+  //     Object.setPrototypeOf ?
+  //       Object.setPrototypeOf(subClass, superClass) :
+  //       subClass.__proto__ = superClass;
+  // }
+
+  inherit(F, superF);
+
+  // ECMAScript 2015(6th) Edition
+  // 상속을 언어 차원에서 지원
+  // class를 지원, super 키워드 사용
+  // class SuperF {}
+  // class F extends SuperF {}
 
   // --------------------------------------------------------------
 
