@@ -42,7 +42,10 @@
       // // 힘들어 ㅠㅡㅠ 포기....
       // --------------------------------------------------------------
       // JSON 요청
-      global.str = this.response;
+      var people = JSON.parse(this.response).results;
+      for (var person of people) {
+        console.log(person.email);
+      }
     } else {
       container_p.innerHTML = '아무래도... 통신에 실패한 듯 합니다. ㅠㅡㅠ';
     }
