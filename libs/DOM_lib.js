@@ -91,6 +91,9 @@
       return function(selector) {
         els = y9.makeArray( global.document.querySelectorAll(selector) );
         y9.fn.getEls = function() { return els; };
+        y9.fn.setEls = function(value) {
+          els = value;
+        };
       };
     })(),
     // 프로토타입 객체 확장 메소드
@@ -99,7 +102,48 @@
     }
   };
 
+  // y9 생성자 함수의 프로토타입(원형) 객체 확장(능력 설정)
   y9.fn.extend({
+    // parent 찾기
+    'parent': function() {
+      var _this = this;
+      var els = _this.getEls();
+      y9.each(els, function(el, idx) {
+        _this.setEls( [el.parentNode] );
+      });
+      return this;
+    },
+
+    'hasClass': function() {
+
+    },
+
+    'addClass': (function(){
+      var _addClass;
+      if ( 'classList' in HTMLElement.prototype ) {
+        _addClass = function(class_name) {
+          var _this = this;
+          y9.each(_this.getEls(), function(el, idx) {
+            if (!el.classList.contains(class_name)) {
+              el.classList.add(class_name);
+            }
+          });
+          return _this;
+        };
+      } else {
+        _addClass = function(class_name) {
+          var _this = this;
+          y9.each(_this.getEls(), function(el, idx) {
+            if ( !_this.hasClass(class_name) ) {
+              var pre_class_value = el.getAttribute('class') || '';
+              el.setAttribute('class', (pre_class_value + ' ' + class_name).trim());
+            }
+          });
+          return _this;
+        };
+      }
+      return _addClass;
+    })()
     // 'find':
     // 'eq':
     // 'each':
