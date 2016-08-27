@@ -108,9 +108,11 @@
     'parent': function() {
       var _this = this;
       var els = _this.getEls();
+      var parents = [];
       y9.each(els, function(el, idx) {
-        _this.setEls( [el.parentNode] );
+        parents.push( el.parentNode );
       });
+      _this.setEls( parents );
       return this;
     },
 
