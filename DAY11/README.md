@@ -22,12 +22,12 @@
 
 -
 
-### 3. jQuery 라이브러리
+### 4. jQuery 라이브러리
 
 jQuery 라이브러리 사용법
 
 -
 
-### 4. jQuery 플러그인
+### 5. jQuery 플러그인
 
 jQuery 플러그인 개발 방법
