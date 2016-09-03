@@ -71,13 +71,18 @@
       return this.type(o) === 'array';
     },
     'extend': function() {
-      var l = arguments.length;
-      while( arguments[--l] ) {
-        var o1 = arguments[l-1];
-        var o2 = arguments[l];
-        if (o1) { _merge(o1, o2); }
+      var composite_obj = {};
+      for ( var i=0, l=arguments.length; i<l; i++ ) {
+        _merge(composite_obj, arguments[i]);
       }
-      return arguments[0];
+      return composite_obj;
+      // var l = arguments.length;
+      // while( arguments[--l] ) {
+      //   var o1 = arguments[l-1];
+      //   var o2 = arguments[l];
+      //   if (o1) { _merge(o1, o2); }
+      // }
+      // return arguments[0];
     }
   });
 
