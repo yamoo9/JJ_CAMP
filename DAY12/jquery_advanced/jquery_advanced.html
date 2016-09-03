@@ -84,6 +84,7 @@
   // $want_div.prependTo('body');
 
   // [STEP 4] 객체를 생성함과 동시에 속성을 설정한다.
+  var $body = $(document.body);
   $('<div>', {
     'attr': {
       'id'    : 'page-container',
@@ -107,8 +108,33 @@
           '</ul>',
         '</nav>',
       '</div>'
-    ].join('')
-  }).prependTo('body');
+    ].join(''),
+    'on': {
+      'click': function(event) {
+        // 이벤트 위임이 발생 시에
+        var target = event.target;
+        switch( target.nodeName.toLowerCase() ) {
+          case 'a':
+            // <a>요소의 경우 기본 동작 차단
+            event.preventDefault();
+            // Vanilla JS
+            target.style.background = 'red';
+            target.style.color = 'white';
+          break;
+          case 'h1':
+            // Vanilla JS
+            target.style.cssText = 'color: maroon; background: yellow;'
+          break;
+          default:
+            // jQuery Instance Method
+            $(target).css({
+              'background': '#34c0ff',
+              'color': '#fff'
+            });
+        }
+      }
+    }
+  }).prependTo( $body );
 
 })(this, this.jQuery);
 </script>
