@@ -8,12 +8,109 @@
   <script>
   (function(global, $){
     'use strict';
-    $ || document.write('<script src="../../libs/jquery/dist/jquery.min.js"><\/script>');
+    /////////////////////////
+    // Aternate jQuery CDN //
+    /////////////////////////
+    $ || document.write('aua<\/script>');
+
+    //////////////////////
+    // hold Ready Event //
+    //////////////////////
+    // 명시적인 방법
+    // $(document).ready(initialization);
+    // 암묵적인 방법
+    // $() 팩토리 함수 (자바스크립트 팩토리 패턴을 사용하기 때문)
+    // 1. 문서 객체
+    // 2. CSS 선택자 문자열
+    // 3. HTML 코드 문자열
+    // 4. 함수 (ready 함수)
+    $(initialization);
+
+    // ready() 이벤트를 움켜쥐다(hold).
+    // $.holdReady(true); // 이벤트 실행을 바로 안 함.
+    $.holdReady(true);
+
+    // 2초 뒤에 움켜 쥐었던 ready() 이벤트를 풀어 코드를 실행
+    global.setTimeout(function() {
+      $.holdReady(false);
+    }, 2000);
+
+    // jQuery.eading.js 파일을 로드한 다음에
+    // ready() 구문을 실행시키겠다.
+    // $.getScript(
+    //   'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js',
+    //   function(script, status, jqXHR) {
+    //   // console.log('jQuery.easing.js 파일 로드 완료');
+    //     $.holdReady(false);
+    //   }
+    // );
+
+    // 애플리케이션 초기화 함수
+    function initialization() {
+      console.log('jQuery Ready!!!');
+    }
+
   })(this, this.jQuery);
   </script>
 </head>
 <body>
 
 
+<script>
+(function(global, $){
+  'use strict';
+  // 내부에 사용되는 코드는 이미
+  // 문서객체모델이 완료된 시점에서 실행
+
+  // 문서 객체를 생성과 동시에 문서의 요소 내부에 삽입
+  // var $want_div = $('<div>');
+
+  // [STEP 1] $want_div: jQuery 객체의 속성 추가
+  // $want_div.attr('class', 'wrapper');
+  // $want_div.attr('id', 'page-container');
+
+  // [STEP 2] 메소드 체이닝
+  // $want_div
+  //   .attr('class', 'wrapper')
+  //   .attr('id', 'page-container');
+
+  // [STEP 3] 메소드에 맵(Object Literal Expression) 전달
+  // $want_div.attr({
+  //   'id'    : 'page-container',
+  //   'class' : 'wrapper'
+  // });
+  // $want_div.addClass('wrapper');
+  // $want_div를 <body> 요소의 앞에(첫번째 자식 요소로) 추가(삽입)
+  // $want_div.prependTo('body');
+
+  // [STEP 4] 객체를 생성함과 동시에 속성을 설정한다.
+  $('<div>', {
+    'attr': {
+      'id'    : 'page-container',
+      'class' : 'wrapper'
+    },
+    // 'text': 'this is created division.'
+    'html': [
+      '<div class="inner-wrapper">',
+        '<h1>this is jQuery Element.</h1>',
+        '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate nesciunt assumenda eius omnis dolorum a doloribus repellendus sapiente explicabo atque tempore, eligendi quidem error tenetur enim? Dolorem provident autem nulla et sit libero suscipit recusandae. Sapiente aperiam hic debitis. Magnam fugit neque, blanditiis id accusamus in beatae a, at facilis! Fuga dicta iusto reiciendis ratione amet nulla explicabo impedit voluptatibus dolorem ex labore optio suscipit repellat ea praesentium culpa, possimus eaque pariatur repudiandae odit velit, totam a rerum. Beatae dicta magni sequi quibusdam molestiae commodi voluptatum, culpa autem laborum illum impedit reprehenderit quo vitae ipsam iusto libero nemo incidunt perferendis sit quis praesentium. Iste maiores odio sequi, officiis quia distinctio.</p>',
+        '<nav>',
+          '<ul>',
+            '<li><a href="">item1</a></li>',
+            '<li><a href="">item2</a></li>',
+            '<li><a href="">item3</a></li>',
+            '<li><a href="">item4</a></li>',
+            '<li><a href="">item5</a></li>',
+            '<li><a href="">item6</a></li>',
+            '<li><a href="">item7</a></li>',
+            '<li><a href="">item8</a></li>',
+          '</ul>',
+        '</nav>',
+      '</div>'
+    ].join('')
+  }).prependTo('body');
+
+})(this, this.jQuery);
+</script>
 </body>
 </html>
