@@ -14,8 +14,8 @@
   // xhr.open('GET', 'data/data.html');
   // xhr.open('GET', 'data/data.xml');
   xhr.open('GET', 'data/data.json');
-  // console.log('xhr.send:', !!xhr.send);
-  // xhr.send();
+  console.log('xhr.send:', !!xhr.send);
+  xhr.send();
 
   // 비동기 통신을 위한 이벤트 구문 작성
   xhr.onreadystatechange = function() {
