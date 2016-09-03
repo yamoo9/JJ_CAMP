@@ -4,8 +4,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>jQuery Advanced</title>
+  <style>
+    .active {
+      background: #ff0;
+    }
+  </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="../jquery_advanced/jquery.plugins/jquery.memory.js"></script>
+  <script src="../jquery_advanced/jquery.plugins/jquery.radioClass.js"></script>
   <script>
   (function(global, $){
     'use strict';
@@ -129,11 +135,13 @@
             // target.style.background = 'red';
             // target.style.color = 'white';
             // jQuery
-            $.$(target).css({
-              'background': 'red',
-              'color': 'white'
-            });
+            // $.$(target).css({
+            //   'background': 'red',
+            //   'color': 'white'
+            // });
+            $.$(target).parent().radioClass('active').attr('data-clicked', true);
             // [Bad] 클릭이 발생할 때마다 매번 this 컨텍스트 객체 내부에서 <a> 콜렉션을 찾는 것은 비용 낭비
+            // 참고 URL: http://webclub.tistory.com/138
             // var $links = $('a', this);
             // jQuery 플러그인을 제작해서 해당 문제를 해결
             // 메모리, 1회만 jQuery 팩토리를 사용
