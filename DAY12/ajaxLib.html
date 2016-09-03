@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>Ajax Library</title>
+  <script src="../libs/DOM_lib.js"></script>
+  <script>
+    // Ajax Library Code
+    (function(global, $){
+      // Library File
+      'use strict';
+
+      // window.y9 생성자 함수 객체의 정적 메소드 추가
+      $.include('ajax', function(){
+
+      });
+
+    })(this, this.y9);
+  </script>
+
+  <script>
+    (function(global, $){
+      // Action Code File
+      'use strict';
+
+      // $.ajax();
+      console.log(!!$.ajax);
+
+    })(this, this.y9);
+  </script>
+</head>
+<body>
+
+</body>
+</html>
