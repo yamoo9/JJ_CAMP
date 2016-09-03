@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Ajax Library</title>
   <!-- window.y9 {} 라이브러리 파일 -->
-  <script src="../libs/DOM_lib.js"></script>
+  <script src="../libs/DOM_lib.core.js"></script>
   <!-- window.y9 {} Ajax 모듈 파일 -->
   <script src="../libs/DOM_lib.ajax.js"></script>
   <!-- 사용자가 프로젝트에 작성하는 파일 -->
@@ -58,7 +58,15 @@
       /////////////////////////////////////
       $.getJSON('/DAY11/Ajax-SPA/data/data.json', function(data){
         for (var item of data.results) {
-          console.log(`${item.name.first} ${item.name.last}`);
+
+          // ECMAScript 2015
+          // String Template
+          // Sass 언어의 보간법(Interpolation)과 유사
+          // console.log(`${item.name.first} ${item.name.last}`);
+
+          // ECMAScript 5 Edition에서 사용되던 문자열 접합 방법
+          console.log(item.name.first + ' ' + item.name.last);
+
         }
       });
 
