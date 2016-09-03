@@ -16,6 +16,7 @@
         'method'  : 'GET',
         'type'    : 'json', // json, xml, html, text
         'url'     : null,
+        'data'    : {},
         'success' : null,
         'error'   : null
       };
@@ -59,17 +60,14 @@
         // .open() 메소드를 사용해서 설정
         xhr.open( settings.method, settings.url );
         // .send() 사용
-        xhr.send();
+        xhr.send( settings.data );
         // onreadystatechange 이벤트 구문
         xhr.onreadystatechange = function() {
           if ( this.status === 200 && this.readyState === 4 ) {
-            console.log(settings);
             // 조건을 통해 통신이 성공했고, success가 존재한다면 success() 실행
             var response;
             switch(settings.type) {
               case 'text':
-                response = this.responseText;
-              break;
               case 'html':
                 response = this.response;
               break;
@@ -87,6 +85,23 @@
         }
       });
 
+      $.include({
+        'getXML': function(url, success) {
+          $.ajax({
+            'type': 'xml',
+            'url': url,
+            'success': success
+          });
+        },
+        'getJSON': function(url, success, error) {
+          $.ajax({
+            'url': url,
+            'success': success,
+            'error': error
+          });
+        }
+      });
+
     })(this, this.y9);
   </script>
   <!-- 사용자가 프로젝트에 작성하는 파일 -->
@@ -94,15 +109,44 @@
     (function(global, $){
       'use strict';
 
-      $.ajax(
-        '/DAY11/Ajax-SPA/data/data.html',
-        'html',
-        'GET',
-        function(data, settings){
-        console.log('this:', this);
-        console.log('data:', data);
-        console.log('settings:', settings);
+      // 문자로 전달할 경우
+      // $.ajax(
+      //   '/DAY11/Ajax-SPA/data/data.html',
+      //   'html',
+      //   'GET',
+      //   function(data, settings){
+      //     // console.log('this:', this);
+      //     console.log('data:', data);
+      //     // console.log('settings:', settings);
+      //   }
+      // );
+
+      // 객체로 전달할 경우
+      // $.post('/DAY11/Ajax-SPA/data/data.xml')
+      // $.getJSON('/DAY11/Ajax-SPA/data/data.xml');
+      // $.getXML('/DAY11/Ajax-SPA/data/data.xml', function(){
+
+      // });
+
+      $.getJSON('/DAY11/Ajax-SPA/data/data.json', function(data){
+        for (var item of data.results) {
+          console.log(`${item.name.first} ${item.name.last} `);
+        }
       });
+
+      // $.ajax({
+      //   'url': '/DAY11/Ajax-SPA/data/data.xml',
+      //   'type': 'xml',
+      //   // 'data': { 'name': 'y9', 'use': 'DOM Library' },
+      //   'success': function(data, settings){
+      //     // console.log('this:', this);
+      //     // console.log('data:', data);
+      //     // console.log('settings:', settings);
+      //     var xmlDoc = data;
+      //     var root = xmlDoc.firstChild;
+      //     console.log(root.firstElementChild.firstElementChild.firstChild.nodeValue);
+      //   }
+      // });
 
       // $.ajax({
       //   'url': '/DAY11/Ajax-SPA/data/data.html',
