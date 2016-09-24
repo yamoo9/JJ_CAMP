@@ -19,31 +19,37 @@
 // RWD 반응형 웹 디자인 적용을 위한 기기 감지 스크립팅
 // 브라우저의 문서가 로드되었을 때 1회 감지
 // 각 기기의 폭을 감지한 결과를 <html> 요소의 class 속성 값으로 처리
-var root = document.documentElement;
+var html = document.documentElement;
+
 var detect_classes = {
   'mobile': 800,
   'tablet': 1024,
   'desktop': 1280
 };
 
-// 조건 문
-// switch ~ case
-// if ~ else
-var device_width = window.innerWidth;
+function assignClassDetection() {
+  // <html> 요소의 class 속성 값을 가져온다.
+  var html_class = html.getAttribute('class');
+  if(!html_class || html_class === detectDeviceType() ) { return; } // 함수 종료
+  console.log('try code');
+}
 
-if(device_width < detect_classes.mobile) {
-  // console.log('m');
-  root.classList.add('mobile');
+function detectDeviceType() {
+  // 조건 문
+  // switch ~ case
+  // if ~ else
+  var device_width = window.innerWidth;
+  var type = null;
+
+  if( device_width < detect_classes.mobile ) { type = 'mobile'; }
+  else if ( device_width < detect_classes.tablet ) { type = 'tablet'; }
+  else if ( device_width < detect_classes.desktop ) { type = 'desktop'; }
+  else { type = 'wide'; }
+  return type;
 }
-else if ( device_width < detect_classes.tablet ) {
-  // console.log('t');
-  root.classList.add('tablet');
-}
-else if ( device_width < detect_classes.desktop ) {
-  // console.log('d');
-  root.classList.add('desktop');
-}
-else {
-  // console.log('w');
-  root.classList.add('wide');
-}
+
+// 초기 실행 시, 클래스 속성 설정
+html.classList.add( detectDeviceType() );
+
+// 사용자가 창 크기를 조정할 때
+window.onresize = assignClassDetection;
