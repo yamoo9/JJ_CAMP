@@ -1,11 +1,40 @@
 body {
-  min-width: 600px;
+  /*min-width: 600px;*/
   width: 80vw;
   margin-left: auto;
   margin-right: auto;
   font: 200 0.875rem/1.5 "Spoqa Han Sans", Sans-Serif;
 }
 
+body::before {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100vw;
+  font-size: 100px;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.mobile body::before {
+  content: 'mobile';
+}
+.tablet body::before {
+  content: 'tablet';
+}
+.desktop body::before {
+  content: 'desktop';
+}
+.wide body::before {
+  content: 'wide';
+}
+
 h1 {
   font-weight: inherit;
+}
+
+abbr {
+  cursor: help;
+  text-decoration: none;
+  font-weight: 700;
 }
