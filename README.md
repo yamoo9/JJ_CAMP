@@ -27,6 +27,12 @@ React.js, Angular.js 와 같은 JavaScript Framework 를 소개해드립니다.
 
 -
 
+### Pre-Survey :octocat:
+
+[프리서베이](http://goo.gl/forms/r6IpNiCrRxHM3bMA3)
+
+-
+
 ### :last_quarter_moon_with_face: JavaScript 시작하기
 - 클라이언트 자바스크립트 환경
 - 브라우저객체모델(BOM)
@@ -93,9 +99,3 @@ React.js, Angular.js 와 같은 JavaScript Framework 를 소개해드립니다.
 ### :last_quarter_moon_with_face: JavaScript/jQuery 그 다음은? JavaScript 라이브러리/ 프레임워크
 - AngularJS 프레임워크 [다음 과정 소개]
 - ReactJS 라이브러리 [다음 과정 소개]
-
--
-
-### Pre-Survey :octocat:
-
-- [프리서베이](http://goo.gl/forms/r6IpNiCrRxHM3bMA3)
