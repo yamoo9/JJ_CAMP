@@ -29,6 +29,8 @@ React.js, Angular.js 와 같은 JavaScript Framework 를 소개해드립니다.
 
 ### Pre-Survey :octocat:
 
+수강생 수준을 파악하여 진도 난이도를 설정하기 위한 사전 설문.
+
 [프리서베이](http://goo.gl/forms/r6IpNiCrRxHM3bMA3)
 
 -
