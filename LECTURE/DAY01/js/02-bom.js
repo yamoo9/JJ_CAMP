@@ -30,8 +30,16 @@ var detect_classes = {
 function assignClassDetection() {
   // <html> 요소의 class 속성 값을 가져온다.
   var html_class = html.getAttribute('class');
-  if(!html_class || html_class === detectDeviceType() ) { return; } // 함수 종료
-  console.log('try code');
+  var current_class = detectDeviceType();
+  if(!html_class || assignClassDetection.old_class === current_class ) { return; } // 함수 종료
+  // 기존 클래스 속성 값을 제거한다.
+  if ( html.classList.contains( assignClassDetection.old_class ) ) {
+    html.classList.remove( assignClassDetection.old_class );
+  }
+  // 현재 설정된 class 값을 <html> 요소의 class 속성으로 할당한다.
+  html.classList.add(current_class);
+  // 현재 설정된 class 값을 기억한다.
+  assignClassDetection.old_class = current_class;
 }
 
 function detectDeviceType() {
@@ -49,7 +57,10 @@ function detectDeviceType() {
 }
 
 // 초기 실행 시, 클래스 속성 설정
-html.classList.add( detectDeviceType() );
+var init_class = detectDeviceType();
+html.classList.add( init_class );
+// 초기 값 할당
+assignClassDetection.old_class = init_class;
 
 // 사용자가 창 크기를 조정할 때
 window.onresize = assignClassDetection;
