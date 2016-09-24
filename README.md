@@ -1,6 +1,6 @@
 ###### Fast Campus
 
-## :bulb: [JavaScript & jQuery 정복 CAMP](http://www.fastcampus.co.kr/dev_camp_jst/)
+## :bulb: JavaScript & jQuery 정복 CAMP [:link:](http://www.fastcampus.co.kr/dev_camp_jst/)
 
 ![JJ Camp](Assets/cover.jpg)
 
