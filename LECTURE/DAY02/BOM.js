@@ -61,21 +61,54 @@ var navigator = window.navigator;
 function detectPlatform() {
   var is_window = navigator.platform.toLowerCase().indexOf('win') > -1; // 'mac', 'win'
   var identifier = is_window ? 'win' : 'mac';
+  assignHtmlClass(identifier);
+}
+
+function assignHtmlClass(identifier) {
+  if ( !html ) { html = document.documentElement; }
+  // 문자 유형만 전달 가능
+  if( typeof identifier !== 'string' ) { throw new Error('문자 유형으로 전달인자를 설정해주세요.'); }
   var existed_class = html.className !== '';
-  // console.log('existed_class:', existed_class);
-  // console.log('is_window:', is_window);
-  // Window OS가 맞다면, 'win' 클래스 속성을 추가
-  // if ( is_window ) {
-  //   identifier = ' win';
-  // }
-  // // Window OS가 아니라면, 'mac' 클래스 속성을 추가
-  // else {
-  //   identifier = ' mac';
-  // }
-  // var space = '';
-  // if ( existed_class ) { space = ' '; }
-  // html.className += space + identifier;
   html.className += (existed_class ? ' ' : '') + identifier;
 }
-// 함수 실행
-detectPlatform();
+
+function detection(device) {
+  // 문자 유형만 전달 가능
+  if( typeof device !== 'string' ) { throw new Error('문자 유형으로 전달인자를 설정해주세요.'); }
+  return navigator.userAgent.toLowerCase().indexOf(device) > -1;
+}
+
+function detectMobileDevice(device) {
+  if ( detection(device) ) {
+    assignHtmlClass(device);
+  }
+}
+
+function loopDetectDevices(checking_devices) {
+  var is_string = typeof checking_devices === 'string';
+  // 검증
+  // checking_devices 전달인자가 존재하는가?
+  if ( !checking_devices ) { throw new Error('전달인자는 필수입니다.'); }
+  // 배열 또는 문자 유형인가?
+  // if (
+  //   !is_string ||
+  //   !(checking_devices instanceof Array)
+  // ) { throw new Error('전달인자는 문자 또는 배열만 가능합니다.'); }
+  // 만약 문자라면? 처리
+  if (is_string) {
+    // 문자 데이터 유형을 배열 데이터 유형으로 변경
+    checking_devices = checking_devices.split(' ');
+  }
+  var device_len = checking_devices.length;
+  while(device_len) {
+    device_len = device_len - 1;
+    detectMobileDevice(checking_devices[device_len]);
+  }
+}
+
+// TODO: 모바일 기기인지? 어떤 기기인지? 감지
+// navigator.userAgent; 웹 브라우저의 식별자를 문자열로 반환
+// iphone ipad android nexus sm-g ..
+
+loopDetectDevices( 'iemobile kindle iphone ipad android nexus sm-g' );
+// loopDetectDevices( ['iemobile','kindle','iphone','ipad','android','nexus','sm-g'] );
