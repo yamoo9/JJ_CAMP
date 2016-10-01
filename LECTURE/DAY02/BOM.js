@@ -38,6 +38,9 @@ var orient = window.screen.orientation;
 // };
 
 
+
+
+
 // ------------------------------------------------------------
 // Navigator 객체
 // 웹 브라우저의 정보 제공
@@ -45,7 +48,7 @@ var orient = window.screen.orientation;
 // 플러그인은 무엇 무엇을 사용하나?
 // 웹 브라우저의 코드네임, 개발 엔진 ???
 
-var html = document.documentElement;
+var html      = document.documentElement;
 var navigator = window.navigator;
 // navigation directory
 // console.log('navigator.platform:', navigator.platform);
@@ -57,17 +60,22 @@ var navigator = window.navigator;
 
 function detectPlatform() {
   var is_window = navigator.platform.toLowerCase().indexOf('win') > -1; // 'mac', 'win'
-  var identifier = '';
+  var identifier = is_window ? 'win' : 'mac';
+  var existed_class = html.className !== '';
+  // console.log('existed_class:', existed_class);
   // console.log('is_window:', is_window);
   // Window OS가 맞다면, 'win' 클래스 속성을 추가
-  if ( is_window ) {
-    identifier = ' win';
-  }
-  // Window OS가 아니라면, 'mac' 클래스 속성을 추가
-  else {
-    identifier = ' mac';
-  }
-  html.className += identifier;
+  // if ( is_window ) {
+  //   identifier = ' win';
+  // }
+  // // Window OS가 아니라면, 'mac' 클래스 속성을 추가
+  // else {
+  //   identifier = ' mac';
+  // }
+  // var space = '';
+  // if ( existed_class ) { space = ' '; }
+  // html.className += space + identifier;
+  html.className += (existed_class ? ' ' : '') + identifier;
 }
 // 함수 실행
 detectPlatform();
