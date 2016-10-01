@@ -4,166 +4,213 @@
 
 # DAY01
 
-### JavaScript 시작하기
+### 자바스크립트와 문서 객체 모델 & 프론트 엔드 개발
 
-- 클라이언트 자바스크립트 환경
-- 브라우저객체모델(BOM)
-- 문서객체모델(DOM) : 선택/탐색
-- 선택/탐색과 관련한 헬퍼 함수 만들기
+### 자바스크립트를 사용하여 동적으로 코드 생성/추가
 
--
+```js
+/*! fde.js © yamoo9.net, 2016 */
 
-### 우리가 정복해야 할 것!
+/** @function initialization */
+function initialization() {
+  // var body = document.getElementsByTagName('body').item(0); // XML DOM 방식
+  var body = document.body; // HTML DOM 방식
+  // 문서에서 <p> 요소를 찾아 변수에 참조
+  // 문서에서 첫번째 <p> 요소를 찾아온다.
+  var target_p = document.getElementsByTagName('p').item(0);
+  // console.log(target_p);
 
-[![DOM+Javascript](../../Assets/DOM+Javascript.jpg)](http://www.slideshare.net/drprolix/front-end-engineering-yui-gallery-and-your-future)
+  // 지연 시켜 호출 할 함수 설정
+  window.setTimeout(function() {
+    createHeadline('h1', 'JavaScript Log', target_p);
+    createHeadline('h2', 'JavaScript Star', target_p);
+  }, 2000);
 
--
+  var list = null;
 
-### 클라이언트 자바스크립트
+  window.setTimeout(function() {
+    list = createList('ul', 'IOT VR IT');
+    collection = createList('ol', 'HTML CSS JavaScript');
+    body.appendChild(list);
+    var t = body.firstElementChild;
+    t.parentNode.insertBefore(collection, t);
+  }, 4000);
 
-분류 | 설명
---- | ---
-자바스크립트 Core | 문법 기본 문법과 구조, 데이터 타입, 조건문, 반복문, 함수, 객체, 클래스(생성자, 프로토타입) 등
-자바스크립트 Core 라이브러리 | 자바스크립트에서 기본 제공되는 클래스(Number, String, Date, Math, Array, ..)
-자바스크립트 DOM(Document Object Model) | 노드(Node), 스타일, 속성, 이벤트, 위치 및 크기 등을 다룰 수 있는 다양한 기능이 포함
-자바스크립트 BOM(Browser Object Model) | 브라우저와 관련된 Window, Navagator, Location, History, Document, Screen 객체들이 포함
+}
 
--
+/** @function createHeadline */
+function createHeadline(h_lv, content, target) {
+  // 유효성 검사
+  if( typeof h_lv !== 'string' ) { throw new Error('첫번째 인자는 문자열이어야 한다.'); }
+  if( typeof content !== 'string' ) { throw new Error('두번째 인자도 문자열이어야 한다.'); }
+  if( target && target.nodeType !== 1 ) { throw new Error('세번째 인자는 요소노드여야 한다.'); }
+  // 단계 1.
+  // <h1> 요소를 생성하고,
+  var headline = document.createElement(h_lv);
+  // 텍스트 내용으로 `JavaScript Log` 라고하는 텍스트를 동적으로 생성한다.
+  var headline_content = document.createTextNode(content);
+  // 생성된 각 노드(Node) 검증
+  // console.log('headline:', headline);
+  // console.log('headline_content:', headline_content);
+  // 각 노드를 합치기(둘 중 하나는 부모 노드, 자식 노드가 되어야 함)
 
-#### BOM(브라우저 객체 모델) / DOM(문서 객체 모델)
+  // 단계 2.
+  // DOM API: ~ 자식으로 삽입
+  // 부모노드.appendChild(자식노드)
+  headline.appendChild(headline_content);
+  // 합쳐진 노드 결과 검증
+  // console.log('headline:', headline);
 
-![BOM-DOM](../../Assets/BOM-DOM.png)
+  // 단계 3.
+  // DOM API: ~ 앞에 삽입
+  // 목표노드.부모노드.insertBefore(삽입노드, 목표노드);
+  if ( target ) {
+    target.parentNode.insertBefore(headline, target);
+  }
+  return headline;
+}
 
-##### DOM이란?
+/** @function createList */
+function createList(list_type, contents, target) {
+  var categories;
+  // 유효성 검사
+  if ( typeof list_type !== 'string' ) { throw new Error('첫번째 인자는 문자열이어야 합니다.'); }
+  /**
+   * --------------------------------
+   * ul 생성
+   * li 생성 x3
+   * 콘텐츠 생성 x3
+   * li + 콘텐츠 접합 x3
+   * ul + li x3 접합
+   * ul > target_p 뒤에 삽입
+   */
 
-브라우저 화면에 보이는 요소를 조작하기 위한 기능으로 가득 차있는 각각의 라이브러리 덩어리로 이해할 수 있다.
-일반적으로 자바스크립트 DOM이나 DOM은 같은 의미로 사용. DOM에서 제공하는 일반적인 기능은 아래 이미지처럼 여러 개의 DOM 객체로 나누어져 구성된다.
+  // <ul>
+  //   <li>IOT</li>
+  //   <li>VR</li>
+  //   <li>IT</li>
+  // </ul>
+  if ( contents && typeof contents === 'string' ) {
+    categories = contents.split(' ');
+  }
+  if ( contents && contents instanceof Array ) {
+    categories = contents;
+  }
+  if ( target && target.nodeType !== 1 ) { throw new Error('세번째 인자는 요소노드여야 합니다.'); }
 
-![DOM](../../Assets/DOM.png)
+  // console.log(categories);
 
--
+  // Legacy 방법
+  // var a = 0, l = categories.length;
+  // for( ; a<l; a=a+1 ) {
+  //   console.log( categories[a], a );
+  // }
 
-###### [D] Document (문서)
+  // 크로스 브라우징 이슈: ES5 Shim JS Library
+  // Modern 방법
 
-문서 객체 모델은 문서가 없으면 동작하지 않는다. 웹에서 사용할 문서를 만들어 웹 브라우저에 출력하는 순간 DOM이 살아 움직이기 시작하며,
-이것은 작성된 웹 문서가 브라우저의 해석을 통해 객체로 변경되기 때문에 가능한 것이다.
+  var list = document.createElement(list_type);
 
--
+  categories.forEach(function(item, index) {
+    // console.log(item, index);
+    // <li>item</li>
+    var li = document.createElement('li');
+    var li_content = document.createTextNode(item);
+    li.appendChild(li_content);
+    // <list> 요소 내부에 삽입
+    list.appendChild(li);
+  });
 
-###### [O] Object (객체)
+  // console.log(list);
+  if ( target ) {
+    target.appendChild(list);
+  }
+  return list;
 
-자바스크립트 세상에는 3 종류의 객체가 존재한다.
+  // ES2015
+  // for (category of categories) {
+  //   console.log(category);
+  // }
+}
 
-1. 웹 브라우저가 제공하는 클라이언트 네이티브 객체
-1. 배열,수학,날짜와 같이 자바스크립트에서 이미 만들어진 코어 라이브러리 객체
-1. 사용자가 정의하는 커스텀 객체
 
-자바스크립트 초기에는 중요한 몇가지 주요 객체들이 스크립트 제작에 사용되었으며, 그 중 가장 기본적인 것이 윈도우 객체(window object)이다.
-이러한 객체는 웹 브라우저 창의 속성을 말하며, 이를 브라우저 객체모델(BOM, Browser Object Model)이라고 부른다.
-브라우저 객체 모델은 `window.open()` 또는 `navigator.userAgent` 같은 것을 말한다.
+// window.alert('excute javascript code');
+// initialization(); // 함수는 언제 실행되어야 하는가? -> 문서가 로드된 이후
 
-DOM은 웹 브라우저 창 안의 문서 내용을 다루는 문서(document) 객체가 대상이다.
+window.onload = initialization;
+```
 
-- `BOM` 웹 브라우저와 관련된 객체 및 속성.
-- `DOM` 웹 브라우저 창 안의 문서와 관련된 객체 및 속성.
+```js
+/*! bom.js © yamoo9.net, 2016 */
 
--
+// 브라우저를 구성하는 객체들
 
-###### [M] Model (모델)
+// 기존에 존재하던 객체들
+// window 객체
+// window.location 객체
+// window.screen 객체
+// window.navigator 객체
+// window.document 객체
+// window.history 객체
 
-DOM에서 사용하는 가장 중요한 규칙은 문서를 나뭇가지(tree)형 구조로 표시하는 것으로 이러한 구조도는 HTML에서 문서를 가장 잘 표현하는 방법이다.
-`<html>`은 모든 요소의 부모(Root Element)이며 `<head>`와 `<body>`는 형제 관계를 이루고 있고 이런 식으로 부모/자식 관계를 맺어가는 것이
-기본적인 **document 구조**. 이러한 형태를 **노드 트리**라 부른다.
+// ↓ HTML5에 추가된 객체들
+// window.navigator.geolocation 객체
+// window.localStorage 객체
+// window.sessionStorage 객체
 
-> **Node** : 어떤 연결망에서 특정 지점과 지점을 연결하는데 표시하는것을 말하며 네트워크는 노드의 집합을 뜻함.
 
-> 현실 세계에서 모든 것은 원자로 구성되어 있고, 원자는 세상의 노드라고 할 수 있으며 원자보다 작은 양성자나 전자 등도 노드라고 부를수 있다.
-> 마찬가지로 DOM 또한 노드의 집합이며, 문서라는 나무 위에 가지나 잎 같은 노드를 갖고 있는 것과 같다.
+// RWD 반응형 웹 디자인 적용을 위한 기기 감지 스크립팅
+// 브라우저의 문서가 로드되었을 때 1회 감지
+// 각 기기의 폭을 감지한 결과를 <html> 요소의 class 속성 값으로 처리
 
----
+// <html> 요소 참조
+var html = document.documentElement;
+// 감지 클래스 속성을 포함한 객체 정의
+var detect_classes = {
+  'mobile': 800,
+  'tablet': 1024,
+  'desktop': 1280
+};
 
-### DOM API: 문서 객체 선택과 탐색
+/** @function assignClassDetection - 감지된 클래스 속성 제거 및 추가 함수 */
+function assignClassDetection() {
+  // <html> 요소의 class 속성 값을 가져온다.
+  var html_class = html.getAttribute('class');
+  var current_class = detectDeviceType();
+  // 기존 클래스 속성과 달라진 경우에만 이 조건을 통과할 수 있다. (성능 이슈 해결)
+  if(!html_class || assignClassDetection.old_class === current_class ) { return; } // 함수 종료
+  // 기존 클래스 속성 값을 제거한다.
+  if ( html.classList.contains( assignClassDetection.old_class ) ) {
+    html.classList.remove( assignClassDetection.old_class );
+  }
+  // 현재 설정된 class 값을 <html> 요소의 class 속성으로 할당한다.
+  html.classList.add(current_class);
+  // 현재 설정된 class 값을 기억한다.
+  assignClassDetection.old_class = current_class;
+}
 
-HTML Parser는 `<script>` 요소를 만나면 더 이상 일을 안하고 쉰다.
-고로 `<head>` 내부에 `<script>` 요소를 사용하지 않을 것을 권장한다.
+/** @function detectDeviceType - 기기의 유형 감지 함수 */
+function detectDeviceType() {
+  // 조건 문
+  // switch ~ case
+  // if ~ else
+  var device_width = window.innerWidth;
+  var type = null;
 
--
+  if( device_width < detect_classes.mobile ) { type = 'mobile'; }
+  else if ( device_width < detect_classes.tablet ) { type = 'tablet'; }
+  else if ( device_width < detect_classes.desktop ) { type = 'desktop'; }
+  else { type = 'wide'; }
+  return type;
+}
 
-### 변수 정리
+// 초기 class 속성 가져옴
+var init_class = detectDeviceType();
+// 초기 실행 시, <html> 요소에 class 속성 설정
+html.classList.add( init_class );
+// 초기 class 속성 값을 assignClassDetection 함수에 메모이제이션(기억)
+assignClassDetection.old_class = init_class;
 
-- 변수란?<br> `데이터를 저장하는 기억(Memory) 공간`
-- 변수 이름 작성 규칙
-  - 반드시!!! 변수를 정의할 때는 `var` 키워드를 앞에 붙여준다.
-  - 숫자가 맨 앞에 오면 안된다.
-  - 변수 이름 사이에 공백이 있으면 안된다.
-  - `$`, `_`을 제외한 특수문자는 사용할 수 없다.
-  - 모두 대문자로 작성하지 말아라. (모두 대문자는 상수(`const`)를 작성할 경우 사용)
-- 변수를 선언하는 방법
-  - `var 변수이름;`
-- 변수에 값을 할당하는 방법
-  - `var 변수이름 = 데이터 값;`
-- 변수에 할당하거나 참조하는 데이터 유형
-  - 아래(↓) 데이터 유형 6가지 확인
-
-#### 자바스크립트 데이터 유형
-
-자바스크립트에서 사용되는 데이터 유형은 다음과 같다.
-
-###### 자바스크립트 주요 객체
-
-- 숫자 객체(`Number`)
-- 문자 객체(`String`)
-- 불린 객체(`Boolean`)
-- 배열 객체(`Array`)
-- 함수 객체(`Function`)
-- 객체(`Object`)
-
-###### 객체가 아닌 것들
-
-- `null`
-- `undefined`
-
--
-
-### 데이터 유형을 체크하는 방법
-
-- `typeof`
-- `instnaceof`
-- `constructor`
-
-※ `typeof`의 치명적 오류는 다음 시간에...
-
--
-
-#### 문서 객체 선택 API
-
-문서 객체에 접근하는 방법은 다음과 같다.
-
-- `.getElementById()`
-- `.getElementsByTagName()`
-- `.getElementsByClassName()`
-- `.querySelector()`
-- `.querySelectorAll()`
-
-※ `.querySelector()`/`.querySelectorAll()` IE 8+ 지원
-
--
-
-### 헬퍼 함수 『선택/탐색』
-
-다음 시간에...
-
--
-
-### 자바스크립트 기초가 부족하신 분들에게 유용한 도서/강의
-
-- [`JavaScript`, Codecademy](https://www.codecademy.com/learn/javascript)
-- [자바스크립트 온라인 무료 강의, 생활코딩](http://opentutorials.org/course/743)
-- [자바스크립트+jQuery 완전정복 스터디 1 기초편](http://book.naver.com/bookdb/book_detail.nhn?bid=9650891)
-
--
-
-### 웹폰트 로컬스토리지 저장 방법
-
-- [웹 폰트를 로컬 스토리지에 저장하는 기법 - 캐시 안정성 증가, 글꼴 깜빡임 현상 제거](http://mytory.net/2016/06/15/webfont-best-practice.html)
-- [스포카 한 산스(Spoqa Han Sans) 글꼴](http://spoqa.github.io/spoqa-han-sans/)
+// 사용자가 창 크기를 조정할 때
+window.onresize = assignClassDetection;
+```
