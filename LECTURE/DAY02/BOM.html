@@ -57,7 +57,13 @@ var linkClick = function(i) {
 for ( ; i<l; i++ ) {
   var link = demo_nav_links[i]; // 0
   // console.log('link'+i+':', link);
-  link.onclick = linkClick(i);
+  // link.onclick = linkClick(i);
+  link.onclick = (function(idx){
+    return function() {
+      console.log(idx);
+      return false;
+    };
+  }(i));
 }
 </script>
 </body>
