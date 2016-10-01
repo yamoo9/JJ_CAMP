@@ -151,9 +151,27 @@ function geoFail(error) {
 
 // 온라인 환경 확인
 var is_online = navigator.onLine;
-console.log('is_online:', is_online);
+// console.log('is_online:', is_online);
 
 
 // ------------------------------------------------------------
 // Location 객체
 
+var _location = window.location;
+
+// console.dir(_location);
+
+var hashes = 'home about works contact'.split(' ');
+
+function assignLocationhash(hash) {
+  _location.hash = '!' + hash;
+}
+
+for( var h = hashes.length, n; (n=hashes[--h]); ) {
+  window.setTimeout( (function(n){
+    return function() {
+      // console.log(n);
+      assignLocationhash(n);
+    };
+  })(n) , h * 1000);
+}

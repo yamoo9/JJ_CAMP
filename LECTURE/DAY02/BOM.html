@@ -4,9 +4,49 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>BOM : 웹 브라우저를 구성하는 객체들의 관계(Model)</title>
+  <link href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 6rem;
+      font: 14px/1.5 "Spoga Han Sans";
+    }
+    ul {
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    a {
+      text-decoration: none;
+      color: #34c0ff;
+    }
+  </style>
   <script src="BOM.js"></script>
 </head>
 <body>
 
+  <ul id="demo-nav">
+    <li><a href="">home</a></li>
+    <li><a href="">about</a></li>
+    <li><a href="">portfolio</a></li>
+    <li><a href="">contact</a></li>
+  </ul>
+
+<script>
+var demo_nav = document.getElementById('demo-nav');
+// console.log('demo_nav:', demo_nav);
+var demo_nav_links = demo_nav.getElementsByTagName('a');
+// console.log('demo_nav_links:', demo_nav_links);
+
+for ( var i=0, l=demo_nav_links.length; i<l; i++ ) {
+  var link = demo_nav_links[i];
+  // console.log('link'+i+':', link);
+  link.onclick = function() {
+    // 각 링크의 index를 콘솔에 출력하라.
+    console.log(i); // 0, 1, 2, 3
+    // 링크를 클릭했을 때 브라우저의 기본 동작을 차단
+    return false;
+  };
+}
+</script>
 </body>
 </html>
