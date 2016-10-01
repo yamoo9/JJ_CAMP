@@ -43,15 +43,21 @@ var demo_nav_links = demo_nav.getElementsByTagName('a');
 
 var i=0, l=demo_nav_links.length; // 호이스트 현상: 1회 수행
 
+var linkClick = function(i) {
+  // 각 링크의 index를 콘솔에 출력하라.
+  // console.log(i); // 0, 1, 2, 3 ???? 4
+  // 링크를 클릭했을 때 브라우저의 기본 동작을 차단
+  // return false;
+  return function() {
+    console.log(i);
+    return false;
+  };
+};
+
 for ( ; i<l; i++ ) {
   var link = demo_nav_links[i]; // 0
   // console.log('link'+i+':', link);
-  link.onclick = function() {
-    // 각 링크의 index를 콘솔에 출력하라.
-    console.log(i); // 0, 1, 2, 3 ???? 4
-    // 링크를 클릭했을 때 브라우저의 기본 동작을 차단
-    return false;
-  };
+  link.onclick = linkClick(i);
 }
 </script>
 </body>
