@@ -5,8 +5,21 @@
 
 // 전역 객체 (Global Object)
 // Window 생성자(Contstructor) - 생성 -> 객체(Object, Instance)
-console.log('window:', window);
+// console.log('window:', window);
 
+// 기기의 픽셀 농도(Device Pixel Ratio)
+function detectDevicePixelRatio() {
+  var dpr         = window.devicePixelRatio || 1;
+  var is_retina   = dpr === 2; // > 1.5
+  var is_retinaHD = dpr === 3;
+  assignHtmlClass('x' + dpr);
+  return {
+    'retina': is_retina,
+    'retinaHD': is_retinaHD
+  };
+}
+
+detectDevicePixelRatio();
 
 
 
@@ -107,7 +120,7 @@ function loopDetectDevices(checking_devices, divider) {
   }
 }
 
-
+detectPlatform();
 
 // TODO: 모바일 기기인지? 어떤 기기인지? 감지
 // navigator.userAgent; 웹 브라우저의 식별자를 문자열로 반환
@@ -117,3 +130,30 @@ function loopDetectDevices(checking_devices, divider) {
 loopDetectDevices( 'iemobile kindle iphone ipad android nexus sm-g' );
 // loopDetectDevices( 'iemobile,kindle,iphone,ipad,android,nexus,sm-g', ',' );
 // loopDetectDevices( ['iemobile','kindle','iphone','ipad','android','nexus','sm-g'] );
+
+
+// 지도 기반 서비스를 활용하기 위한 geolocation 객체
+var geo = navigator.geolocation;
+// geo.getCurrentPosition(geoSuccess, geoFail);
+
+function geoSuccess(position) {
+  console.log('지도 위도/경도 좌표 가져오기 성공!');
+  console.dir('position:', position);
+  console.log('position.coords:', position.coords);
+  console.log('position.coords.accuracy:', position.coords.accuracy);
+  console.log('position.coords.latitude:', position.coords.latitude);
+  console.log('position.coords.longitude:', position.coords.longitude);
+}
+
+function geoFail(error) {
+  console.error('지도 위도/경도 좌표 가져오기 실패!');
+}
+
+// 온라인 환경 확인
+var is_online = navigator.onLine;
+console.log('is_online:', is_online);
+
+
+// ------------------------------------------------------------
+// Location 객체
+
