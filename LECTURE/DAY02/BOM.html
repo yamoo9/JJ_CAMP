@@ -18,6 +18,10 @@
     a {
       text-decoration: none;
       color: #34c0ff;
+      transition: all 0.3s ease-out;
+    }
+    a:hover {
+      color: #3d01ff;
     }
   </style>
   <script src="BOM.js"></script>
@@ -37,12 +41,14 @@ var demo_nav = document.getElementById('demo-nav');
 var demo_nav_links = demo_nav.getElementsByTagName('a');
 // console.log('demo_nav_links:', demo_nav_links);
 
-for ( var i=0, l=demo_nav_links.length; i<l; i++ ) {
-  var link = demo_nav_links[i];
+var i=0, l=demo_nav_links.length; // 호이스트 현상: 1회 수행
+
+for ( ; i<l; i++ ) {
+  var link = demo_nav_links[i]; // 0
   // console.log('link'+i+':', link);
   link.onclick = function() {
     // 각 링크의 index를 콘솔에 출력하라.
-    console.log(i); // 0, 1, 2, 3
+    console.log(i); // 0, 1, 2, 3 ???? 4
     // 링크를 클릭했을 때 브라우저의 기본 동작을 차단
     return false;
   };
