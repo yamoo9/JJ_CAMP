@@ -17,7 +17,7 @@ console.log('window:', window);
 // 화면의 가로 폭 길이(px)
 // 화면의 세로 폭 길이(px)
 // 화면의 가용(Available) 가능한 실제 폭 길이(px)
-console.log('window.screen:', window.screen);
+// console.log('window.screen:', window.screen);
 // 해상도(Resolution) 1440x900
 // 전 세계 사용자의 스크린 가로 폭 평균치: 1366px (국내 평균 1920px)
 
@@ -25,9 +25,9 @@ console.log('window.screen:', window.screen);
 var full_height    = window.screen.height;
 var avail_height   = window.screen.availHeight;
 var unavail_height = full_height - avail_height;
-console.log('full_height:', full_height);
-console.log('avail_height:', avail_height);
-console.log('unavail_height:', unavail_height);
+// console.log('full_height:', full_height);
+// console.log('avail_height:', avail_height);
+// console.log('unavail_height:', unavail_height);
 
 // 인스턴스 객체 Object <- ScreenOrientation 생성자 함수
 var orient = window.screen.orientation;
@@ -79,36 +79,41 @@ function detection(device) {
 }
 
 function detectMobileDevice(device) {
-  if ( detection(device) ) {
-    assignHtmlClass(device);
-  }
+  if ( detection(device) ) { assignHtmlClass(device); }
 }
 
-function loopDetectDevices(checking_devices) {
-  var is_string = typeof checking_devices === 'string';
+function loopDetectDevices(checking_devices, divider) {
+  var is_string, device_len;
+  // 사용자가 전달한 값이 없을 경우, ' '으로 초기화
+  // 사용자 전달 값이 있으면 사용자가 전달한 값으로 설정
+  divider = divider || ' ';
   // 검증
   // checking_devices 전달인자가 존재하는가?
   if ( !checking_devices ) { throw new Error('전달인자는 필수입니다.'); }
+  is_string = typeof checking_devices === 'string';
   // 배열 또는 문자 유형인가?
-  // if (
-  //   !is_string ||
-  //   !(checking_devices instanceof Array)
-  // ) { throw new Error('전달인자는 문자 또는 배열만 가능합니다.'); }
+  if ( !is_string && !(checking_devices instanceof Array) ) {
+    throw new Error('전달인자는 문자 또는 배열만 가능합니다.');
+  }
   // 만약 문자라면? 처리
   if (is_string) {
     // 문자 데이터 유형을 배열 데이터 유형으로 변경
-    checking_devices = checking_devices.split(' ');
+    checking_devices = checking_devices.split(divider);
   }
-  var device_len = checking_devices.length;
+  device_len = checking_devices.length;
   while(device_len) {
     device_len = device_len - 1;
     detectMobileDevice(checking_devices[device_len]);
   }
 }
 
+
+
 // TODO: 모바일 기기인지? 어떤 기기인지? 감지
 // navigator.userAgent; 웹 브라우저의 식별자를 문자열로 반환
 // iphone ipad android nexus sm-g ..
 
+// 문자 유형과 배열 유형 모두 적용 가능하도록 함수 확장
 loopDetectDevices( 'iemobile kindle iphone ipad android nexus sm-g' );
+// loopDetectDevices( 'iemobile,kindle,iphone,ipad,android,nexus,sm-g', ',' );
 // loopDetectDevices( ['iemobile','kindle','iphone','ipad','android','nexus','sm-g'] );
