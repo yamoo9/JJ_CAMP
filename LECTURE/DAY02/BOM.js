@@ -24,6 +24,8 @@ detectDevicePixelRatio();
 
 
 
+
+
 // ------------------------------------------------------------
 // Screen 객체
 // 사용자의 스크린 화면에 대한 정보를 제공
@@ -154,6 +156,12 @@ var is_online = navigator.onLine;
 // console.log('is_online:', is_online);
 
 
+
+
+
+
+
+
 // ------------------------------------------------------------
 // Location 객체
 
@@ -163,7 +171,7 @@ var _location = window.location;
 
 var hashes = 'home about works contact'.split(' ');
 
-function assignLocationhash(hash) {
+function assignLocationHash(hash) {
   _location.hash = '!' + hash;
 }
 
@@ -171,7 +179,7 @@ for( var h = hashes.length, n; (n=hashes[--h]); ) {
   window.setTimeout( (function(n){
     return function() {
       // console.log(n);
-      assignLocationhash(n);
+      assignLocationHash(n);
     };
   })(n) , h * 1000);
 }
