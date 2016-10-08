@@ -30,7 +30,7 @@ var countdown10 = countDownMaker(10);
 // countdown10(); // 8
 // countdown10(); // 7
 // countdown10(); // 6
-// //.
-// //.
-// //.
+// .
+// .
+// .
 // countdown10(); // 0
