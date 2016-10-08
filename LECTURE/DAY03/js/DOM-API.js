@@ -70,3 +70,23 @@ window.onload = initial; // 창의 로드 이벤트 발생 시, 함수 실행
 window.addEventListener('DOMContentLoaded', function() {
   console.log('DOMContentLoaded');
 }, false);
+
+
+/**
+ * --------------------------------
+ * 문서 노드(Node)에 접근
+ * 요소 노드
+ * 텍스트 노드 (빈 공백, 들여쓰기, 탭..)
+ * ----------------------------- */
+var target_node = document.getElementsByTagName('h3').item(1);
+// console.log('target_node의 정체:', Object.prototype.toString.call(target_node));
+console.log('target_node:', target_node);
+
+var target_node_first_child;
+var target_node_last_child;
+
+target_node_first_child = target_node.firstChild;
+target_node_last_child = target_node.lastChild;
+
+console.log('target_node_first_child:', target_node_first_child);
+console.log('target_node_last_child:', target_node_last_child);

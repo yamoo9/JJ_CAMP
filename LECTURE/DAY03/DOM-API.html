@@ -6,19 +6,57 @@
   <title>DOM API</title>
   <!-- <link rel="stylesheet" href="style.css"> -->
   <!-- <script src="js/DOM-API.js"></script> -->
+  <!-- 사용자 정의 헬퍼 함수 스크립트 -->
+  <script src="../dom_helper/index.js"></script>
 </head>
 <body>
-
+  <!-- 이것은 주석노드입니다. -->
   <div class="container">
     <div class="row">
       <div class="col-6">
+        <!-- 마크업 사례 1 -->
         <h3><a href="">Col</a><a name="umn">umn</a></h3>
+        <!-- 마크업 사례 2 -->
+        <h3 id="heading-3">
+          <a id="hyperlink" href="">Col</a>
+          <a id="named-anchor" name="umn">umn</a>
+        </h3>
         <img src="http://placehold.it/400x200/000/fff/" alt="더미">
         <!-- <div role="img" class="ir" aria-label="배경이미지 설명"></div> -->
       </div>
     </div>
   </div>
 
-  <script src="js/DOM-API.js"></script>
+  <div data-custom-attr="this is custom attribute." id="element" title="요소" class="hi col-6"></div>
+  <div class="col-6 there"></div>
+  <div class="col-6 wow"></div>
+  <div class="todo col-6 good"></div>
+
+  <!-- <script src="js/DOM-API.js"></script> -->
+  <!-- <script src="js/DOM-Traversal.js"></script> -->
+  <script>
+  // 문서 객체를 사용자가 클릭했을 때 어떤 요소를 클릭했는지 확인해보자.
+  // 이벤트 위임
+  document.onclick = function(event) {
+    // 이벤트 객체
+    console.log('nodeName:', event.target.nodeName.toLowerCase());
+    // console.log('localName:', event.target.localName);
+  };
+
+  // IE 8+
+  var hyperlink    = document.querySelector('#hyperlink');
+  var heading_3    = document.querySelector('#heading-3');
+  var container    = document.querySelector('.container');
+  var row          = container.querySelector('.row');
+  // var col_sixes = document.querySelector('.col-6');    // Document Object
+  var col_sixes    = document.querySelectorAll('.col-6'); // Nodelist
+
+  // IE 8
+  // var container_h3_2 = container.querySelectorAll('h3')[1];
+  // IE 9+
+  var container_h3_2 = container.querySelector('h3:nth-of-type(2)');
+  console.log('container_h3_2:', container_h3_2);
+
+  </script>
 </body>
 </html>
