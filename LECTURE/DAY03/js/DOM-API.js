@@ -29,3 +29,44 @@
 // document.getElementById('id-name');
 // document.getElementsByName()
 // document.getElementsByTagName('tag');
+
+// DOM Level 2 시대
+// 불협화음: 각기 다른 방식으로 발전된 진보 이벤트 모델
+// W3C: .addEventListener()    표준, IE 9+
+// W3C: .removeEventListener() 표준, IE 9+
+// MS: .attachEvent()          비표준
+// MS: .detachEvent()          비표준
+
+/**
+ * --------------------------------
+ * DOM: Node Interface
+ * ----------------------------- */
+
+function initial() {
+  // DOM Legacy 과거의 방식
+  var html = document.documentElement;
+  var head = document.head;
+  var body = document.body;
+  console.log(html); // <html> Document Object
+  console.log(head); // <head>
+  console.log(body); // <body>
+  body.className = 'dom-legacy-method';
+  // DOM Lv1 방식
+  html = document.getElementsByTagName('html').item(0); // [<html>] -> <html>
+  head = document.getElementsByTagName('head').item(0); // [<head>] -> <head>
+  body = document.getElementsByTagName('body')[0];      // [<body>] -> <body>
+  console.log(html); // [<html>] Nodelist, 유사 배열(Object like Array)
+  console.log(head); // [<head>]
+  console.log(body); // [<body>]
+  // ※ Nodelist의 경우 DOM API를 바로 사용할 수 없다.
+  //   Nodelist에서 Document Object를 빼내야 적용 가능하다.
+  body.setAttribute('class', 'dom-modern-method');
+}
+
+// 코드의 실행 시점을 늦춘다.
+window.onload = initial; // 창의 로드 이벤트 발생 시, 함수 실행
+// 진보 이벤트 모델
+// DOMContentLoaded 이벤트 (이미지 로드와 상관 없이 이벤트 발생)
+window.addEventListener('DOMContentLoaded', function() {
+  console.log('DOMContentLoaded');
+}, false);
