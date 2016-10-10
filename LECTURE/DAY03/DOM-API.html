@@ -48,9 +48,9 @@
   var heading_3    = query('#heading-3');
   var container    = query('.container');
   // var row          = container.querySelector('.row');
-  var row          = query('.row', '.container' );
+  // var row          = query('.row', '.container' );
   // var row          = query('.row', query('.container') );
-  // var row          = query('.row', container );
+  var row          = query('.row', container );
   // var col_sixes = query('.col-6');    // Document Object
   var col_sixes    = document.querySelectorAll('.col-6'); // Nodelist
 
@@ -59,8 +59,7 @@
   // IE 9+
   var container_h3_2 = container.querySelector('h3:nth-of-type(2)');
   // console.log('container_h3_2:', container_h3_2);
-
-  console.log('row:', row);
+  // console.log('row:', row);
 
   </script>
 </body>
