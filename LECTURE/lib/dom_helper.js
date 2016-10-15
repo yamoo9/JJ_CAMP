@@ -153,40 +153,44 @@ function tag(name, context) {
 }
 
 /** @function classEls() */
-function classEls(name, context) {
-  validate(!isString(name), 'name 인자는 문자열이어야 합니다.');
-  // 최신 웹브라우저라면 .getElementsByClassName() 사용
+// 함수 표현식 + 클로저
+var classEls = (function(){
+  var _classEls = null;
+  // 즉시 실행되는 함수 내에서 단 한번만 실행
   if ( document.getElementsByClassName ) {
-    return ( ((context && isElement(context)) && context) || document).getElementsByClassName(name);
-  }
-  // class 속성 쓰지마... 느려.... (IE 7,8에 한해서...)
-  // 크로스 브라우징
-  // 그렇지 않다면.... (구형 브라우저)
-  // 문서 객체를 순환하여 class 속성 값이 일치하는 집합을 배열로 반환하는 함수
-  else {
-    var all_els = tag('*', ((context && isElement(context)) && context) || document.body);
-    var all_els_length = all_els.length; // 6
-    var el = null;
-    var class_name = '';
-    var filtered_els = [];
-    // 정규 표현식 사용
-    // ^    시작 값을 검증
-    // $    끝나는 값을 검증
-    // \s   공백을 검증
-    // +    1개 이상
-    // ※ new RegExp() 사용 시에는 문자열 내부의 \s 사용 시, Escape 처리를 해야 한다.
-    var reg = new RegExp('(^|\\s)+' + name + '(\\s|$)+');
-    while(all_els_length--) { // 6, 5, 4, 3, 2, 1, 0
-      // 5, 4, 3, 2, 1, 0
-      el = all_els[all_els_length];
-      class_name = el.getAttribute('class');
-      if( reg.test(class_name) ) {
-        filtered_els.push(el);
+    _classEls = function(name, context) {
+      validate(!isString(name), 'name 인자는 문자열이어야 합니다.');
+      return ( ((context && isElement(context)) && context) || document).getElementsByClassName(name);
+    };
+  } else {
+    _classEls = function(name, context) {
+      validate(!isString(name), 'name 인자는 문자열이어야 합니다.');
+      var all_els = tag('*', ((context && isElement(context)) && context) || document.body);
+      var all_els_length = all_els.length; // 6
+      var el = null;
+      var class_name = '';
+      var filtered_els = [];
+      // 정규 표현식 사용
+      // ^    시작 값을 검증
+      // $    끝나는 값을 검증
+      // \s   공백을 검증
+      // +    1개 이상
+      // ※ new RegExp() 사용 시에는 문자열 내부의 \s 사용 시, Escape 처리를 해야 한다.
+      var reg = new RegExp('(^|\\s)+' + name + '(\\s|$)+');
+      while(all_els_length--) { // 6, 5, 4, 3, 2, 1, 0
+        // 5, 4, 3, 2, 1, 0
+        el = all_els[all_els_length];
+        class_name = el.getAttribute('class');
+        if( reg.test(class_name) ) {
+          filtered_els.push(el);
+        }
       }
-    }
-    return filtered_els;
+      return filtered_els;
+    };
   }
-}
+
+  return _classEls;
+}());
 
 /** @function queryAll() */
 function queryAll(selector, context ) {
