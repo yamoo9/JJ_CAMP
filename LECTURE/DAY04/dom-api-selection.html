@@ -28,10 +28,14 @@
   // tag(name, context)
   var container, wrappers, wrapper_headings;
 
-  container        = id('container');
+  // container        = id('container');
+  container        = query('#container');
   // wrappers         = tag('div', container);
-  wrappers         = classEls('wrapper');
-  wrapper_headings = tag('h3', container);
+  // wrappers         = classEls('wrapper');
+  wrappers         = queryAll('.wrapper');
+  // wrapper_headings = tag('h3', container);
+  // wrapper_headings = queryAll('#container h3');
+  wrapper_headings = queryAll('h3', container);
 
   console.log('container:', container);
   console.log('wrappers:', wrappers);

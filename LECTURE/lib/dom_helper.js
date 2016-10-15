@@ -153,18 +153,18 @@ function tag(name, context) {
 }
 
 /** @function classEls() */
-function classEls(name) {
+function classEls(name, context) {
   validate(!isString(name), 'name 인자는 문자열이어야 합니다.');
   // 최신 웹브라우저라면 .getElementsByClassName() 사용
-  if ( !document.getElementsByClassName ) {
-    return document.getElementsByClassName(name);
+  if ( document.getElementsByClassName ) {
+    return ( ((context && isElement(context)) && context) || document).getElementsByClassName(name);
   }
   // class 속성 쓰지마... 느려.... (IE 7,8에 한해서...)
   // 크로스 브라우징
   // 그렇지 않다면.... (구형 브라우저)
   // 문서 객체를 순환하여 class 속성 값이 일치하는 집합을 배열로 반환하는 함수
   else {
-    var all_els = tag('*', document.body);
+    var all_els = tag('*', ((context && isElement(context)) && context) || document.body);
     var all_els_length = all_els.length; // 6
     var el = null;
     var class_name = '';
@@ -217,4 +217,23 @@ function queryAll(selector, context ) {
 /** @function query() */
 function query(selector, context) {
   return queryAll(selector, context)[0];
+}
+
+
+/**
+ * --------------------------------
+ * DOM API: Creation
+ * ----------------------------- */
+
+/** @function createEl() */
+function createEl(node_name, prop_id, prop_class) {
+  validate(!isString(node_name), 'node_name 전달인자는 문자열 이어야 합니다.');
+  validate(prop_id && !isString(prop_id), 'prop_id 전달인자는 문자열 이어야 합니다.');
+  validate(prop_class && !isString(prop_class), 'prop_class 전달인자는 문자열 이어야 합니다.');
+  // 요소노드 생성
+  var created_el = document.createElement(node_name);
+  // 속성 설정
+  prop_id && created_el.setAttribute('id', prop_id);
+  prop_class && created_el.setAttribute('class', prop_class);
+  return created_el;
 }
