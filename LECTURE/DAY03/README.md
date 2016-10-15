@@ -18,6 +18,4 @@
 
 - __BOM__
 - __DOM API__
-- __JavaScript Advanced__
 - __DOM Helper__
-- __UI Component: Tab, Navigation, Carousel, Modal Window__

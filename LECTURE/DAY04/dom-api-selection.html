@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>DOM API - 선택 헬퍼 함수</title>
+  <script src="../lib/dom_helper.js"></script>
+</head>
+<body>
+
+  <div id="container" lang="en">
+    <div class="wrapper">
+      <h3>Container Wrapper Element One</h3>
+    </div>
+    <div class="wrapper">
+      <h3>Container Wrapper Element Two</h3>
+    </div>
+  </div>
+
+<script>
+  var container, wrappers, wrapper_headings;
+  container        = id('container');
+  wrappers         = tag('div', container);
+  wrapper_headings = tag('h3', container);
+
+  console.log('container:', container);
+  console.log('wrappers:', wrappers);
+  console.log('wrapper_headings:', wrapper_headings);
+</script>
+</body>
+</html>
