@@ -40,23 +40,53 @@ function detectFeature(property) {
 // 메모이제이션 패턴
 detectFeature.dummy = document.createElement('div');
 
-function detectFeatures(properties, element) {
-  detectFeatures.element = (element && isElement(element)) || detectFeatures.root_element;
-  validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
-  for( var property, i=properties.length; (property = properties[--i]); ) {
-    detectFeatures.property = property;
-    isValidate( detectFeature(property), detectFeatures.success, detectFeatures.fail );
+// --------------------------------------------------------------------------------
+// 함수 표현식 + 클로저
+// IIFE 패턴 (즉시 실행하는 함수)
+var detectFeatures = (function(){
+  // 외부와 단절된 독립된 공간이 형성
+  // 지역(Local Scope)
+  var el           = null;
+  var prop         = null;
+  var root_element = document.documentElement; // <html>
+  function success(){
+    el.classList.add(prop);
+  };
+  function fail(){
+    el.classList.add('no-' + prop);
+  };
+
+  // 클로저 함수
+  function _detectFetures(properties, element) {
+      el = (element && isElement(element)) || root_element;
+      validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
+      for( var property, i=properties.length; (property = properties[--i]); ) {
+        prop = property;
+        isValidate( detectFeature(prop), success, fail );
+      }
   }
-}
-detectFeatures.element = null;
-detectFeatures.property = null;
-detectFeatures.root_element = document.documentElement; // <html>
-detectFeatures.success = function(){
-  detectFeatures.element.classList.add(detectFeatures.property);
-};
-detectFeatures.fail = function(){
-  detectFeatures.element.classList.add('no-' + detectFeatures.property);
-};
+  return _detectFetures;
+}());
+
+// --------------------------------------------------------------------------------
+// 함수 선언식 + 메모이제이션 패턴
+// function detectFeatures(properties, element) {
+//   detectFeatures.element = (element && isElement(element)) || detectFeatures.root_element;
+//   validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
+//   for( var property, i=properties.length; (property = properties[--i]); ) {
+//     detectFeatures.property = property;
+//     isValidate( detectFeature(property), detectFeatures.success, detectFeatures.fail );
+//   }
+// }
+// detectFeatures.element = null;
+// detectFeatures.property = null;
+// detectFeatures.root_element = document.documentElement; // <html>
+// detectFeatures.success = function(){
+//   detectFeatures.element.classList.add(detectFeatures.property);
+// };
+// detectFeatures.fail = function(){
+//   detectFeatures.element.classList.add('no-' + detectFeatures.property);
+// };
 
 /**
  * --------------------------------
