@@ -19,13 +19,27 @@
 
 <script>
   var container, wrappers, wrapper_headings;
+
   container        = id('container');
   wrappers         = tag('div', container);
   wrapper_headings = tag('h3', container);
 
-  console.log('container:', container);
-  console.log('wrappers:', wrappers);
-  console.log('wrapper_headings:', wrapper_headings);
+  // console.log('container:', container);
+  // console.log('wrappers:', wrappers);
+  // console.log('wrapper_headings:', wrapper_headings);
+
+  // detectFeatures()
+  detectFeatures([
+    'backface-visibility',
+    'box-shadow',
+    'grid',
+    'transform-origin',
+    'transform-style',
+    'flex',
+    'flex-direction',
+    'flex-flow',
+    'order'
+  ], container);
 </script>
 </body>
 </html>
