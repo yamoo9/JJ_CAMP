@@ -11,8 +11,13 @@ function isDataType(data) {
 function isFunction(data) { return isDataType(data) === 'function'; }
 /** @function isString() */
 function isString(data) { return isDataType(data) === 'string'; }
+/** @function isArray() */
+function isArray(data) { return isDataType(data) === 'array'; }
 /** @function isElement() */
-function isElement(node) { return node.nodeType === 1; }
+function isElement(node) {
+  if (!node) { return false; }
+  return node.nodeType === 1;
+}
 /** @function validate() */
 // 조건 확인 후, 조건이 참이면 오류 메시지를 띄움과 동시에 코드를 정지시킴.
 function validate(condition, error_message) {
@@ -28,13 +33,30 @@ function isValidate(condition, success, fail) {
   return condition ? true : false;
 }
 /** @function detectFeature() */
-function detectFeature(element, property) {
-  // validate( element.nodeType !== 1, '문서 요소객체가 아닙니다.' );
-  validate( !isElement(element), '첫번째 인자는 문서 요소객체가 아닙니다.' );
-  // validate( isDataType(property) !== 'string', '2번째 인자는 문자 유혀이어야 합니다.' );
-  validate( !isString(property), '두번째 인자는 문자 유형이어야 합니다.' );
-  return property in element.style;
+function detectFeature(property) {
+  validate( !isString(property), '첫번째 인자는 문자 유형이어야 합니다.' );
+  return property in detectFeature.dummy.style;
 }
+// 메모이제이션 패턴
+detectFeature.dummy = document.createElement('div');
+
+function detectFeatures(properties, element) {
+  detectFeatures.element = (element && isElement(element)) || detectFeatures.root_element;
+  validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
+  for( var property, i=properties.length; (property = properties[--i]); ) {
+    detectFeatures.property = property;
+    isValidate( detectFeature(property), detectFeatures.success, detectFeatures.fail );
+  }
+}
+detectFeatures.element = null;
+detectFeatures.property = null;
+detectFeatures.root_element = document.documentElement; // <html>
+detectFeatures.success = function(){
+  detectFeatures.element.classList.add(detectFeatures.property);
+};
+detectFeatures.fail = function(){
+  detectFeatures.element.classList.add('no-' + detectFeatures.property);
+};
 
 /**
  * --------------------------------
