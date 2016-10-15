@@ -2,17 +2,38 @@
  * --------------------------------
  * Utility Helper Functions
  * ----------------------------- */
+/** @function isDataType() */
+// 자바스크립트의 데이터 유형을 완벽하게 체크함.
+function isDataType(data) {
+  return Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
+}
+/** @function isFunction() */
+function isFunction(data) { return isDataType(data) === 'function'; }
+/** @function isString() */
+function isString(data) { return isDataType(data) === 'string'; }
+/** @function isElement() */
+function isElement(node) { return node.nodeType === 1; }
 /** @function validate() */
 // 조건 확인 후, 조건이 참이면 오류 메시지를 띄움과 동시에 코드를 정지시킴.
 function validate(condition, error_message) {
   if (condition) { throw new Error(error_message); }
 }
 /** @function isValidate() */
-function isValidate(condition, excute) {
-  // 사용자가 excute 인자를 전달했고, 그 인자가 함수 유형이라면
-  // excute 함수를 실행하라.
-  if ( condition && excute && typeof excute === 'function' ) { excute(); }
+function isValidate(condition, success, fail) {
+  // condition 조건이 참이고,
+  // 사용자가 success 인자를 전달했고,
+  // 그 인자가 함수 유형이라면 success 함수를 실행하라.
+  if ( condition && success && isFunction(success) ) { success(); }
+  if ( !condition && fail && isFunction(fail) ) { fail(); }
   return condition ? true : false;
+}
+/** @function detectFeature() */
+function detectFeature(element, property) {
+  // validate( element.nodeType !== 1, '문서 요소객체가 아닙니다.' );
+  validate( !isElement(element), '첫번째 인자는 문서 요소객체가 아닙니다.' );
+  // validate( isDataType(property) !== 'string', '2번째 인자는 문자 유혀이어야 합니다.' );
+  validate( !isString(property), '두번째 인자는 문자 유형이어야 합니다.' );
+  return property in element.style;
 }
 
 /**
