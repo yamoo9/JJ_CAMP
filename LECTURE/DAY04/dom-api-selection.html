@@ -4,42 +4,56 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>DOM API - 선택 헬퍼 함수</title>
+  <style>
+    .no-region {
+      background: #f00;
+    }
+  </style>
   <script src="../lib/dom_helper.js"></script>
 </head>
 <body>
 
   <div id="container" lang="en">
-    <div class="wrapper">
+    <div class="hey wrapper row">
       <h3>Container Wrapper Element One</h3>
     </div>
-    <div class="wrapper">
+    <div class="hey wrapper row">
       <h3>Container Wrapper Element Two</h3>
     </div>
   </div>
 
 <script>
+  // --------------------------------------------------------------------
+  // id(name)
+  // tag(name, context)
   var container, wrappers, wrapper_headings;
 
   container        = id('container');
-  wrappers         = tag('div', container);
+  // wrappers         = tag('div', container);
+  wrappers         = classEls('wrapper');
   wrapper_headings = tag('h3', container);
 
-  // console.log('container:', container);
-  // console.log('wrappers:', wrappers);
-  // console.log('wrapper_headings:', wrapper_headings);
+  console.log('container:', container);
+  console.log('wrappers:', wrappers);
+  console.log('wrapper_headings:', wrapper_headings);
 
-  // detectFeatures()
+  console.log('%c------------------------------', 'color: #3d9a21');
+
+  // --------------------------------------------------------------------
+  // detectFeatures(features, element)
   detectFeatures([
     'backface-visibility',
     'box-shadow',
+    'transform',
+    'transition',
     'grid',
-    'transform-origin',
-    'transform-style',
     'flex',
-    'flex-direction',
-    'flex-flow',
-    'order'
-  ], container);
+    'mask',
+    'filter',
+    'region',
+    'border-radius',
+    'opacity'
+  ]);
 </script>
 </body>
 </html>

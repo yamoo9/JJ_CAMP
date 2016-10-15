@@ -2,17 +2,46 @@
  * --------------------------------
  * Utility Helper Functions
  * ----------------------------- */
+
 /** @function isDataType() */
 // 자바스크립트의 데이터 유형을 완벽하게 체크함.
 function isDataType(data) {
   return Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
 }
-/** @function isFunction() */
-function isFunction(data) { return isDataType(data) === 'function'; }
+/** @function isNumber() */
+function isNumber(data) {
+  return isDataType(data) === 'number';
+}
 /** @function isString() */
-function isString(data) { return isDataType(data) === 'string'; }
+function isString(data) {
+  return isDataType(data) === 'string';
+}
+/** @function isBoolean() */
+function isBoolean(data) {
+  return isDataType(data) === 'boolean';
+}
+/** @function isFunction() */
+function isFunction(data) {
+  return isDataType(data) === 'function';
+}
 /** @function isArray() */
-function isArray(data) { return isDataType(data) === 'array'; }
+function isArray(data) {
+  return isDataType(data) === 'array';
+}
+/** @function isObject() */
+function isObject(data) {
+  return isDataType(data) === 'object';
+}
+/** @function isEmptyObject() */
+function isEmptyObject(data) {
+  // 속성이 존재하는지 확인(검증)
+  // 속성이 존재하지 않는다면? 텅 빈 객체
+  var prop_legnth = 0;
+  for ( var prop in data ) {
+    prop_legnth++;
+  }
+  return isObject(data) && !prop_legnth;
+}
 /** @function isElement() */
 function isElement(node) {
   if (!node) { return false; }
@@ -40,7 +69,7 @@ function detectFeature(property) {
 // 메모이제이션 패턴
 detectFeature.dummy = document.createElement('div');
 
-// --------------------------------------------------------------------------------
+// -----------------------------
 // 함수 표현식 + 클로저
 // IIFE 패턴 (즉시 실행하는 함수)
 var detectFeatures = (function(){
@@ -53,36 +82,45 @@ var detectFeatures = (function(){
   function fail(){ el.classList.add('no-' + property); }
   // 클로저 함수
   function _detectFetures(properties, element) {
-      el = ((element && isElement(element)) && element) || root_element;
-      validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
-      for( var i=properties.length; properties[--i]; ) {
-        property = properties[i];
-        isValidate( detectFeature(property), success, fail );
-      }
+    // 한 줄(인라인)로 코드를 작성하는 것을 선호하는 사람들
+    // el = ((element && isElement(element)) && element) || root_element;
+    // 정석대로 조건 구문을 사용한다면 아래처럼_
+    if ( element && isElement(element) ) {
+      el = element;
+    } else {
+      el = root_element;
+    }
+
+    validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
+    for( var i=properties.length; properties[--i]; ) {
+      property = properties[i];
+      isValidate( detectFeature(property), success, fail );
+    }
   }
   // 클로저 함수 반환
   return _detectFetures;
 }());
 
-// --------------------------------------------------------------------------------
+// -----------------------------
 // 함수 선언식 + 메모이제이션 패턴
-// function detectFeatures(properties, element) {
-//   detectFeatures.element = ((element && isElement(element)) && element) || detectFeatures.root_element;
-//   validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
-//   for( var property, i=properties.length; (property = properties[--i]); ) {
-//     detectFeatures.property = property;
-//     isValidate( detectFeature(property), detectFeatures.success, detectFeatures.fail );
-//   }
-// }
-// detectFeatures.element = null;
-// detectFeatures.property = null;
-// detectFeatures.root_element = document.documentElement; // <html>
-// detectFeatures.success = function(){
-//   detectFeatures.element.classList.add(detectFeatures.property);
-// };
-// detectFeatures.fail = function(){
-//   detectFeatures.element.classList.add('no-' + detectFeatures.property);
-// };
+  // function detectFeatures(properties, element) {
+  //   detectFeatures.element = ((element && isElement(element)) && element) || detectFeatures.root_element;
+  //   validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
+  //   for( var property, i=properties.length; (property = properties[--i]); ) {
+  //     detectFeatures.property = property;
+  //     isValidate( detectFeature(property), detectFeatures.success, detectFeatures.fail );
+  //   }
+  // }
+  // detectFeatures.element = null;
+  // detectFeatures.property = null;
+  // detectFeatures.root_element = document.documentElement; // <html>
+  // detectFeatures.success = function(){
+  //   detectFeatures.element.classList.add(detectFeatures.property);
+  // };
+  // detectFeatures.fail = function(){
+  //   detectFeatures.element.classList.add('no-' + detectFeatures.property);
+  // };
+
 
 /**
  * --------------------------------
@@ -112,6 +150,42 @@ function tag(name, context) {
     context = document;
   }
   return context.getElementsByTagName(name);
+}
+
+/** @function classEls() */
+function classEls(name) {
+  validate(!isString(name), 'name 인자는 문자열이어야 합니다.');
+  // 최신 웹브라우저라면 .getElementsByClassName() 사용
+  if ( !document.getElementsByClassName ) {
+    return document.getElementsByClassName(name);
+  }
+  // class 속성 쓰지마... 느려.... (IE 7,8에 한해서...)
+  // 크로스 브라우징
+  // 그렇지 않다면.... (구형 브라우저)
+  // 문서 객체를 순환하여 class 속성 값이 일치하는 집합을 배열로 반환하는 함수
+  else {
+    var all_els = tag('*', document.body);
+    var all_els_length = all_els.length; // 6
+    var el = null;
+    var class_name = '';
+    var filtered_els = [];
+    // 정규 표현식 사용
+    // ^    시작 값을 검증
+    // $    끝나는 값을 검증
+    // \s   공백을 검증
+    // +    1개 이상
+    // ※ new RegExp() 사용 시에는 문자열 내부의 \s 사용 시, Escape 처리를 해야 한다.
+    var reg = new RegExp('(^|\\s)+' + name + '(\\s|$)+');
+    while(all_els_length--) { // 6, 5, 4, 3, 2, 1, 0
+      // 5, 4, 3, 2, 1, 0
+      el = all_els[all_els_length];
+      class_name = el.getAttribute('class');
+      if( reg.test(class_name) ) {
+        filtered_els.push(el);
+      }
+    }
+    return filtered_els;
+  }
 }
 
 /** @function queryAll() */
