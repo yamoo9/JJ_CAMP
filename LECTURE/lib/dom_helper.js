@@ -138,18 +138,19 @@ function id(name) {
 function tag(name, context) {
   // 타입 검증
   validate(typeof name !== 'string', '전달된 인자는 문자 유형이어야만 합니다.');
-  if ( context && context.nodeType !== document.ELEMENT_NODE ) {
-    throw new Error('context 객체는 문서 요소 객체여야만 합니다.');
-  }
+  validate( context && !isElement(context), 'context 객체는 문서 요소 객체여야만 합니다.' );
+  // if ( context && context.nodeType !== document.ELEMENT_NODE ) {
+  //   throw new Error('context 객체는 문서 요소 객체여야만 합니다.');
+  // }
   // 만약 사용자가 context 객체를 전달했고,
   // context 객체는 문서 요소객체라면
   // context를 사용한다.
   // 하지만 context 객체가 없다면
   // 기본값으로 document 객체를 사용한다.
-  if( !context ) {
-    context = document;
-  }
-  return context.getElementsByTagName(name);
+  // if( !context ) {
+  //   context = document;
+  // }
+  return (context || document).getElementsByTagName(name);
 }
 
 /** @function classEls() */
@@ -230,14 +231,29 @@ function query(selector, context) {
  * ----------------------------- */
 
 /** @function createEl() */
-function createEl(node_name, prop_id, prop_class) {
+function createEl(node_name, properties) {
   validate(!isString(node_name), 'node_name 전달인자는 문자열 이어야 합니다.');
-  validate(prop_id && !isString(prop_id), 'prop_id 전달인자는 문자열 이어야 합니다.');
-  validate(prop_class && !isString(prop_class), 'prop_class 전달인자는 문자열 이어야 합니다.');
+  validate(properties && !isObject(properties), 'properties는 객체 유형이 전달되어야 합니다.');
   // 요소노드 생성
   var created_el = document.createElement(node_name);
   // 속성 설정
-  prop_id && created_el.setAttribute('id', prop_id);
-  prop_class && created_el.setAttribute('class', prop_class);
+  properties && attrs(created_el, properties);
   return created_el;
+}
+
+
+/**
+ * --------------------------------
+ * DOM API: Manipulation
+ * ----------------------------- */
+
+/** @function attrs() */
+function attrs(element, properties) {
+  validate(!isElement(element), 'element는 요소노드여야 합니다.');
+  validate(!isObject(properties), 'properties는 객체 유형이어야 합니다.');
+  // 객체 순환
+  for ( var prop in properties) {
+    var value = properties[prop];
+    element.setAttribute(prop, value);
+  }
 }
