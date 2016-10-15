@@ -47,31 +47,27 @@ var detectFeatures = (function(){
   // 외부와 단절된 독립된 공간이 형성
   // 지역(Local Scope)
   var el           = null;
-  var prop         = null;
+  var property     = null;
   var root_element = document.documentElement; // <html>
-  function success(){
-    el.classList.add(prop);
-  };
-  function fail(){
-    el.classList.add('no-' + prop);
-  };
-
+  function success(){ el.classList.add(property); }
+  function fail(){ el.classList.add('no-' + property); }
   // 클로저 함수
   function _detectFetures(properties, element) {
-      el = (element && isElement(element)) || root_element;
+      el = ((element && isElement(element)) && element) || root_element;
       validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
-      for( var property, i=properties.length; (property = properties[--i]); ) {
-        prop = property;
-        isValidate( detectFeature(prop), success, fail );
+      for( var i=properties.length; properties[--i]; ) {
+        property = properties[i];
+        isValidate( detectFeature(property), success, fail );
       }
   }
+  // 클로저 함수 반환
   return _detectFetures;
 }());
 
 // --------------------------------------------------------------------------------
 // 함수 선언식 + 메모이제이션 패턴
 // function detectFeatures(properties, element) {
-//   detectFeatures.element = (element && isElement(element)) || detectFeatures.root_element;
+//   detectFeatures.element = ((element && isElement(element)) && element) || detectFeatures.root_element;
 //   validate( !isArray(properties), 'properties는 배열 유형이어야 합니다.' );
 //   for( var property, i=properties.length; (property = properties[--i]); ) {
 //     detectFeatures.property = property;
