@@ -65,6 +65,11 @@ function isElement(node) {
   if (!node) { return false; }
   return node.nodeType === 1;
 }
+/** @function isTextNode() */
+function isTextNode(node) {
+  if (!node) { return false; }
+  return node.nodeType === 3;
+}
 /** @function isDocument() */
 function isDocument(node) {
   return node.nodeType === 9;
@@ -250,23 +255,28 @@ function createEl(node_name, properties, contents) {
   validate(properties && !isObject(properties), 'properties는 객체 유형이 전달되어야 합니다.');
   // isObject(node_name) 결과가 객체인 경우
   // 옵션 객체가 된다.
-  if ( isObject(node_name) ) {
-    console.log('node_name.element:', node_name.element);
-    console.log('node_name.attr:', node_name.attr);
-    console.log('node_name.text:', node_name.text);
+  var created_el, created_text;
+  if ( isObject(node_name) && isString(node_name.element) ) {
+    created_el = document.createElement(node_name.element);
+    node_name.attr && attrs(created_el, node_name.attr);
+    // node_name.text && created_el.appendChild(createText(node_name.text));
+    node_name.text && append(created_el, createText(node_name.text));
+    node_name.finish && isFunction(node_name.finish) && node_name.finish.call(created_el);
+  } else {
+    // 인자를 하나 하나 받은 경우
+    // 요소노드 생성
+    created_el = document.createElement(node_name);
+    // 속성 설정
+    properties && attrs(created_el, properties);
+    // 콘텐츠 추가 설정
+    if (contents) {
+      created_text = createText(contents);
+      // append(created_el, created_text);
+      appendTo(created_text, created_el);
+      // created_el.appendChild(created_text);
+    }
   }
 
-  return;
-
-  // 요소노드 생성
-  var created_el = document.createElement(node_name);
-  // 속성 설정
-  properties && attrs(created_el, properties);
-  // 콘텐츠 추가 설정
-  if (contents) {
-    var created_text = createText(contents);
-    created_el.appendChild(created_text);
-  }
   return created_el;
 }
 /** @function createText() */
@@ -293,4 +303,17 @@ function attrs(element, properties) {
       element.setAttribute(prop, value);
     }
   }
+}
+
+/** @function append() */
+function append(parent_node, child_node) {
+  validate(!isElement(parent_node), '부모노드는 요소노드를 전달해야 합니다.');
+  validate(!isElement(child_node) && !isTextNode(child_node), '자식노드는 요소노드, 또는 텍스트노드를 전달해야 합니다.');
+  // 부모노드.appendChild(자식노드)
+  parent_node.appendChild(child_node);
+}
+
+/** @function appendTo() */
+function appendTo(child_node, parent_node) {
+  append(parent_node, child_node);
 }
