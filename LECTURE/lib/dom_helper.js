@@ -5,6 +5,22 @@
  * Utility Helper Functions
  * ----------------------------- */
 
+/** @function cLog  사용자 정의 CSS 스타일을 가미한 console.log() 헬퍼 */
+function cLog(input, console_style) {
+  // 사용자가 전달한 input은 문자열어이야 한다는 것을 검증
+  validate(!isString(input), '문자열을 입력해야 합니다.');
+  // 옵션: console_style
+  if ( input.indexOf('%c') > -1 ) {
+    // 기본 값
+    console_style = console_style || cLog.styles;
+    console.log(input, console_style);
+  } else {
+    console.log(input);
+  }
+}
+// 초기 설정 값
+cLog.styles = 'color: #fe4940; font-size: 1.2rem;';
+
 /** @function isDataType() */
 // 자바스크립트의 데이터 유형을 완벽하게 체크함.
 function isDataType(data) {
