@@ -245,14 +245,34 @@ function query(selector, context) {
  * ----------------------------- */
 
 /** @function createEl() */
-function createEl(node_name, properties) {
-  validate(!isString(node_name), 'node_name 전달인자는 문자열 이어야 합니다.');
+function createEl(node_name, properties, contents) {
+  validate(!isString(node_name) && !isObject(node_name), 'node_name 전달인자는 문자열 이어야 합니다.');
   validate(properties && !isObject(properties), 'properties는 객체 유형이 전달되어야 합니다.');
+  // isObject(node_name) 결과가 객체인 경우
+  // 옵션 객체가 된다.
+  if ( isObject(node_name) ) {
+    console.log('node_name.element:', node_name.element);
+    console.log('node_name.attr:', node_name.attr);
+    console.log('node_name.text:', node_name.text);
+  }
+
+  return;
+
   // 요소노드 생성
   var created_el = document.createElement(node_name);
   // 속성 설정
   properties && attrs(created_el, properties);
+  // 콘텐츠 추가 설정
+  if (contents) {
+    var created_text = createText(contents);
+    created_el.appendChild(created_text);
+  }
   return created_el;
+}
+/** @function createText() */
+function createText(content) {
+  validate(!isString(content), '텍스트노드를 생성하기 위한 문자열을 입력하여야 합니다.');
+  return document.createTextNode(content);
 }
 
 
