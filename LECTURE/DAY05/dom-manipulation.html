@@ -8,11 +8,35 @@
   <script src="../lib/dom_helper.js"></script>
 </head>
 <body>
-
-  <!-- <div class="container"></div> -->
+  <!-- <main role="main" class="main-content">Main Area</main> -->
+  <div class="container"></div>
 
   <!-- <script src="js/dom-creation.js"></script> -->
   <script src="js/dom-create-manipulation.js"></script>
   <!-- <script src="js/function-obj-call.js"></script> -->
+
+  <script>
+    var target_node = query('.container');
+    // insert_node 생성
+    var insert_node = createEl('main', {
+      'role': 'main',
+      'class': 'main-content'
+    }, 'Main Area');
+
+    // Native
+    // target_node.parentNode.insertBefore(insert_node, target_node);
+
+    // Custom
+    // window.setTimeout(function() {
+    //   insertBefore(insert_node, target_node);
+    // }, 2000);
+    // before(target_node, insert_node);
+
+    window.setTimeout(function() {
+      insertAfter(insert_node, query('#target'));
+    }, 1000);
+  </script>
+
+  <div id="target">target division</div>
 </body>
 </html>

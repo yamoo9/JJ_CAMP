@@ -319,3 +319,36 @@ function append(parent_node, child_node) {
 function appendTo(child_node, parent_node) {
   append(parent_node, child_node);
 }
+
+/** @function insertBefore() */
+function insertBefore(insert_node, target_node) {
+  validate(!isElement(insert_node) || !isElement(target_node), '전달 인자는 모두 요소 노드여야 합니다.');
+  target_node.parentNode.insertBefore(insert_node, target_node);
+}
+
+/** @function before() */
+function before(target_node, insert_node) {
+  insertBefore(insert_node, target_node);
+}
+
+/** @function insertAfter() */
+function insertAfter(insert_node, target_node) {
+  validate(!isElement(insert_node) || !isElement(target_node), '전달 인자는 모두 요소 노드여야 합니다.');
+  // target_node의 인접한 다음 요소노드를 찾자
+
+  // 조건이 거짓이든, 참이든 1회는 반드시 수행
+  // do {반복처리(조건이 거짓이더라도 1회는 반드시 수행)} while(조건)
+  var next_node = target_node;
+  do {
+    next_node = next_node.nextSibling;
+  } while( next_node && !isElement(next_node) );
+
+  next_node ?
+    insertBefore(insert_node, next_node) :
+    appendTo(insert_node, target_node.parentNode);
+}
+
+/** @function after() */
+function after(target_node, insert_node) {
+  insertAfter(insert_node, target_node);
+}
