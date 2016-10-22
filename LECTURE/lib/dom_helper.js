@@ -261,6 +261,8 @@ function createEl(node_name, properties, contents) {
     node_name.attr && attrs(created_el, node_name.attr);
     // node_name.text && created_el.appendChild(createText(node_name.text));
     node_name.text && append(created_el, createText(node_name.text));
+    // 메소드 빌려쓰기 패턴 .call()
+    // Function.prototype.call 메소드는 함수 객체라면 누구나 사용 가능!!
     node_name.finish && isFunction(node_name.finish) && node_name.finish.call(created_el);
   } else {
     // 인자를 하나 하나 받은 경우
