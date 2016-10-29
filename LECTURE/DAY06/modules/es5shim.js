@@ -17,7 +17,7 @@ if ( !Array.prototype.forEach ) {
     // this; <= Array Instance Object
     var _this = this;
     for ( var i=0, l=_this.length; i<l; i++ ) {
-      callback.call(undefined, i, _this[i]);
+      callback.call(null, _this[i], i, _this);
     }
   }
 }
