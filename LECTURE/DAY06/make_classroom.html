@@ -4,15 +4,73 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>클래스룸 만들기 - 객체 지향 자바스크립트 활용</title>
+  <style>
+    body {
+      margin: 12rem;
+    }
+    nav ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    nav a {
+      display: block;
+      padding: 0.6em 1em;
+      text-decoration: none;
+    }
+  </style>
   <!-- 재사용 모듈 -->
+  <script src="modules/es5shim.js"></script>
   <script src="modules/Person.js"></script>
   <script src="modules/Student.js"></script>
   <script src="modules/Teacher.js"></script>
-  <script src="modules/Classroom.js"></script>
+  <!-- <script src="modules/Classroom.js"></script> -->
   <!-- 모듈을 활용하여 프로그래밍 -->
-  <script src="make_clasroom.js"></script>
+  <!-- <script src="make_clasroom.js"></script> -->
 </head>
 <body>
 
+  <nav id="gnb">
+    <ul>
+      <li><a href rel="external">item 01</a></li>
+      <li><a href rel="external">item 02</a></li>
+      <li><a href rel="external">item 03</a></li>
+      <li><a href rel="external">item 04</a></li>
+      <li><a href rel="external">item 05</a></li>
+      <li><a href rel="external">item 06</a></li>
+      <li><a href rel="external">item 07</a></li>
+      <li><a href rel="external">item 08</a></li>
+    </ul>
+  </nav>
+
+<script>
+(function(global, $){
+  'use strict';
+
+  var gnb = document.querySelector('#gnb'),
+      gnb_links = gnb.querySelectorAll('a');
+
+  // for 구문
+  // C 문법
+  for ( var i=gnb_links.length, gnb_link; ( gnb_link = gnb_links[--i] ); ) {
+    gnb_link.addEventListener('click', function(event) {
+      // console.log(event.type);
+      // console.log(event.target);
+      // 브라우저 기본 동작 차단
+      event.preventDefault();
+    });
+  }
+
+  // ES5 forEach 구문
+  gnb_links.forEach(function(link, idx) {
+    console.log(link, idx);
+  });
+
+
+  global.gnb_links = gnb_links;
+
+})(this, this.y9);
+</script>
 </body>
 </html>

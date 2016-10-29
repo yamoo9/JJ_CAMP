@@ -40,3 +40,8 @@ var student_cocoaman = new y9.Student(
 );
 
 console.log('student_cocoaman:', student_cocoaman);
+
+var a = new y9.Person();
+var b = new y9.Person();
+var c = new y9.Person();
+var d = new y9.Person();
