@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>이벤트 캡쳐 VS 버블</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    div {
+      position: relative;
+      border: 1px solid currentColor;
+      padding: 3rem;
+      color: #a9a9a9;
+      background: hsla(208, 6%, 42%, 0.24);
+    }
+    div::before {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      content: attr(class);
+      color: #101010;
+    }
+    .grand-child {
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="parent">
+      <div class="child">
+        <div class="grand-child"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

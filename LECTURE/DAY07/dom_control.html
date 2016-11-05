@@ -7,7 +7,10 @@
   <meta charset="UTF-8">
   <title>문서객체 조작/제어 이벤트 처리
   함수형 프로그래밍 → 객체형 프로그래밍으로 변경</title>
-  <script src="../lib/dom_helper.js"></script>
+  <script src="../lib/DOM_Helper/main.js"></script>
+  <!-- <script src="../lib/DOM_Helper/modules/utility.js"></script> -->
+  <script src="../lib/DOM_Helper/modules/selection.js"></script>
+  <!-- <script src="../lib/dom_helper.js"></script> -->
 </head>
 <body>
 
@@ -127,7 +130,7 @@
     this.parentNode.style.backgroundColor = '#ffd219';
   }
 
-})(this, this.DOM_Helper);
+}); // (this, this.DOM_Helper)
 
 
 (function(global){
