@@ -42,5 +42,43 @@
     </div>
   </div>
 
+<script>
+(function(global){
+  'use strict';
+  // 이벤트 Capture VS Bubble
+
+  var all_divs = document.querySelectorAll('div');
+  var using_capture = !true;
+  var confirmEventPropagation = function(event) {
+    console.log('this:', this);
+    console.log('event.target:', event.target);
+    console.log('event.currentTarget:', event.currentTarget);
+    console.log('%c------------------------------', 'color: #3d9a21');
+
+    var class_name = event.target.getAttribute('class');
+    if ( class_name === 'grand-child' ) {
+      // 버블링: 부모까지 전파되는 이벤트를 차단하라.
+      event.stopPropagation();
+      // 즉각 전파 중지!!!! 동일한 이벤트 타겟에 걸린 다른 함수도 중지!!!
+      // event.stopImmediatePropagation();
+    }
+  };
+
+  var anotherEventAction = function() {
+    console.log('anotherEventAction');
+  };
+
+  // chrome
+  // all_divs.forEach(function(div, idx) {
+  //   console.log('div:', div);
+  // });
+
+  [].forEach.call(all_divs, function(div, idx) {
+    div.addEventListener('click', confirmEventPropagation, using_capture);
+    div.addEventListener('click', anotherEventAction, using_capture);
+  });
+
+})(this);
+</script>
 </body>
 </html>
