@@ -35,9 +35,9 @@
     'letter-spacing: 0.04em;'
   ].join('');
 
-  cLog('this is %cLibrary.');
+  // cLog('this is %cLibrary.');
 
-  cLog('util type is object? %c' + util.isObject( util ) ); // false
+  // cLog('util type is object? %c' + util.isObject( util ) ); // false
 
 // -------------------------------------------
 
@@ -48,18 +48,33 @@
   // cLog('container element is %c' + container);
   // console.log('rows:', rows);
 
-  console.log(util.isNodeList(rows)); // true
+  // console.log(util.isNodeList(rows)); // true
 
-  rows = util.makeArray(rows);
+  // rows = util.makeArray(rows);
 
-  console.log(util.isNodeList(rows)); // false
-  console.log(util.isArray(rows)); // true
+  // console.log(util.isNodeList(rows)); // false
+  // console.log(util.isArray(rows)); // true
 
-  // $.each(rows, function(row, index, rows){
-  //   // row    // <div class="row">
-  //   // index  // 0
-  //   // rows   // nodeList
-  // });
+  // ------------------------------------------------------
+  // DOM_Helper.util.makeArray 검토
+  // function demoFn() {
+  //   console.log('arguments:', arguments);
+  //   console.log('is array?:', util.isArray(arguments));
+  //   var args = util.makeArray(arguments);
+  //   console.log('is array?:', util.isArray(args));
+  // }
+
+  // demoFn(1, 3, 5, 7, 8);
+
+  // ------------------------------------------------------
+  // DOM_Helper.each 검토
+
+  $.each(rows, function(row, index, rows){
+    // row    // <div class="row">
+    // index  // 0
+    // rows   // nodeList
+    console.log(arguments);
+  });
 
 })(this, this.DOM_Helper);
 </script>

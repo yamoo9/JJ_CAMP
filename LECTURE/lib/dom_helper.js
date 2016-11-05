@@ -94,6 +94,10 @@ this.DOM_Helper = (function(global){
   function isDocument(node) {
     return node.nodeType === 9;
   }
+  /** @function isArguments() */
+  function isArguments(obj) {
+    return isDataType(obj) === 'arguments';
+  }
   /** @function validate() */
   // 조건 확인 후, 조건이 참이면 오류 메시지를 띄움과 동시에 코드를 정지시킴.
   function validate(condition, error_message) {
@@ -208,21 +212,39 @@ this.DOM_Helper = (function(global){
     // 배열과 유사한 데이터 arguments, nodeList를
     // 배열로 변경하려면? 어떤 로직이 필요할까요?
 
-    validate ( !isNodeList(like_arr_obj), 'nodeList를 전달해야 합니다.' );
+    validate (
+      !isNodeList(like_arr_obj) && !isArguments(like_arr_obj),
+      'nodeList 또는 arguments 객체를 전달해야 합니다.'
+    );
 
     // 방법 1. 복습
-    var converted_array = [];
-    for ( var i=0, l=like_arr_obj.length; i<l; i++ ) {
-      converted_array.push(like_arr_obj[i]);
-    }
-    return converted_array;
+    // var converted_array = [];
+    // for ( var i=0, l=like_arr_obj.length; i<l; i++ ) {
+    //   converted_array.push(like_arr_obj[i]);
+    // }
+    // return converted_array;
+
     // 방법 2. 네이티브 배열의 기술을 활용
+    // return Array.prototype.slice.call(like_arr_obj, 0);
+    return [].slice.call(like_arr_obj, 0);
   }
 
   /** @function each() */
   function each(data, callback) {
-    console.log('data:', data);
-    console.log('callback:', callback);
+    data = makeArray(data);
+
+    // callback
+
+    // forEach를 사용할 수 있나?
+    data.forEach(function() {
+      // function.call(this, arguments[0], arguments[1], arguments[2]);
+      // function.apply(this, arguments);
+      callback.apply(data, arguments);
+    });
+
+    // 없다면?? 대체 기술
+
+
   }
 
   // ------------------------------------------------------
