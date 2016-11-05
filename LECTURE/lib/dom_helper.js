@@ -230,24 +230,25 @@ this.DOM_Helper = (function(global){
   }
 
   /** @function each() */
-  function each(data, callback) {
-    data = makeArray(data);
-    // forEach를 사용할 수 있나?
-    if ( data.forEach ) {
-      data.forEach(function(item, idx, data) {
-        // this를 사용하지 않을 경우
-        // 비 엄격모드에서 this는 window 암묵적으로 가리킴
-        // callback(idx, item, data);
-        // 단, 명시적일 경우 this는 해당 객체를 가리킨다.
-        callback.call(data, idx, item);
-      });
-    } else {
-      for ( var i=0, l=data.length; i<l; i++ ) {
-        var item = data[i];
-        callback.call(data, i, item);
-      }
+  var each = (function(){
+    var _each;
+    if ( Array.prototype.forEach ) {
+      _each = function(data, callback) {
+        makeArray(data).forEach(function(item, idx, data) {
+          callback.call(data, idx, item);
+        });
+      };
     }
-  }
+    else {
+      _each = function(data, callback) {
+        for ( var i=0, l=data.length; i<l; i++ ) {
+          var item = data[i];
+          callback.call(data, i, item);
+        }
+      };
+    }
+    return _each;
+  })();
 
   // ------------------------------------------------------
 
