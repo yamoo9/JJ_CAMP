@@ -98,9 +98,15 @@
     // Legacy DOM
     // DOM Lv0
     // 이벤트 속성에 하나의 이벤트 핸들러만 연결이 가능하다!
-    link.onclick = assignParentActiveClass;
-    link.onclick = stylingParentChangeBGColor;
+    // link.onclick = assignParentActiveClass;
+    // link.onclick = stylingParentChangeBGColor;
     // link.onclick = [assignParentActiveClass, stylingParentChangeBGColor];
+    // link.onclick = function() {
+    //   // 함수 리터럴로 실행하고자 하는 함수들을 묶었을 때
+    //   // this가 참조하는 실행 객체를 임의로 설정해줘야 하는 불편함이 있다.
+    //   assignParentActiveClass.call(this);
+    //   stylingParentChangeBGColor.call(this);
+    // };
 
     // DOM Lv2, W3C Standard Event Model (2000)
     // .addEventListener(type, handler, capture)
