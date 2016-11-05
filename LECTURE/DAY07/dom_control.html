@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>문서객체 조작/제어 이벤트 처리
+  함수형 프로그래밍 → 객체형 프로그래밍으로 변경</title>
+  <script src="../lib/dom_helper.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+  </div>
+
+<script>
+(function(global, $){
+  'use strict';
+
+  // 라이브러러 객체의 util 네임스페이스 객체의 메소드
+  // 지역 변수에 참조
+  var util = $.util;
+  var cLog = util.cLog;
+
+  // 스타일 변경
+  cLog.styles = [
+    'color: #34c0ff;',
+    'font-size: 1.1rem;',
+    'letter-spacing: 0.04em;'
+  ].join('');
+
+  cLog('this is %cLibrary.');
+
+  cLog('util type is object? %c' + util.isObject( util ) ); // false
+
+// -------------------------------------------
+
+  var container = $.query('.container');
+  var rows = $.queryAll('.row', container);
+
+  // console.log('container:', container);
+  // cLog('container element is %c' + container);
+  // console.log('rows:', rows);
+
+  console.log(util.isNodeList(rows)); // true
+
+  rows = util.makeArray(rows);
+
+  console.log(util.isNodeList(rows)); // false
+  console.log(util.isArray(rows)); // true
+
+  // $.each(rows, function(row, index, rows){
+  //   // row    // <div class="row">
+  //   // index  // 0
+  //   // rows   // nodeList
+  // });
+
+})(this, this.DOM_Helper);
+</script>
+</body>
+</html>
