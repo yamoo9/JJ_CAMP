@@ -232,19 +232,21 @@ this.DOM_Helper = (function(global){
   /** @function each() */
   function each(data, callback) {
     data = makeArray(data);
-
-    // callback
-
     // forEach를 사용할 수 있나?
-    data.forEach(function() {
-      // function.call(this, arguments[0], arguments[1], arguments[2]);
-      // function.apply(this, arguments);
-      callback.apply(data, arguments);
-    });
-
-    // 없다면?? 대체 기술
-
-
+    if ( data.forEach ) {
+      data.forEach(function(item, idx, data) {
+        // this를 사용하지 않을 경우
+        // 비 엄격모드에서 this는 window 암묵적으로 가리킴
+        // callback(idx, item, data);
+        // 단, 명시적일 경우 this는 해당 객체를 가리킨다.
+        callback.call(data, idx, item);
+      });
+    } else {
+      for ( var i=0, l=data.length; i<l; i++ ) {
+        var item = data[i];
+        callback.call(data, i, item);
+      }
+    }
   }
 
   // ------------------------------------------------------

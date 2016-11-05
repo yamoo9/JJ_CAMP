@@ -69,11 +69,13 @@
   // ------------------------------------------------------
   // DOM_Helper.each 검토
 
-  $.each(rows, function(row, index, rows){
+  $.each(rows, function(index, row){
     // row    // <div class="row">
     // index  // 0
     // rows   // nodeList
-    console.log(arguments);
+    // console.log(arguments);
+    console.log(this);
+    row.innerHTML = '<p>this is paragraph 0' + index +'</p>';
   });
 
 })(this, this.DOM_Helper);
