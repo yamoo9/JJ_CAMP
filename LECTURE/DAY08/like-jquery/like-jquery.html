@@ -11,15 +11,16 @@
 
   <nav class="demo">
     <ul>
-      <li><a href="">link 1m21</a></li>
+      <li><a class="demo-link" href="">link 1m21</a></li>
       <li><a href="">link 2m22</a></li>
       <li><a href="">link 3m23</a></li>
-      <li><a href="">link 4m24</a></li>
+      <li><a class="demo-link" href="">link 4m24</a></li>
       <li><a href="">link 5m25</a></li>
-      <li><a href="">link 6m26</a></li>
+      <li><a class="demo-link" href="">link 6m26</a></li>
     </ul>
   </nav>
 
+<script src="Element.prototype.js"></script>
 <script src="like-jquery.js"></script>
 <script>
 (function(global, $){
@@ -46,9 +47,14 @@
   // console.log($demo.elements);
   // console.log($demo_links);
 
-  $demo_links.each(function(index, el, list) {
-    console.log(index, el, list);
-  });
+  $demo_links
+    .addClass('hey')
+    .addClass('you')
+    .addClass('demo-link')
+    .removeClass('you');
+
+  $demo_links
+    .removeClass('demo-link');
 
 })(this, likeJq);
 </script>

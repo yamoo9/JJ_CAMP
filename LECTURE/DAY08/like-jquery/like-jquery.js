@@ -17,6 +17,18 @@ var likeJq = (function( global ){
     this._init.apply( this, arguments );
   }
 
+  // 생성자 함수의 속성(메소드)을 추가
+  // 객체를 생성하지 않고도 외부에서 사용 가능한 정적 메소드이다.
+  likeJq.trimLeft = function( text ) {
+    return text.replace(/^\s+/, '');
+  };
+  likeJq.trimRight = function( text ) {
+    return text.replace(/\s+$/, '');
+  };
+  likeJq.trim = function( text ) {
+    return likeJq.trimRight( likeJq.trimLeft(text) );
+  };
+
   // 생성자 함수의 프로토타입 빈 객체
   likeJq.fn = likeJq.prototype = {
     // 생성자 참조 멤버 변수
@@ -34,12 +46,31 @@ var likeJq = (function( global ){
       }
     },
     'hasClass': function(name) {
-      this.each(function(index, element){
-        var _classes = element.getAttribute('class');
-        for ( var i=0, l=_classes.length; i<l; i++ ) {
-          console.log(_classes[i]);
+
+    },
+    'addClass': function(name) {
+      this.each(function(index, el) {
+        // el.classList.add(name); // IE 10+
+        var pre_classes = el.getAttribute('class') || '';
+        var pre_classes_arr = pre_classes.split(' ');
+        for ( var i=0, l=pre_classes_arr.length; i<l; i++ ) {
+          var item = pre_classes_arr[i];
+          if (item === name) { return; } // 함수 종료
         }
+        el.setAttribute( 'class', likeJq.trim(pre_classes + ' ' + name) );
       });
+      return this;
+    },
+    'removeClass': function(name) {
+      var name_reg = new RegExp('(^|\\s+)' +name+ '(\\s+|$)', 'g');
+      this.each(function(index, el) {
+        // el.classList.remove(name); // IE 10+
+        var classes = el.getAttribute('class');
+        classes = classes.replace(name_reg, ' ');
+        el.setAttribute('class', likeJq.trim(classes));
+      });
+      // 메소드를 연결해서 사용하려면
+      return this;
     }
   };
 
