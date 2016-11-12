@@ -25,18 +25,30 @@
 (function(global, $){
   'use strict';
 
+  // ------------------------------------------------------------
   // $ 모듈은 함수이다.
-  console.log( 'typeof $:', typeof $ );
-
+  // console.log( 'typeof $:', typeof $ );
+  // ------------------------------------------------------------
   // 생성한 인스턴스의 생성자를 확인해보자.
   // var $instance = new $();
   // console.log( '$instance:', $instance );
   // console.log( '$instance.constructor === $: ', $instance.constructor === $ );
-
+  // ------------------------------------------------------------
   // new 키워드를 함께 사용하지 않고도 객체를 생성하게 하려면?
   // new를 강제화시키는 패턴을 사용한다.
-  var $ins = $();
-  console.log($ins.version); // "1.0.0"
+  var $demo = $('.demo');
+  var $demo_links = $('.demo a');
+  // 객체지향 언어를 사용하는 프로그래밍의 특징
+  // 1. 추상화(Abstract)
+  // 2. 캡슐화(Encapsuration) [x] => IIFE 패턴 흉내
+  // 3. 상속(Inheritance)
+  // 4. 다형성(Polymorphism) [x] => ....
+  // console.log($demo.elements);
+  // console.log($demo_links);
+
+  $demo_links.each(function(index, el, list) {
+    console.log(index, el, list);
+  });
 
 })(this, likeJq);
 </script>
