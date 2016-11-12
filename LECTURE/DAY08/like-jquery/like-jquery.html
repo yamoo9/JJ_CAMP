@@ -6,6 +6,20 @@
     content="IE=Edge">
   <meta charset="UTF-8">
   <title>jQuery와 유사한 라이브러리</title>
+  <style>
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    .activation {
+      color: #7045cf;
+    }
+    .activation:focus {
+      outline: none;
+      outline-offset: 5px;
+      box-shadow: 0 0 0 3px hsla(199, 100%, 60%, 0.45);
+    }
+  </style>
 </head>
 <body>
 
@@ -28,16 +42,29 @@
 
   var nav = document.querySelector('nav');
 
-  var li_first = nav.addClass('gnb').querySelector('ul').addClass('clearfix reset-list').querySelectorAll('li').item(1).addClass('active');
-
-  li_first.addEventListener('click', function(event) {
-    if ( event.target.nodeName === 'A' ) { event.preventDefault(); }
-    console.log(this.hasClass('active'));
+  // 부모 요소에 이벤트를 한 번 걸어 줌에 따라 모든 자손들은 이벤트가 전파
+  // 이를 `이벤트 위임`이라고 부른다.
+  nav.addEventListener('click', function(e) {
+    var node_name = e.target.nodeName.toLowerCase();
+    console.log(node_name);
+    // 브라우저 기본 동작 차단
+    if (node_name === 'a') { e.preventDefault(); }
+    e.target.radioClass('activation');
     // console.log('this:', this);
-    // console.log('event.target:', event.target);
-    // console.log('event.currentTarget:', event.currentTarget);
-    // event.target.toggleClass('active');
-  }, false);
+    // console.log('e.target:', e.target);
+    // console.log('e.currentTarget:', e.currentTarget);
+  });
+
+  // var li_first = nav.addClass('gnb').querySelector('ul').addClass('clearfix reset-list').querySelectorAll('li').item(1).addClass('active');
+
+  // li_first.addEventListener('click', function(event) {
+  //   if ( event.target.nodeName === 'A' ) { event.preventDefault(); }
+  //   console.log(this.hasClass('active'));
+  //   // console.log('this:', this);
+  //   // console.log('event.target:', event.target);
+  //   // console.log('event.currentTarget:', event.currentTarget);
+  //   // event.target.toggleClass('active');
+  // }, false);
 
 
 })(this);
