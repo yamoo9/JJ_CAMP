@@ -23,6 +23,24 @@
 <script src="Element.prototype.js"></script>
 <script src="like-jquery.js"></script>
 <script>
+(function(global){
+  'use strict';
+
+  var nav = document.querySelector('nav');
+
+  var li_first = nav.addClass('gnb').querySelector('ul').addClass('clearfix reset-list').querySelectorAll('li').item(1).addClass('active');
+
+  li_first.addEventListener('click', function(event) {
+    if ( event.target.nodeName === 'A' ) { event.preventDefault(); }
+    console.log(this.hasClass('active'));
+    // console.log('this:', this);
+    // console.log('event.target:', event.target);
+    // console.log('event.currentTarget:', event.currentTarget);
+    // event.target.toggleClass('active');
+  }, false);
+
+
+})(this);
 (function(global, $){
   'use strict';
 
@@ -56,7 +74,7 @@
   $demo_links
     .removeClass('demo-link');
 
-})(this, likeJq);
+}); // (this, likeJq)
 </script>
 </body>
 </html>
