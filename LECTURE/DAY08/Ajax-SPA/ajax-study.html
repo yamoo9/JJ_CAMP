@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="UTF-8">
+  <title>Ajax 테스트 슈트</title>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 2rem;
+    }
+    .call-ajax-btn {
+      cursor: pointer;
+      margin-bottom: 2rem;
+      border: none;
+      padding: 1em;
+      background: #4937ce;
+      color: #fff;
+    }
+    .call-ajax-btn:hover,
+    .call-ajax-btn:focus {
+      background: #1d115c;
+    }
+    .ajax-container {
+      width: 80%;
+      border: 5px solid currentColor;
+      padding: 1rem 1.4rem;
+      color: #4937ce;
+      font-size: 0.875rem;
+      font-family: "Spoqa Han Sans";
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <button type="button" class="call-ajax-btn">Call Ajax</button>
+
+  <div class="ajax-container">
+    <p> Ajax로 처리된 데이터 코드가 이 곳에 적용됩니다. </p>
+  </div>
+
+  <script src="ajax-study.js"></script>
+</body>
+</html>
