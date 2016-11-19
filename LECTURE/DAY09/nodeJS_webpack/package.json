@@ -1,0 +1,10 @@
+{
+  "name": "node.js_webpack",
+  "version": "1.0.0",
+  "description": "Node.js 환경에서 Webpack을 사용하여 ECMAScript 2015(ES6) 사용하기",
+  "scripts": {
+    "start": ""
+  },
+  "keywords": ["Node.js", "Webpack", "Babel", "ECMAScript 2015", "ES6"],
+  "author": "yamoo9 <yamoo9@naver.com>"
+}
