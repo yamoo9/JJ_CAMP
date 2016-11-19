@@ -1,0 +1,21 @@
+/* 그리드 시스템 */
+.container {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+[class*="col-"] {
+  float: left;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.col-1 { width: 80px; }
+.col-2 { width: 160px; }

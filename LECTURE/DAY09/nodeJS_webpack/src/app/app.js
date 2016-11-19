@@ -1,6 +1,12 @@
 /*! app.js © yamoo9.net, 2016 */
 'use strict';
 
+// [CSS] --------------------------------------------------------------------------
+require('./css/app.css');
+
+
+// [JS] ---------------------------------------------------------------------------
+
 // var temp = 'app.js';
 // debugger;
 
@@ -11,8 +17,6 @@ var square     = require('./modules/square');
 var factorial  = require('./modules/factorial');
 var capitalize = require('./modules/capitalize');
 var camelCase  = require('./modules/camelCase');
-
-// --------------------------------------------------------------------------------
 
 var s_result = square(3);
 var f_result   = factorial(s_result);
