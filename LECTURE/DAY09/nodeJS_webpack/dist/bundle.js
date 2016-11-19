@@ -53,14 +53,21 @@
 	// 의존 모듈(square, factorial) 로드
 	// server side javascript env. module load
 	// CommonJS 방법 모듈 로드 require() 함수 사용
-	var square    = __webpack_require__(1);
-	var factorial = __webpack_require__(2);
+	var square     = __webpack_require__(1);
+	var factorial  = __webpack_require__(2);
+	var capitalize = __webpack_require__(3);
+	var camelCase  = __webpack_require__(4);
+
+	// --------------------------------------------------------------------------------
 
 	var s_result = square(3);
-	var result   = factorial(s_result);
+	var f_result   = factorial(s_result);
+	var message  = 'capitalize is awesome function!';
 
-	console.log(s_result, result);
-	// console.log(s_result, result, temp);
+	console.log( 'square:', s_result );
+	console.log( 'factorial:', f_result );
+	console.log( 'capitalize:', capitalize(message) );
+	console.log( 'camelCase:', camelCase(message) );
 
 /***/ },
 /* 1 */
@@ -93,6 +100,43 @@
 	}
 
 	module.exports = factorial;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	/*! capitalize.js © yamoo9.net, 2016 */
+
+	function capitalize(s) {
+	  return s.split(' ')
+	    .map(function(k){
+	      return k.replace(/^./, function($1){
+	          return $1.toUpperCase();
+	      });
+	    }).join(' ');
+	}
+
+	module.exports = capitalize;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	/*! camelCase.js © yamoo9.net, 2016 */
+
+	// camelCase('design school'); // 'designSchool'
+
+	function camelCase(s) {
+	  return s.split(' ')
+	    .map(function(k, i){
+	      if ( i === 0 ) { return k; }
+	      return k.replace(/^./, function($1){
+	          return $1.toUpperCase();
+	      });
+	    }).join('');
+	}
+
+	module.exports = camelCase;
 
 /***/ }
 /******/ ]);

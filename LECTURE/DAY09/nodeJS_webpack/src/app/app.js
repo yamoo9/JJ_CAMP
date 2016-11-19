@@ -15,9 +15,10 @@ var camelCase  = require('./modules/camelCase');
 // --------------------------------------------------------------------------------
 
 var s_result = square(3);
-var result   = factorial(s_result);
+var f_result   = factorial(s_result);
 var message  = 'capitalize is awesome function!';
 
-console.log(s_result, result);
+console.log( 'square:', s_result );
+console.log( 'factorial:', f_result );
 console.log( 'capitalize:', capitalize(message) );
 console.log( 'camelCase:', camelCase(message) );
