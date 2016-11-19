@@ -1,18 +1,21 @@
 /*! app.js © yamoo9.net, 2016 */
 'use strict';
 
-// factorial 함수 정의
-function factorial(n) {
-  // factorial 로직
-  return n < 2 ? 1 : n * factorial(n - 1);
-}
+// var temp = 'app.js';
+// debugger;
 
-// square 함수 정의
-function square(n) {
-  return n * n;
-}
+// 의존 모듈(square, factorial) 로드
+// server side javascript env. module load
+// CommonJS 방법 모듈 로드 require() 함수 사용
+var square     = require('./modules/square');
+var factorial  = require('./modules/factorial');
+var capitalize = require('./modules/capitalize');
+
+
 
 var s_result = square(3);
-var result = factorial(s_result);
+var result   = factorial(s_result);
+var message  = 'capitalize is awesome function!';
 
 console.log(s_result, result);
+console.log( capitalize(message) );

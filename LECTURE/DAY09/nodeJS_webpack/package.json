@@ -5,6 +5,15 @@
   "scripts": {
     "start": ""
   },
-  "keywords": ["Node.js", "Webpack", "Babel", "ECMAScript 2015", "ES6"],
-  "author": "yamoo9 <yamoo9@naver.com>"
+  "keywords": [
+    "Node.js",
+    "Webpack",
+    "Babel",
+    "ECMAScript 2015",
+    "ES6"
+  ],
+  "author": "yamoo9 <yamoo9@naver.com>",
+  "devDependencies": {
+    "webpack": "^1.13.3"
+  }
 }
