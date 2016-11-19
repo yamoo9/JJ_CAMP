@@ -24,6 +24,11 @@ var webpack_config = {
       {
         'test': /\.css$/,
         'loader': 'style-loader!css-loader'
+      },
+      // Sass 파일 -> CSS 파일 변환 -> 번들링
+      {
+        'test': /\.(sass|scss)$/,
+        'loader': 'style-loader!css-loader!sass-loader'
       }
     ]
   }
