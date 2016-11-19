@@ -10,12 +10,14 @@
 var square     = require('./modules/square');
 var factorial  = require('./modules/factorial');
 var capitalize = require('./modules/capitalize');
+var camelCase  = require('./modules/camelCase');
 
-
+// --------------------------------------------------------------------------------
 
 var s_result = square(3);
 var result   = factorial(s_result);
 var message  = 'capitalize is awesome function!';
 
 console.log(s_result, result);
-console.log( capitalize(message) );
+console.log( 'capitalize:', capitalize(message) );
+console.log( 'camelCase:', camelCase(message) );
