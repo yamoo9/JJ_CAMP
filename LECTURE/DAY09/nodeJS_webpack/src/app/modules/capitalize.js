@@ -1,5 +1,4 @@
 /*! capitalize.js © yamoo9.net, 2016 */
-
 function capitalize(s) {
   return s.split(' ')
     .map(function(k){

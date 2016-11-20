@@ -1,6 +1,6 @@
 /*! square.js © yamoo9.net, 2016 */
 // debugger;
-var temp = 'square.js';
+// var temp = 'square.js';
 // debugger;
 
 function square(n) {

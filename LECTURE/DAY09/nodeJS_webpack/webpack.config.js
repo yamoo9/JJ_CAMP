@@ -12,26 +12,42 @@ var webpack_config = {
   // path     : 출력 파일 폴더 설정
   // filename : 출력 파일 이름 설정
   'output': {
-    // 'path'     : __dirname + '/dist',
-    'path'     : __dirname + '/src/public/assets',
-    'filename' : 'bundle.js'
+    'publicPath' : 'assets',
+    'path'       : __dirname + '/dist',
+    'filename'   : 'bundle.js'
   },
 
-  // 로더 모듈 설정
+  // 모듈 설정
   'module': {
+    // 로더 설정
     'loaders': [
       // CSS 파일 -> 번들링
       {
         'test': /\.css$/,
-        'loader': 'style-loader!css-loader'
+        'loader': 'style!css'
       },
       // Sass 파일 -> CSS 파일 변환 -> 번들링
       {
         'test': /\.(sass|scss)$/,
-        'loader': 'style-loader!css-loader!sass-loader'
+        'loader': 'style!css!sass'
+      },
+      // Babel (ES6, ECMAScript 2015) -> JS 파일 변환 -> 번들링
+      {
+        'test': /\.js$/,
+        'exclude': /node_modules/,
+        // 'loader': 'babel?presets[]=es2015',
+        'loader': 'babel',
+        'query': {
+          'presets': ['es2015']
+        }
       }
     ]
-  }
+  },
+
+  // webpack-dev-server 루트 경로 설정
+  'devServer': {
+    'contentBase': __dirname + '/src/public'
+  },
 
   // watch    : 관찰 모드 설정
   // 'watch': true,

@@ -1,7 +1,4 @@
 /*! camelCase.js © yamoo9.net, 2016 */
-
-// camelCase('design school'); // 'designSchool'
-
 function camelCase(s) {
   return s.split(' ')
     .map(function(k, i){
