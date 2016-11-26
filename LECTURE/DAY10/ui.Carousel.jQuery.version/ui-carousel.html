@@ -6,6 +6,17 @@
   <title>Carousel UI Component</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/ui-carousel.css">
+  <!-- jQuery CDN 라이브러리 로드 -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+  <script>
+  <!-- 네트워크 불안정 시, jQuery 로컬 라이브러리 로드 -->
+  window.jQuery||document.writeln('<script src="../jQuery.Extension/lib/jquery.min.js"><\/script>');
+  </script>
+  <!-- jQuery 의존 확장 모듈 로드 -->
+  <script src="../jQuery.Extension/utilities/jquery.cache.js"></script>
+  <script src="../jQuery.Extension/plugins/jquery.radioClass.js"></script>
+  <!-- jQuery 캐러셀 플러그인 모듈 로드 -->
+  <script src="js/jquery.ui.carousel.js"></script>
 </head>
 <body>
 

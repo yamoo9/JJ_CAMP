@@ -13,6 +13,13 @@
 // 7. 객체 지향 자바스크립트 방식으로 코드를 변경한다. (e.g: new Carousel('#bs3-headphone') )
 // --------------------------------------------------------------------------------------------
 
+(function(global, $){
+  'use strict';
+
+  $('#bs3-headphone').carousel();
+
+})(this, this.jQuery);
+
 (function(global){
   'use strict';
 
@@ -38,4 +45,4 @@
   global.addEventListener('DOMContentLoaded', resizeCarouselHeight);
   global.addEventListener('resize', resizeCarouselHeight);
 
-})(this);
+}) // (this);
