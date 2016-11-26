@@ -18,9 +18,14 @@
   // 문서객체 참조
   var document = global.document;
   // 플러그인 모듈 내부 어디에서든 참조 가능하도록 초기 변수 설정
-  var $widget;
-  var $wrapper;
-  var $panels;
+  var $widget,
+      $wrapper,
+      $panels,
+      $tablist,
+      $tabs,
+      panel_width,
+      active_index = 0,
+      using_animation = !true;
 
   // 플러그인: 인스턴스 메소드
   var carousel = function() {
@@ -33,6 +38,8 @@
   // 초기화 함수
   var init = function() {
     // 캐러셀 컴포넌트 객체 참조
+    $tablist = $widget.find('.ui-carousel-tablist');
+    $tabs    = $widget.find('.ui-carousel-tab');
     $wrapper = $widget.find('.ui-carousel-tabpanel-wrapper');
     $panels  = $wrapper.find('.ui-carousel-tabpanel');
     // 초기 실행
@@ -41,15 +48,21 @@
   };
   // 이벤트 연결 함수
   var bindEvents = function() {
+    // 리사이즈 이벤트 핸들링
     $(global).on('resize', resizeCarouselHeight);
+    // 탭 이벤트 핸들링
+    $.each($tabs, function(index) {
+      var $tab = $tabs.eq(index);
+      $tab.on('click', $.proxy(activeTabPanel, $tab, index));
+    });
   };
   // 래퍼 객체의 너비 설정 함수
   var settingWrapperSize = function() {
-    // 컴포넌트 폭
-    var panel_width = $widget.width();
-    // 패널 폭 설정
+    // 컴포넌트 너비 구하기
+    panel_width = $widget.width();
+    // 패널 너비를 컴포넌트 너비로 설정
     $panels.width( panel_width );
-    // 래퍼 폭 설정
+    // 래퍼 너비를 컴포넌트 너비 x 패널 개수로 설정
     var wrapper_width = panel_width * $panels.length;
     $wrapper.width(wrapper_width);
   };
@@ -57,6 +70,24 @@
   var resizeCarouselHeight = function () {
     $widget.height( $panels.height() );
   };
+  // 탭패널 활성화하는 함수
+  var activeTabPanel = function(index, e) {
+    e.preventDefault();
+    active_index = index;
+    moveWrapperPosX( active_index );
+    updateIndicators( active_index );
+  };
+  // 래퍼 객체를 이동시키는 함수
+  var moveWrapperPosX = function(active_index) {
+    var distance_x = -panel_width * active_index + 'px';
+    using_animation ?
+      $wrapper.animate({'left': distance_x}, 600) :
+      $wrapper.css('left', distance_x);
+  }
+  // 업데이트 인디케이터 함수
+  var updateIndicators = function(active_index) {
+    $tabs.eq(active_index).parent().radioClass('active');
+  }
 
   // 플러그인으로 함수 연결
   if (!$.fn.carousel) {
