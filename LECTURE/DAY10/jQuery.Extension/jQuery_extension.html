@@ -28,6 +28,8 @@
   <p data-currency="$">128000</p>
   <p data-currency="₩">3201290</p>
   <p data-currency="¥">510</p>
+  <p data-currency>9012510000</p>
+  <p data-currency="¥">1245510</p>
 
 <script>
 (function(global, $){
@@ -61,6 +63,25 @@
   };
 
   $repeat_btn.on('click', processingRepeatProcess);
+
+  console.log('%c------------------------------', 'color: #3d9a21');
+
+  // 통화 변경 처리
+  var $currencies = $('[data-currency]');
+
+  // jQuery 반복순환문 처리 유틸리티 메소드
+  $.each($currencies, function(index){
+    var $c_el = $currencies.eq(index);
+    var sign  = $c_el.attr('data-currency');
+    var currency;
+    if( !!sign ) {
+      // 사용자 정의 유틸리티 메소드 $.currency() 활용
+      currency = $.currency( $c_el.text(), sign, 'before' );
+    } else {
+      currency = $.currency( $c_el.text() );
+    }
+    $c_el.text( currency );
+  });
 
 })(this, this.jQuery);
 </script>
