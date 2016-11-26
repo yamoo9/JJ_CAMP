@@ -4,14 +4,46 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta charset="UTF-8">
   <title>jQuery 확장: 커스텀 유틸리티/인스턴스/필터 메소드</title>
+  <style>
+    .wrapper {
+      padding: 1rem;
+    }
+    .javascript-library-frameworks {
+      margin-top: 0;
+      padding-left: 0;
+      list-style-type: none;
+    }
+    .javascript-library-frameworks li::before {
+      content: '━ ';
+    }
+    .javascript-library-frameworks a {
+      display: inline-block;
+      padding: 0.4em;
+      color: #878bee;
+      text-decoration: none;
+    }
+    .print-web-address {
+      padding: 1em;
+      border: 5px solid currentColor;
+      color: #878bee;
+    }
+    .radio-active {
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      font-size: 20px;
+    }
+  </style>
   <!-- CDN -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <!-- Network 불안정 문제로 정상적으로 CDN 데이터를 로드하지 못했을 때는 대체 방법으로 로컬 jQuery 사용하겠다. -->
   <script>window.jQuery || document.writeln('<script src="./lib/jquery.min.js"><\/script>');</script>
-  <!-- jQuery 확장 모듈 로드 -->
+  <!-- jQuery 확장 유틸리티 모듈 로드 -->
   <script src="utilities/jquery.string.includes.js"></script>
   <script src="utilities/jquery.string.repeat.js"></script>
   <script src="utilities/jquery.currency.js"></script>
+  <script src="utilities/jquery.cache.js"></script>
+  <!-- jQuery 확장 플러그인 모듈 -->
+  <script src="plugins/jquery.radioClass.js"></script>
 </head>
 <body>
 
@@ -23,6 +55,7 @@
 
   <p class="compare-string">야무 한글 로렘입숨 로렘입숨이란? 디자인을 위한 더미 텍스트!. 숨소리가 쿵쿵대는 운동화도 설레게 가슴을 어디에나, 너 설레는, 흐르는 햇볕처럼, 하고 세상을 그대 눈부신 장엄한 하루를 심장 꽃보다 청춘아! 고동소리. 사명으로 엮어가는 젊음의 숨소리가 찬란한 설레는!</p>
 
+  <hr>
 
   <p data-currency>267000</p>
   <p data-currency="$">128000</p>
@@ -30,6 +63,20 @@
   <p data-currency="¥">510</p>
   <p data-currency>9012510000</p>
   <p data-currency="¥">1245510</p>
+
+  <hr>
+
+  <div class="wrapper">
+    <ul class="javascript-library-frameworks">
+      <li><a href="http://jquery.com/">jQuery Library</a></li>
+      <li><a href="http://angular.io/">Angular.js Framework</a></li>
+      <li><a href="https://facebook.github.io/react/">React.js Framework</a></li>
+      <li><a href="https://vuejs.org/">Vue.js Framework</a></li>
+      <li><a href="http://vanilla-js.com/">Vanilla JavaScript</a></li>
+    </ul>
+    <p class="print-web-address">print-web-address</p>
+  </div>
+
 
 <script>
 (function(global, $){
@@ -82,6 +129,39 @@
     }
     $c_el.text( currency );
   });
+
+  console.log('%c------------------------------', 'color: #3d9a21');
+
+  // jQuery 인스턴스 캐시
+
+  var $web_address_list  = $('.javascript-library-frameworks');
+  var $web_address_links = $('a', $web_address_list);
+  var $print_web_address = $('.print-web-address');
+
+  $web_address_links.on('click', function(e) {
+    // 브라우저 기본 동작 차단
+    e.preventDefault();
+    // console.log(this); // DOM Element, not jQuery Instance
+
+    // Native JavaScript
+    // var href = this.getAttribute('href');
+
+    // jQuery
+    // var href = $.cache(this).attr('href');
+    var href = $.$(this).attr('href');
+    $print_web_address.text(href);
+  });
+
+  console.log('%c------------------------------', 'color: #3d9a21');
+
+  // jQuery radioCalss
+
+  $web_address_links.on('click', function(e) {
+    var $this = $.$(this);
+    // console.log($this);
+    $this.parent().radioClass('radio-active');
+  });
+
 
 })(this, this.jQuery);
 </script>
