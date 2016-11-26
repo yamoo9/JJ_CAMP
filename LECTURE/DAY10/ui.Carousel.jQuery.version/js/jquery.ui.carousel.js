@@ -18,6 +18,15 @@
   // 문서객체 참조
   var document = global.document;
 
+  // 전역에 공개하여 사용하는 공통 함수
+  global.playAnimation = function(callback, time) {
+    time = time || 3000;
+    return global.setInterval(callback, time);
+  };
+  global.stopAnimation = function(stop_id) {
+    global.clearInterval(stop_id);
+  };
+
   // 플러그인 모듈 내부 어디에서든 참조 가능하도록 객체 참조 변수 선언
   var $widget,
       $wrapper,
@@ -27,8 +36,11 @@
       $button_group,
       panel_width,
       // 초기 변수
+      stop_id         = 0,
       active_index    = 0,
-      using_animation = true;
+      using_animation = true,
+      using_autoPlay  = true,
+      rolling_time    = 3000;
 
   // 플러그인: 인스턴스 메소드
   var carousel = function() {
@@ -49,6 +61,7 @@
     // 초기 실행
     settingWrapperSize();
     resizeCarouselHeight();
+    using_autoPlay && autoPlay();
   };
   // 이벤트 연결 함수
   var bindEvents = function() {
@@ -57,11 +70,19 @@
     // 탭 이벤트 핸들링
     $.each($tabs, function(index) {
       var $tab = $tabs.eq(index);
-      $tab.on('click', $.proxy(activeTabPanel, $tab, index));
+      $tab.on({
+        'click': $.proxy(activeTabPanel, $tab, index),
+        'focus': stop
+      });
     });
     // 버튼 이벤트 핸들링
     $button_group.on('click', 'button', function(e){
       $.$(this).index() ? nextContent() : prevContent();
+    });
+    // 자동재생 이벤트 핸들링
+    $widget.on({
+      'mouseenter': stop,
+      'mouseleave': autoPlay
     });
   };
   // 래퍼 객체의 너비 설정 함수
@@ -106,6 +127,16 @@
   var prevContent = function() {
     active_index = --active_index < 0 ? ($panels.length - 1) : active_index;
     activeTabPanel(active_index);
+  };
+  // 자동 재생 함수
+  var autoPlay = function() {
+    stop_id = global.playAnimation(nextContent, rolling_time);
+    console.log(stop_id);
+  };
+  // 멈춤 함수
+  var stop = function() {
+    console.log(stop_id);
+    global.stopAnimation(stop_id);
   };
 
   // 플러그인으로 함수 연결
