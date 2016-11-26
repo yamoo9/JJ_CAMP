@@ -66,13 +66,16 @@
   // 이벤트 연결 함수
   var bindEvents = function() {
     // 리사이즈 이벤트 핸들링
-    $(global).on('resize', resizeCarouselHeight);
+    $(global).on({
+      'resize.change_carousel': resizeCarouselHeight,
+      'resize.change_wrapper': settingWrapperSize
+    });
     // 탭 이벤트 핸들링
     $.each($tabs, function(index) {
       var $tab = $tabs.eq(index);
       $tab.on({
         'click': $.proxy(activeTabPanel, $tab, index),
-        'focus': stop
+        'focus': stopPlay
       });
     });
     // 버튼 이벤트 핸들링
@@ -81,7 +84,7 @@
     });
     // 자동재생 이벤트 핸들링
     $widget.on({
-      'mouseenter': stop,
+      'mouseenter': stopPlay,
       'mouseleave': autoPlay
     });
   };
@@ -94,6 +97,8 @@
     // 래퍼 너비를 컴포넌트 너비 x 패널 개수로 설정
     var wrapper_width = panel_width * $panels.length;
     $wrapper.width(wrapper_width);
+    // 현재 활성화된 페이지를 재정렬
+    activeTabPanel(active_index);
   };
   // 창 크기 조정에 따른 캐러셀 높이 조정 함수
   var resizeCarouselHeight = function () {
@@ -131,11 +136,9 @@
   // 자동 재생 함수
   var autoPlay = function() {
     stop_id = global.playAnimation(nextContent, rolling_time);
-    console.log(stop_id);
   };
   // 멈춤 함수
-  var stop = function() {
-    console.log(stop_id);
+  var stopPlay = function() {
     global.stopAnimation(stop_id);
   };
 
