@@ -8,8 +8,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <!-- Network 불안정 문제로 정상적으로 CDN 데이터를 로드하지 못했을 때는 대체 방법으로 로컬 jQuery 사용하겠다. -->
   <script>window.jQuery || document.writeln('<script src="./lib/jquery.min.js"><\/script>');</script>
+  <!-- jQuery 확장 모듈 로드 -->
+  <script src="utilities/jquery.string.includes.js"></script>
 </head>
 <body>
 
+  <p class="compare-string">야무 한글 로렘입숨 로렘입숨이란? 디자인을 위한 더미 텍스트!. 숨소리가 쿵쿵대는 운동화도 설레게 가슴을 어디에나, 너 설레는, 흐르는 햇볕처럼, 하고 세상을 그대 눈부신 장엄한 하루를 심장 꽃보다 청춘아! 고동소리. 사명으로 엮어가는 젊음의 숨소리가 찬란한 설레는!</p>
+
+<script>
+(function(global, $){
+  'use strict';
+
+  var $compare           = $('.compare-string');
+  var include_text_yamoo = $.includes( $compare.text(), '야무' );
+  console.log('include_text_yamoo:', include_text_yamoo);
+
+})(this, this.jQuery);
+</script>
 </body>
 </html>
