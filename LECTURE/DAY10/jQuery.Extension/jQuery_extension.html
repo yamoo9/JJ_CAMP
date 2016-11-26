@@ -10,8 +10,15 @@
   <script>window.jQuery || document.writeln('<script src="./lib/jquery.min.js"><\/script>');</script>
   <!-- jQuery 확장 모듈 로드 -->
   <script src="utilities/jquery.string.includes.js"></script>
+  <script src="utilities/jquery.string.repeat.js"></script>
 </head>
 <body>
+
+  <div class="assign-repeat-zone">
+    <label>repeat <input type="text" class="repeat-str"></label>
+    <label>count <input type="number" class="repeat-count" min="1" max="10" value="5" step="1"></label>
+    <button type="button" class="process-btn">Processing</button>
+  </div>
 
   <p class="compare-string">야무 한글 로렘입숨 로렘입숨이란? 디자인을 위한 더미 텍스트!. 숨소리가 쿵쿵대는 운동화도 설레게 가슴을 어디에나, 너 설레는, 흐르는 햇볕처럼, 하고 세상을 그대 눈부신 장엄한 하루를 심장 꽃보다 청춘아! 고동소리. 사명으로 엮어가는 젊음의 숨소리가 찬란한 설레는!</p>
 
@@ -22,6 +29,23 @@
   var $compare           = $('.compare-string');
   var include_text_yamoo = $.includes( $compare.text(), '야무' );
   console.log('include_text_yamoo:', include_text_yamoo);
+
+  console.log('%c------------------------------', 'color: #3d9a21');
+
+  var $repeat_zone  = $('.assign-repeat-zone');
+  var $repeat_str   = $('.repeat-str', $repeat_zone);
+  var $repeat_count = $repeat_zone.find('.repeat-count');
+  var $repeat_btn   = $repeat_zone.children('button');
+
+  var processingRepeatProcess = function() {
+    var input_str     = $repeat_str.val();
+    var input_count   = Number( $repeat_count.val() );
+    // 사용자 정의 $.repeat() 유틸리티 메소드 사용
+    var processed_str = $.repeat( input_str, input_count );
+    $compare.text(processed_str);
+  };
+
+  $repeat_btn.on('click', processingRepeatProcess);
 
 })(this, this.jQuery);
 </script>
