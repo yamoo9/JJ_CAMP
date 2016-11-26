@@ -11,6 +11,7 @@
   <!-- jQuery 확장 모듈 로드 -->
   <script src="utilities/jquery.string.includes.js"></script>
   <script src="utilities/jquery.string.repeat.js"></script>
+  <script src="utilities/jquery.currency.js"></script>
 </head>
 <body>
 
@@ -22,13 +23,25 @@
 
   <p class="compare-string">야무 한글 로렘입숨 로렘입숨이란? 디자인을 위한 더미 텍스트!. 숨소리가 쿵쿵대는 운동화도 설레게 가슴을 어디에나, 너 설레는, 흐르는 햇볕처럼, 하고 세상을 그대 눈부신 장엄한 하루를 심장 꽃보다 청춘아! 고동소리. 사명으로 엮어가는 젊음의 숨소리가 찬란한 설레는!</p>
 
+
+  <p data-currency>267000</p>
+  <p data-currency="$">128000</p>
+  <p data-currency="₩">3201290</p>
+  <p data-currency="¥">510</p>
+
 <script>
 (function(global, $){
   'use strict';
 
-  var $compare           = $('.compare-string');
-  var include_text_yamoo = $.includes( $compare.text(), '야무' );
-  console.log('include_text_yamoo:', include_text_yamoo);
+  var $compare = $('.compare-string');
+
+  var compareStrYamoo = function() {
+    // 사용자 정의 $.includes() 유틸리티 메소드 사용
+    var include_text_yamoo = $.includes( $compare.text(), '야무' );
+    console.log('include_text_yamoo:', include_text_yamoo);
+  };
+
+  compareStrYamoo();
 
   console.log('%c------------------------------', 'color: #3d9a21');
 
@@ -43,6 +56,8 @@
     // 사용자 정의 $.repeat() 유틸리티 메소드 사용
     var processed_str = $.repeat( input_str, input_count );
     $compare.text(processed_str);
+    $.includes( $compare.text(), '야무' );
+    compareStrYamoo();
   };
 
   $repeat_btn.on('click', processingRepeatProcess);
