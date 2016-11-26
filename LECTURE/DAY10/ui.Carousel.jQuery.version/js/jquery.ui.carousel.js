@@ -17,15 +17,18 @@
 
   // 문서객체 참조
   var document = global.document;
-  // 플러그인 모듈 내부 어디에서든 참조 가능하도록 초기 변수 설정
+
+  // 플러그인 모듈 내부 어디에서든 참조 가능하도록 객체 참조 변수 선언
   var $widget,
       $wrapper,
       $panels,
       $tablist,
       $tabs,
+      $button_group,
       panel_width,
-      active_index = 0,
-      using_animation = !true;
+      // 초기 변수
+      active_index    = 0,
+      using_animation = true;
 
   // 플러그인: 인스턴스 메소드
   var carousel = function() {
@@ -38,10 +41,11 @@
   // 초기화 함수
   var init = function() {
     // 캐러셀 컴포넌트 객체 참조
-    $tablist = $widget.find('.ui-carousel-tablist');
-    $tabs    = $widget.find('.ui-carousel-tab');
-    $wrapper = $widget.find('.ui-carousel-tabpanel-wrapper');
-    $panels  = $wrapper.find('.ui-carousel-tabpanel');
+    $tablist      = $widget.find('.ui-carousel-tablist');
+    $tabs         = $widget.find('.ui-carousel-tab');
+    $button_group = $widget.find('.ui-carousel-button-group');
+    $wrapper      = $widget.find('.ui-carousel-tabpanel-wrapper');
+    $panels       = $wrapper.find('.ui-carousel-tabpanel');
     // 초기 실행
     settingWrapperSize();
     resizeCarouselHeight();
@@ -54,6 +58,10 @@
     $.each($tabs, function(index) {
       var $tab = $tabs.eq(index);
       $tab.on('click', $.proxy(activeTabPanel, $tab, index));
+    });
+    // 버튼 이벤트 핸들링
+    $button_group.on('click', 'button', function(e){
+      $.$(this).index() ? nextContent() : prevContent();
     });
   };
   // 래퍼 객체의 너비 설정 함수
@@ -72,7 +80,8 @@
   };
   // 탭패널 활성화하는 함수
   var activeTabPanel = function(index, e) {
-    e.preventDefault();
+    e && e.preventDefault();
+    // index 값으로 활성화 인덱스 업데이트
     active_index = index;
     moveWrapperPosX( active_index );
     updateIndicators( active_index );
@@ -81,13 +90,23 @@
   var moveWrapperPosX = function(active_index) {
     var distance_x = -panel_width * active_index + 'px';
     using_animation ?
-      $wrapper.animate({'left': distance_x}, 600) :
+      $wrapper.stop().animate({'left': distance_x}, 600) :
       $wrapper.css('left', distance_x);
-  }
+  };
   // 업데이트 인디케이터 함수
   var updateIndicators = function(active_index) {
     $tabs.eq(active_index).parent().radioClass('active');
-  }
+  };
+  // 다음 콘텐츠 보기 함수
+  var nextContent = function() {
+    active_index = ++active_index % $panels.length;
+    activeTabPanel(active_index);
+  };
+  // 이전 콘텐츠 보기 함수
+  var prevContent = function() {
+    active_index = --active_index < 0 ? ($panels.length - 1) : active_index;
+    activeTabPanel(active_index);
+  };
 
   // 플러그인으로 함수 연결
   if (!$.fn.carousel) {
